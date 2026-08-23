@@ -53,6 +53,7 @@ export interface EyeData {
   sph: string;
   cyl: string;
   axis: string;
+  prisma: string;
   add: string;
   dp: string;
   av: string;
