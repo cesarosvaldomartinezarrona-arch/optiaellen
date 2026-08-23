@@ -64,7 +64,7 @@ function buildTicketHTML(opticsName: string, rx: Prescription): string {
   <div class="bold big right">TOTAL: $${rx.grandTotal.toLocaleString()}</div>
   ` : ''}
   <div class="line"></div>
-  <div class="bold">Notas:</div><div class="small">${rx.clinicalNotes || '—'}</div>
+  <div class="bold">Notas:</div><div class="small">${rx.recommendations || '—'}</div>
   <div class="bold">Obs:</div><div class="small">${rx.observations || '—'}</div>
   <div class="dbl"></div>
   <div class="center small">${opticsName} — ${rx.doctor}</div>
@@ -155,7 +155,7 @@ export default function Recetas() {
   const [activeTab, setActiveTab] = useState<'todas' | 'vigentes' | 'pasadas'>('todas');
   const [newRx, setNewRx] = useState({
     patientId: '', doctor: 'Dr. Elena Ruiz', status: 'Vigente' as Prescription['status'],
-    rightEye: { ...emptyEye }, leftEye: { ...emptyEye }, clinicalNotes: '', observations: '',
+    rightEye: { ...emptyEye }, leftEye: { ...emptyEye }, recommendations: '', observations: '',
     selectedLenses: [] as SelectedLens[], treatments: [] as TreatmentType[],
   });
 
@@ -205,13 +205,13 @@ export default function Recetas() {
       patientName: patient?.name || '', date: new Date().toISOString().split('T')[0],
       doctor: newRx.doctor, status: newRx.status,
       rightEye: newRx.rightEye, leftEye: newRx.leftEye,
-      clinicalNotes: newRx.clinicalNotes, observations: newRx.observations,
+      recommendations: newRx.recommendations, observations: newRx.observations,
       selectedLenses: newRx.selectedLenses, treatments: newRx.treatments,
       ...totals,
     };
     setPrescriptions([...prescriptions, rx]);
     setShowModal(false);
-    setNewRx({ patientId: '', doctor: 'Dr. Elena Ruiz', status: 'Vigente', rightEye: { ...emptyEye }, leftEye: { ...emptyEye }, clinicalNotes: '', observations: '', selectedLenses: [], treatments: [] });
+    setNewRx({ patientId: '', doctor: 'Dr. Elena Ruiz', status: 'Vigente', rightEye: { ...emptyEye }, leftEye: { ...emptyEye }, recommendations: '', observations: '', selectedLenses: [], treatments: [] });
   };
 
   const EyeForm = ({ label, data, onChange, readonly = false }: { label: string; data: EyeData; onChange: (d: EyeData) => void; readonly?: boolean }) => (
@@ -372,8 +372,8 @@ export default function Recetas() {
               )}
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                  <h4 className="text-sm font-bold text-slate-900 mb-2">Notas Clínicas</h4>
-                  <p className="text-sm text-slate-600">{viewPrescription.clinicalNotes || 'Sin notas.'}</p>
+                  <h4 className="text-sm font-bold text-slate-900 mb-2">Recomendaciones</h4>
+                  <p className="text-sm text-slate-600">{viewPrescription.recommendations || 'Sin notas.'}</p>
                 </div>
                 <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
                   <h4 className="text-sm font-bold text-slate-900 mb-2">Observaciones</h4>
@@ -484,8 +484,8 @@ export default function Recetas() {
               {/* Notes */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Notas Clínicas</label>
-                  <textarea value={newRx.clinicalNotes} onChange={e => setNewRx({ ...newRx, clinicalNotes: e.target.value })} rows={3}
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Recomendaciones</label>
+                  <textarea value={newRx.recommendations} onChange={e => setNewRx({ ...newRx, recommendations: e.target.value })} rows={3}
                     className="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none" />
                 </div>
                 <div>

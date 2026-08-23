@@ -1,14 +1,14 @@
 import type { Patient, Prescription, Product, Sale, LabOrder, Expense, DeliveryOrder, PendingPayment, SelectedLens, Treatment } from '../types';
 
 export const patients: Patient[] = [
-  { id: 'P001', name: 'María García López', dni: '12345678', phone: '+52 55 1234 5678', email: 'maria.garcia@email.com', dateOfBirth: '1985-03-15', registrationDate: '2024-01-10', address: 'Av. Reforma 123, CDMX' },
-  { id: 'P002', name: 'Carlos Rodríguez Pérez', dni: '87654321', phone: '+52 55 8765 4321', email: 'carlos.rodriguez@email.com', dateOfBirth: '1990-07-22', registrationDate: '2024-01-15', address: 'Calle Insurgentes 456' },
-  { id: 'P003', name: 'Ana Martínez Sánchez', dni: '11223344', phone: '+52 55 1122 3344', email: 'ana.martinez@email.com', dateOfBirth: '1978-11-08', registrationDate: '2024-02-01', address: 'Blvd. Ángeles 789' },
-  { id: 'P004', name: 'Roberto Hernández Díaz', dni: '44332211', phone: '+52 55 4433 2211', email: 'roberto.hernandez@email.com', dateOfBirth: '1995-05-30', registrationDate: '2024-02-10', address: 'Calle Juárez 321' },
-  { id: 'P005', name: 'Laura Jiménez Flores', dni: '55667788', phone: '+52 55 5566 7788', email: 'laura.jimenez@email.com', dateOfBirth: '1988-09-12', registrationDate: '2024-02-15', address: 'Av. Universidad 654' },
-  { id: 'P006', name: 'Fernando Torres Ruiz', dni: '99887766', phone: '+52 55 9988 7766', email: 'fernando.torres@email.com', dateOfBirth: '1982-01-25', registrationDate: '2024-03-01', address: 'Calle Morelos 987' },
-  { id: 'P007', name: 'Patricia Vargas Mendoza', dni: '33445566', phone: '+52 55 3344 5566', email: 'patricia.vargas@email.com', dateOfBirth: '1975-12-03', registrationDate: '2024-03-05', address: 'Blvd. Díaz Ordaz 147' },
-  { id: 'P008', name: 'Miguel Ángel Castro', dni: '77889900', phone: '+52 55 7788 9900', email: 'miguel.castro@email.com', dateOfBirth: '2000-06-18', registrationDate: '2024-03-10', address: 'Av. Hidalgo 258' },
+  { id: 'P001', name: 'María García López', age: '39', dateOfBirth: '1985-03-15', address: 'Av. Reforma 123, CDMX', phone: '+52 55 1234 5678', reasonForVisit: 'Dolor de cabeza frecuente', discomforts: 'Visión borrosa de lejos', hasIllness: 'No', otherInfo: '', usesGlasses: true, howFeelsWithGlasses: 'No se siente cómoda', occupation: 'Contadora', registrationDate: '2024-01-10' },
+  { id: 'P002', name: 'Carlos Rodríguez Pérez', age: '36', dateOfBirth: '1990-07-22', address: 'Calle Insurgentes 456', phone: '+52 55 8765 4321', reasonForVisit: 'Revisión anual', discomforts: 'Cansancio visual en computadora', hasIllness: 'No', otherInfo: '', usesGlasses: true, howFeelsWithGlasses: 'Bien pero se le empañan', occupation: 'Ingeniero', registrationDate: '2024-01-15' },
+  { id: 'P003', name: 'Ana Martínez Sánchez', age: '46', dateOfBirth: '1978-11-08', address: 'Blvd. Ángeles 789', phone: '+52 55 1122 3344', reasonForVisit: 'Renovar receta', discomforts: 'No ve de cerca', hasIllness: 'Hipertensión', otherInfo: 'Tratamiento con Losartán', usesGlasses: true, howFeelsWithGlasses: 'Necesita nuevos', occupation: 'Doctora', registrationDate: '2024-02-01' },
+  { id: 'P004', name: 'Roberto Hernández Díaz', age: '29', dateOfBirth: '1995-05-30', address: 'Calle Juárez 321', phone: '+52 55 4433 2211', reasonForVisit: 'Primera vez', discomforts: 'Dolor de cabeza', hasIllness: 'No', otherInfo: '', usesGlasses: false, howFeelsWithGlasses: '', occupation: 'Diseñador', registrationDate: '2024-02-10' },
+  { id: 'P005', name: 'Laura Jiménez Flores', age: '36', dateOfBirth: '1988-09-12', address: 'Av. Universidad 654', phone: '+52 55 5566 7788', reasonForVisit: 'Molestia en los ojos', discomforts: 'Ojos rojos y lagrimeo', hasIllness: 'Diabetes tipo 2', otherInfo: 'Control con Metformina', usesGlasses: true, howFeelsWithGlasses: 'Regular', occupation: 'Profesora', registrationDate: '2024-02-15' },
+  { id: 'P006', name: 'Fernando Torres Ruiz', age: '42', dateOfBirth: '1982-01-25', address: 'Calle Morelos 987', phone: '+52 55 9988 7766', reasonForVisit: 'Examen completo', discomforts: 'Visión doble a veces', hasIllness: 'No', otherInfo: 'Cirugía de cataratas previa', usesGlasses: true, howFeelsWithGlasses: 'Necesita cambio', occupation: 'Abogado', registrationDate: '2024-03-01' },
+  { id: 'P007', name: 'Patricia Vargas Mendoza', age: '49', dateOfBirth: '1975-12-03', address: 'Blvd. Díaz Ordaz 147', phone: '+52 55 3344 5566', reasonForVisit: 'Dificultad para leer', discomforts: 'No puede leer letras pequeñas', hasIllness: 'No', otherInfo: '', usesGlasses: false, howFeelsWithGlasses: '', occupation: 'Maestra', registrationDate: '2024-03-05' },
+  { id: 'P008', name: 'Miguel Ángel Castro', age: '24', dateOfBirth: '2000-06-18', address: 'Av. Hidalgo 258', phone: '+52 55 7788 9900', reasonForVisit: 'Revisión de contacto', discomforts: 'Sequedad con lente de contacto', hasIllness: 'No', otherInfo: 'Usa Biofinity Toric', usesGlasses: true, howFeelsWithGlasses: 'Usa más lentes de contacto', occupation: 'Estudiante', registrationDate: '2024-03-10' },
 ];
 
 export const products: Product[] = [
@@ -59,7 +59,7 @@ export const prescriptions: Prescription[] = [
     status: 'Vigente',
     rightEye: { sph: '-2.50', cyl: '-0.75', axis: '180', add: '+1.00', dp: '32', av: '20/20' },
     leftEye: { sph: '-2.25', cyl: '-0.50', axis: '175', add: '+1.00', dp: '32', av: '20/20' },
-    clinicalNotes: 'Miopía leve bilateral con presbicia incipiente', observations: 'Control en 12 meses',
+    recommendations: 'Miopía leve bilateral con presbicia incipiente', observations: 'Control en 12 meses',
     selectedLenses: [{ ...availableLenses[0], quantity: 2 }, { ...availableLenses[3], quantity: 2 }],
     treatments: [{ ...availableTreatments[0] }],
     totalLenses: 2800, totalTreatments: 150, grandTotal: 2950,
@@ -69,7 +69,7 @@ export const prescriptions: Prescription[] = [
     status: 'Vigente',
     rightEye: { sph: '+1.75', cyl: '-1.25', axis: '90', add: '+2.00', dp: '34', av: '20/25' },
     leftEye: { sph: '+2.00', cyl: '-1.00', axis: '85', add: '+2.00', dp: '34', av: '20/25' },
-    clinicalNotes: 'Hipermetropía con astigmatismo bilateral', observations: 'Usar lentes bifocales',
+    recommendations: 'Hipermetropía con astigmatismo bilateral', observations: 'Usar lentes bifocales',
     selectedLenses: [{ ...availableLenses[1], quantity: 2 }],
     treatments: [{ ...availableTreatments[4] }],
     totalLenses: 2400, totalTreatments: 400, grandTotal: 2800,
@@ -79,7 +79,7 @@ export const prescriptions: Prescription[] = [
     status: 'Vencida',
     rightEye: { sph: '-4.00', cyl: '-1.50', axis: '170', add: '+1.50', dp: '30', av: '20/30' },
     leftEye: { sph: '-3.75', cyl: '-1.25', axis: '165', add: '+1.50', dp: '30', av: '20/30' },
-    clinicalNotes: 'Miopía moderada con astigmatismo', observations: 'Renovar receta, visión ha cambiado',
+    recommendations: 'Miopía moderada con astigmatismo', observations: 'Renovar receta, visión ha cambiado',
     selectedLenses: [], treatments: [], totalLenses: 0, totalTreatments: 0, grandTotal: 0,
   },
   {
@@ -87,7 +87,7 @@ export const prescriptions: Prescription[] = [
     status: 'Vigente',
     rightEye: { sph: '-0.75', cyl: '0.00', axis: '0', add: '+0.50', dp: '31', av: '20/20' },
     leftEye: { sph: '-0.50', cyl: '-0.25', axis: '10', add: '+0.50', dp: '31', av: '20/20' },
-    clinicalNotes: 'Miopía leve incipiente', observations: 'Vigilar carga visual digital',
+    recommendations: 'Miopía leve incipiente', observations: 'Vigilar carga visual digital',
     selectedLenses: [{ ...availableLenses[6], quantity: 2 }],
     treatments: [],
     totalLenses: 3000, totalTreatments: 0, grandTotal: 3000,
@@ -97,7 +97,7 @@ export const prescriptions: Prescription[] = [
     status: 'Pendiente',
     rightEye: { sph: '-6.00', cyl: '-2.00', axis: '160', add: '+2.50', dp: '33', av: '20/40' },
     leftEye: { sph: '-5.50', cyl: '-1.75', axis: '155', add: '+2.50', dp: '33', av: '20/40' },
-    clinicalNotes: 'Miopía alta con astigmatismo significativo', observations: 'Evaluación adicional requerida',
+    recommendations: 'Miopía alta con astigmatismo significativo', observations: 'Evaluación adicional requerida',
     selectedLenses: [{ ...availableLenses[2], quantity: 2 }, { ...availableLenses[5], quantity: 2 }],
     treatments: [{ ...availableTreatments[3] }, { ...availableTreatments[4] }],
     totalLenses: 9400, totalTreatments: 900, grandTotal: 10300,

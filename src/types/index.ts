@@ -1,13 +1,18 @@
 export interface Patient {
   id: string;
   name: string;
-  dni: string;
-  phone: string;
-  email: string;
+  age: string;
   dateOfBirth: string;
+  address: string;
+  phone: string;
+  reasonForVisit: string;
+  discomforts: string;
+  hasIllness: string;
+  otherInfo: string;
+  usesGlasses: boolean;
+  howFeelsWithGlasses: string;
+  occupation: string;
   registrationDate: string;
-  address?: string;
-  notes?: string;
 }
 
 export interface Prescription {
@@ -19,9 +24,8 @@ export interface Prescription {
   status: 'Vigente' | 'Vencida' | 'Pendiente';
   rightEye: EyeData;
   leftEye: EyeData;
-  clinicalNotes: string;
+  recommendations: string;
   observations: string;
-  distance?: string;
   selectedLenses?: SelectedLens[];
   treatments?: Treatment[];
   totalLenses: number;
