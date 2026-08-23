@@ -127,13 +127,13 @@ export default function Cobrar() {
   const statusColor = (s: string) => s === 'Pendiente' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-blue-50 text-blue-700 border border-blue-200';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Cobrar</h1>
-        <p className="text-slate-500 text-sm mt-1">Gestión de cobros y pagos pendientes</p>
+        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Cobrar</h1>
+        <p className="text-slate-500 text-xs sm:text-sm mt-1">Gestión de cobros y pagos pendientes</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="space-y-3">
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Pagos Pendientes</h3>
           {pendingPayments.length === 0 ? (

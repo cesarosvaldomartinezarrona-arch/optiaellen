@@ -55,7 +55,13 @@ const navSections: { label: string; items: NavItem[] }[] = [
   },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  isMobile: boolean;
+  mobileOpen: boolean;
+  onMobileClose: () => void;
+}
+
+export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const { sales, pendingPayments, deliveryOrders } = useApp();
@@ -71,7 +77,7 @@ export default function Sidebar() {
     entregar: pendingDeliveryCount,
   };
 
-  const sidebarWidth = collapsed ? 76 : 260;
+  const sidebarWidth = isMobile ? 280 : (collapsed ? 76 : 260);
 
   const filteredSections = navSections
     .map(section => ({
@@ -80,13 +86,10 @@ export default function Sidebar() {
     }))
     .filter(section => section.items.length > 0);
 
-  return (
-    <aside
-      className="fixed left-0 top-0 h-screen bg-[#1a0e2e] text-white flex flex-col z-50 transition-all duration-300 ease-in-out border-r border-white/5"
-      style={{ width: sidebarWidth }}
-    >
-      <div className="flex flex-col items-center py-6 px-4 border-b border-white/10">
-        <Logo size={collapsed ? 48 : 56} />
+  const sidebarContent = (
+    <>
+      <div className="flex flex-col items-center py-5 sm:py-6 px-4 border-b border-white/10">
+        <Logo size={isMobile ? 60 : 56} />
         {!collapsed && (
           <div className="text-center mt-2">
             <h1 className="text-lg font-extrabold tracking-tight">
@@ -97,7 +100,7 @@ export default function Sidebar() {
         )}
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-thin">
+      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
         {filteredSections.map((section) => (
           <div key={section.label} className="mb-4">
             {!collapsed && (
@@ -114,6 +117,7 @@ export default function Sidebar() {
                   <NavLink
                     key={item.to}
                     to={item.to}
+                    onClick={isMobile ? onMobileClose : undefined}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative ${
                       isActive
                         ? 'bg-gradient-to-r from-[#7c3aed]/30 to-[#6d28d9]/20 text-white shadow-lg shadow-purple-900/20 border border-purple-500/20'
@@ -171,12 +175,36 @@ export default function Sidebar() {
         )}
       </div>
 
-      <button
-        onClick={() => setCollapsed(!collapsed)}
-        className="absolute -right-3 top-[72px] w-6 h-6 bg-[#1a0e2e] border-2 border-white/10 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-[#2d1b4e] hover:border-purple-500/30 transition-all duration-200 shadow-lg"
+      {!isMobile && (
+        <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="absolute -right-3 top-[72px] w-6 h-6 bg-[#1a0e2e] border-2 border-white/10 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-[#2d1b4e] hover:border-purple-500/30 transition-all duration-200 shadow-lg"
+        >
+          {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
+        </button>
+      )}
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <aside
+        className={`fixed left-0 top-0 h-screen bg-[#1a0e2e] text-white flex flex-col z-50 transition-transform duration-300 ease-in-out border-r border-white/5 ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        style={{ width: 280 }}
       >
-        {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
-      </button>
+        {sidebarContent}
+      </aside>
+    );
+  }
+
+  return (
+    <aside
+      className="fixed left-0 top-0 h-screen bg-[#1a0e2e] text-white flex flex-col z-50 transition-all duration-300 ease-in-out border-r border-white/5"
+      style={{ width: sidebarWidth }}
+    >
+      {sidebarContent}
     </aside>
   );
 }

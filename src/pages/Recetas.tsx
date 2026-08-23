@@ -230,18 +230,18 @@ export default function Recetas() {
   );
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Recetas</h1>
-          <p className="text-slate-500 text-sm mt-1">Exámenes optométricos, lentes y tratamientos</p>
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Recetas</h1>
+          <p className="text-slate-500 text-xs sm:text-sm mt-1">Exámenes optométricos, lentes y tratamientos</p>
         </div>
-        <button onClick={() => setShowModal(true)} className="flex items-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:-translate-y-0.5">
+        <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-4 sm:px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-purple-500/25">
           <Plus className="w-4 h-4" /> Nuevo Examen
         </button>
       </div>
 
-      <div className="flex gap-1 bg-white rounded-xl p-1 border border-slate-200/80 w-fit shadow-sm">
+      <div className="flex gap-1 bg-white rounded-xl p-1 border border-slate-200/80 w-fit shadow-sm overflow-x-auto">
         {(['todas', 'vigentes', 'pasadas'] as const).map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
             className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all capitalize ${activeTab === tab ? 'bg-[#7c3aed] text-white shadow-md shadow-purple-500/25' : 'text-slate-500 hover:bg-slate-50'}`}>
@@ -301,7 +301,7 @@ export default function Recetas() {
       {/* View Detail Modal */}
       {viewPrescription && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/80">
+          <div className="bg-white rounded-2xl w-full max-w-full sm:max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/80">
             <div className="flex items-center justify-between p-6 border-b border-slate-100 sticky top-0 bg-white z-10">
               <div>
                 <h2 className="text-lg font-bold text-slate-900">Receta {viewPrescription.id}</h2>
@@ -388,7 +388,7 @@ export default function Recetas() {
       {/* New Exam Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/80">
+          <div className="bg-white rounded-2xl w-full max-w-full sm:max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/80">
             <div className="flex items-center justify-between p-6 border-b border-slate-100 sticky top-0 bg-white z-10">
               <h2 className="text-lg font-bold text-slate-900">Nuevo Examen Optométrico</h2>
               <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center"><X className="w-4 h-4 text-slate-500" /></button>
