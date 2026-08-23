@@ -1,0 +1,137 @@
+import { useState } from 'react';
+import { useApp } from '../context/AppContext';
+import { Plus, Trash2, DollarSign, Hash, TrendingUp } from 'lucide-react';
+import type { ExpenseCategory } from '../types';
+
+const categoryColors: Record<ExpenseCategory, string> = {
+  'Renta': 'bg-pink-50 text-pink-700 border border-pink-200',
+  'Servicios': 'bg-blue-50 text-blue-700 border border-blue-200',
+  'Compras': 'bg-amber-50 text-amber-700 border border-amber-200',
+  'Nómina': 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+  'Insumos': 'bg-purple-50 text-purple-700 border border-purple-200',
+};
+
+export default function Gastos() {
+  const { expenses, setExpenses } = useApp();
+  const [showModal, setShowModal] = useState(false);
+  const [newExpense, setNewExpense] = useState({ concept: '', category: 'Servicios' as ExpenseCategory, amount: '', date: new Date().toISOString().split('T')[0] });
+
+  const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
+  const categoryTotals = expenses.reduce((acc, e) => { acc[e.category] = (acc[e.category] || 0) + e.amount; return acc; }, {} as Record<string, number>);
+  const topCategory = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0];
+
+  const handleAdd = () => {
+    if (!newExpense.concept || !newExpense.amount) return;
+    setExpenses([...expenses, { id: `G${String(expenses.length + 1).padStart(3, '0')}`, concept: newExpense.concept, category: newExpense.category, amount: parseFloat(newExpense.amount), date: newExpense.date }]);
+    setNewExpense({ concept: '', category: 'Servicios', amount: '', date: new Date().toISOString().split('T')[0] });
+    setShowModal(false);
+  };
+
+  const handleDelete = (id: string) => setExpenses(prev => prev.filter(e => e.id !== id));
+
+  const stats = [
+    { label: 'Total Gastos', value: `$${totalExpenses.toLocaleString('es-MX', { minimumFractionDigits: 2 })}`, icon: DollarSign, color: 'text-red-600', bg: 'bg-red-50' },
+    { label: 'Mayor Categoría', value: topCategory ? `${topCategory[0].toLowerCase()} ($${topCategory[1].toLocaleString()})` : 'N/A', icon: TrendingUp, color: 'text-[#7c3aed]', bg: 'bg-purple-50' },
+    { label: 'Transacciones', value: expenses.length, icon: Hash, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Gastos</h1>
+          <p className="text-slate-500 text-sm mt-1">Control de gastos operativos</p>
+        </div>
+        <button onClick={() => setShowModal(true)}
+          className="flex items-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:-translate-y-0.5">
+          <Plus className="w-4 h-4" /> Nuevo Gasto
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {stats.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <div key={stat.label} className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
+              <div className="flex items-center gap-3 mt-3">
+                <div className={`w-11 h-11 rounded-xl ${stat.bg} flex items-center justify-center`}><Icon className={`w-5 h-5 ${stat.color}`} /></div>
+                <p className={`text-xl font-extrabold ${stat.color} tracking-tight`}>{stat.value}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-slate-100"><h3 className="text-base font-bold text-slate-900">Registro de Gastos</h3></div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead><tr className="bg-slate-50/80">
+              {['ID', 'Concepto', 'Categoría', 'Monto', 'Fecha', 'Acciones'].map(h => (
+                <th key={h} className="text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-6 py-3">{h}</th>
+              ))}
+            </tr></thead>
+            <tbody className="divide-y divide-slate-100">
+              {expenses.map(expense => (
+                <tr key={expense.id} className="hover:bg-slate-50/50 transition-colors">
+                  <td className="px-6 py-4 text-sm font-bold text-[#7c3aed]">{expense.id}</td>
+                  <td className="px-6 py-4 text-sm font-semibold text-slate-800">{expense.concept}</td>
+                  <td className="px-6 py-4"><span className={`inline-flex px-2.5 py-1 rounded-full text-[11px] font-bold ${categoryColors[expense.category]}`}>{expense.category}</span></td>
+                  <td className="px-6 py-4 text-sm font-bold text-slate-900">${expense.amount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
+                  <td className="px-6 py-4 text-sm text-slate-500">{expense.date}</td>
+                  <td className="px-6 py-4">
+                    <button onClick={() => handleDelete(expense.id)} className="w-9 h-9 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors border border-red-100">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl border border-slate-200/80">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+              <h2 className="text-lg font-bold text-slate-900">Nuevo Gasto</h2>
+              <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center"><span className="text-slate-500">&times;</span></button>
+            </div>
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Concepto *</label>
+                <input type="text" value={newExpense.concept} onChange={e => setNewExpense({ ...newExpense, concept: e.target.value })}
+                  placeholder="Descripción del gasto" className="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Categoría *</label>
+                  <select value={newExpense.category} onChange={e => setNewExpense({ ...newExpense, category: e.target.value as ExpenseCategory })}
+                    className="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                    {(['Renta', 'Servicios', 'Compras', 'Nómina', 'Insumos'] as ExpenseCategory[]).map(c => (<option key={c} value={c}>{c}</option>))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Monto *</label>
+                  <input type="number" value={newExpense.amount} onChange={e => setNewExpense({ ...newExpense, amount: e.target.value })}
+                    placeholder="0.00" className="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Fecha</label>
+                <input type="date" value={newExpense.date} onChange={e => setNewExpense({ ...newExpense, date: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 p-6 border-t border-slate-100">
+              <button onClick={() => setShowModal(false)} className="px-5 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors">Cancelar</button>
+              <button onClick={handleAdd} className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Guardar</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
