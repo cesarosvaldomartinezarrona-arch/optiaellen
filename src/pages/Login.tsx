@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
@@ -168,9 +169,9 @@ export default function Login() {
           {/* Register link */}
           <p className="text-center text-sm text-gray-500">
             ¿No tienes cuenta?{' '}
-            <button className="text-[#7c3aed] hover:text-[#6b21a8] font-semibold transition-colors">
+            <Link to="/register" className="text-[#7c3aed] hover:text-[#6b21a8] font-semibold transition-colors">
               Regístrate aquí
-            </button>
+            </Link>
           </p>
         </div>
 
