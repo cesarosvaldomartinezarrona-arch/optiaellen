@@ -88,19 +88,23 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
 
   const sidebarContent = (
     <>
+      {/* Header */}
       <div className="flex flex-col items-center py-5 sm:py-6 px-4 border-b border-white/10">
-        <Logo size={isMobile ? 60 : 56} />
+        <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center p-1 backdrop-blur-sm">
+          <Logo size={isMobile ? 52 : 48} />
+        </div>
         {!collapsed && (
-          <div className="text-center mt-2">
-            <h1 className="text-lg font-extrabold tracking-tight">
+          <div className="text-center mt-2.5">
+            <h1 className="text-[17px] font-extrabold tracking-tight">
               optic<span className="text-[#a855f7]">æ</span>llen
             </h1>
-            <p className="text-[9px] text-white/30 tracking-widest">Ver bien es vivir mejor</p>
+            <p className="text-[9px] text-white/30 tracking-[0.15em] mt-0.5">Ver bien es vivir mejor</p>
           </div>
         )}
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-thin scrollbar-thumb-white/10">
         {filteredSections.map((section) => (
           <div key={section.label} className="mb-4">
             {!collapsed && (
@@ -150,14 +154,15 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
         ))}
       </nav>
 
+      {/* Footer */}
       <div className="border-t border-white/10 px-3 py-3 space-y-2">
         {!collapsed && user && (
-          <div className="flex items-center gap-2 px-2 py-1.5 bg-white/5 rounded-lg">
-            <div className="w-8 h-8 rounded-full bg-[#4a2c82] flex items-center justify-center flex-shrink-0">
+          <div className="flex items-center gap-2.5 px-3 py-2 bg-white/5 rounded-xl">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center flex-shrink-0 shadow-lg shadow-purple-500/20">
               <span className="text-xs font-bold text-white">{user.name.charAt(0)}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-medium text-white truncate">{user.name}</p>
+              <p className="text-xs font-semibold text-white truncate">{user.name}</p>
               <p className="text-[10px] text-white/40 capitalize">{user.role}</p>
             </div>
           </div>

@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useState, useEffect, createContext } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 export const SidebarContext = createContext({ mobileOpen: false, setMobileOpen: (_v: boolean) => {} });
 
 export default function Layout() {
+  const { user } = useAuth();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [sidebarWidth, setSidebarWidth] = useState(260);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -81,21 +83,17 @@ export default function Layout() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
-              <div className="hidden sm:flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-medium text-slate-400">Sistema activo</span>
-              </div>
             </div>
             <div className="flex items-center gap-3 sm:gap-5">
               <span className="text-xs sm:text-sm text-slate-400 font-mono tabular-nums hidden sm:block">{formatDate(currentTime)}</span>
               <div className="hidden sm:block h-6 w-px bg-slate-200" />
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-lg shadow-purple-500/20">
-                  <span className="text-white text-xs font-bold">AD</span>
+                  <span className="text-white text-xs font-bold">{user?.name?.charAt(0) || 'A'}</span>
                 </div>
                 <div className="hidden sm:block">
-                  <p className="text-sm font-semibold text-slate-800 leading-tight">Administrador</p>
-                  <p className="text-[10px] text-slate-400">admin@optiaellen.com</p>
+                  <p className="text-sm font-semibold text-slate-800 leading-tight">{user?.name || 'Administrador'}</p>
+                  <p className="text-[10px] text-slate-400 capitalize">{user?.role || 'admin'}</p>
                 </div>
               </div>
             </div>

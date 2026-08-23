@@ -49,12 +49,20 @@ export default function Panel() {
   const labProgress = (phase: number) => (phase / 6) * 100;
 
   return (
-    <div className="space-y-5 sm:space-y-8">
-      <div>
-        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Panel de Control</h1>
-        <p className="text-slate-500 text-xs sm:text-sm mt-1">Resumen general de la operación de la óptica</p>
+    <div className="space-y-6 sm:space-y-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Panel de Control</h1>
+          <p className="text-slate-500 text-sm mt-1">Resumen general de la operación de la óptica</p>
+        </div>
+        <div className="flex items-center gap-2 bg-gradient-to-r from-[#7c3aed]/10 to-[#a855f7]/10 px-4 py-2 rounded-xl border border-purple-200/50">
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-xs font-semibold text-[#7c3aed]">Sistema activo</span>
+        </div>
       </div>
 
+      {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
         {stats.map((stat) => {
           const Icon = stat.icon;
@@ -78,6 +86,7 @@ export default function Panel() {
         })}
       </div>
 
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
           <div className="flex items-center justify-between mb-6">
@@ -85,7 +94,7 @@ export default function Panel() {
               <h3 className="text-base font-bold text-slate-900">Ventas Mensuales</h3>
               <p className="text-xs text-slate-400 mt-0.5">Comparativa de los últimos 3 meses</p>
             </div>
-            <div className="flex items-center gap-1.5 bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-lg text-xs font-semibold">
+            <div className="flex items-center gap-1.5 bg-emerald-50 text-emerald-600 px-3 py-1.5 rounded-lg text-xs font-semibold border border-emerald-200/50">
               <TrendingUp className="w-3.5 h-3.5" /> +12.5%
             </div>
           </div>
@@ -120,9 +129,12 @@ export default function Panel() {
         </div>
       </div>
 
+      {/* Tables */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-slate-100"><h3 className="text-base font-bold text-slate-900">Ventas Recientes</h3></div>
+          <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-[#7c3aed]/5 to-transparent">
+            <h3 className="text-base font-bold text-slate-900">Ventas Recientes</h3>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead><tr className="bg-slate-50/80">
@@ -144,7 +156,9 @@ export default function Panel() {
         </div>
 
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-slate-100"><h3 className="text-base font-bold text-slate-900">Órdenes de Laboratorio</h3></div>
+          <div className="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-[#7c3aed]/5 to-transparent">
+            <h3 className="text-base font-bold text-slate-900">Órdenes de Laboratorio</h3>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead><tr className="bg-slate-50/80">
