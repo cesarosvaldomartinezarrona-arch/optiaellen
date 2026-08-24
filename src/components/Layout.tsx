@@ -1,14 +1,60 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useState, useEffect, createContext } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Search, Bell, Maximize2 } from 'lucide-react';
+import { useApp } from '../context/AppContext';
+import { Search, Bell, Maximize2, LayoutDashboard, Users, ShoppingCart, Package, Menu } from 'lucide-react';
 
 export const SidebarContext = createContext({ mobileOpen: false, setMobileOpen: (_v: boolean) => {} });
 
+function MobileBottomNav({ onMenuOpen }: { onMenuOpen: () => void }) {
+  const location = useLocation();
+  const { deliveryOrders } = useApp();
+  const pendingLab = deliveryOrders.filter(d => d.status !== 'Entregado').length;
+  const items = [
+    { to: '/', icon: LayoutDashboard, label: 'Inicio' },
+    { to: '/clientes', icon: Users, label: 'Clientes' },
+    { to: '/ventas', icon: ShoppingCart, label: 'Ventas' },
+    { to: '/inventario', icon: Package, label: 'Stock' },
+  ];
+  return (
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 px-3 pb-3 pt-2 pointer-events-none">
+      <div className="pointer-events-auto mx-auto max-w-md bg-[#0f0a1f]/95 backdrop-blur-xl border border-white/10 rounded-[28px] shadow-2xl shadow-black/30 flex items-center justify-around px-2 py-2">
+        {items.map(item => {
+          const Icon = item.icon;
+          const active = location.pathname === item.to;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={`relative flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 min-w-[64px] ${
+                active ? 'text-white' : 'text-white/40'
+              }`}
+            >
+              {active && <div className="absolute inset-0 bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] rounded-2xl shadow-lg shadow-purple-500/20" />}
+              <Icon className={`relative w-5 h-5 ${active ? 'text-white' : 'text-white/50'}`} strokeWidth={active ? 2.5 : 2} />
+              <span className={`relative text-[10px] font-bold tracking-wide ${active ? 'text-white' : 'text-white/50'}`}>{item.label}</span>
+            </NavLink>
+          );
+        })}
+        <button
+          onClick={onMenuOpen}
+          className="relative flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-2xl text-white/60 hover:text-white transition-colors min-w-[64px]"
+        >
+          <div className="relative w-9 h-9 rounded-2xl bg-white/10 flex items-center justify-center border border-white/10">
+            <Menu className="w-5 h-5" />
+            {pendingLab > 0 && <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-[#0f0a1f]">{pendingLab}</span>}
+          </div>
+          <span className="text-[10px] font-bold">Menú</span>
+        </button>
+      </div>
+    </nav>
+  );
+}
+
 export default function Layout() {
   const { user } = useAuth();
-  const [sidebarWidth, setSidebarWidth] = useState(240);
+  const [sidebarWidth, setSidebarWidth] = useState(260);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [search, setSearch] = useState('');
@@ -55,7 +101,7 @@ export default function Layout() {
         {/* Mobile overlay */}
         {isMobile && mobileOpen && (
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-[#0f0a1f]/60 backdrop-blur-md z-40 lg:hidden"
             onClick={() => setMobileOpen(false)}
           />
         )}
@@ -63,44 +109,63 @@ export default function Layout() {
         <Sidebar isMobile={isMobile} mobileOpen={mobileOpen} onMobileClose={() => setMobileOpen(false)} />
 
         <div className="transition-all duration-300" style={marginStyle}>
-          <header className="h-[64px] bg-white border-b border-slate-200/60 flex items-center justify-between px-4 sm:px-6 lg:px-8 sticky top-0 z-30">
-            <div className="flex items-center gap-4 flex-1">
+          <header className="h-[64px] bg-white/80 backdrop-blur-xl border-b border-slate-200/60 flex items-center justify-between px-4 sm:px-6 lg:px-8 sticky top-0 z-30">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"
+                className="lg:hidden relative w-10 h-10 rounded-2xl bg-[#0f0a1f] hover:bg-[#1a1033] flex items-center justify-center transition-all shadow-md group"
               >
-                <svg className="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <div className="w-5 flex flex-col gap-1.5">
+                  <span className={`block h-0.5 bg-white rounded-full transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-2 w-5' : 'w-5'}`} />
+                  <span className={`block h-0.5 bg-white rounded-full transition-all duration-200 ${mobileOpen ? 'opacity-0 w-0' : 'w-3'}`} />
+                  <span className={`block h-0.5 bg-white rounded-full transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-2 w-5' : 'w-5'}`} />
+                </div>
               </button>
               <div className="hidden lg:block">
                 <h1 className="text-[15px] font-extrabold text-slate-900 leading-none">Dashboard</h1>
                 <p className="text-[11px] text-slate-400 mt-0.5">Resumen general del negocio</p>
               </div>
+              {/* Mobile title */}
+              <div className="lg:hidden flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow">
+                  <span className="text-white text-[11px] font-bold">{user?.name?.charAt(0) || 'A'}</span>
+                </div>
+                <div>
+                  <p className="text-[13px] font-bold text-slate-900 leading-none">{user?.name?.split(' ')[0] || 'Admin'}</p>
+                  <p className="text-[10px] text-slate-400">opticællen</p>
+                </div>
+              </div>
               {/* Search - desktop */}
               <div className="hidden lg:flex items-center flex-1 max-w-md ml-8">
-                <div className="relative w-full">
-                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <div className="relative w-full group">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-[#7c3aed] transition-colors" />
                   <input
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Buscar..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-[#f1f0ff] rounded-xl border border-transparent text-sm placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-[#7c3aed]/20 focus:ring-2 focus:ring-[#7c3aed]/10 transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#f1f0ff] group-hover:bg-[#ecebff] rounded-xl border border-transparent text-sm placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-[#7c3aed]/20 focus:ring-4 focus:ring-[#7c3aed]/10 transition-all"
                   />
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
-              <button className="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors relative">
-                <Bell className="w-4 h-4 text-slate-600" />
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
+              {/* Search mobile */}
+              <button className="lg:hidden w-10 h-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors">
+                <Search className="w-4 h-4 text-slate-600" />
               </button>
-              <button className="hidden sm:flex w-9 h-9 rounded-xl bg-white border border-slate-200 items-center justify-center hover:bg-slate-50 transition-colors">
+              <button className="w-10 h-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors relative group">
+                <Bell className="w-4 h-4 text-slate-600 group-hover:text-[#7c3aed] transition-colors" />
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-gradient-to-r from-red-500 to-red-600 rounded-full border-2 border-white shadow animate-pulse" />
+              </button>
+              <button className="hidden sm:flex w-10 h-10 rounded-2xl bg-white border border-slate-200 items-center justify-center hover:bg-slate-50 transition-colors">
                 <Maximize2 className="w-4 h-4 text-slate-600" />
               </button>
               <div className="hidden sm:flex items-center gap-3 pl-3 ml-1 border-l border-slate-200">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow">
-                  <span className="text-white text-xs font-bold">{user?.name?.split(' ').map(n=>n[0]).slice(0,2).join('') || 'AR'}</span>
+                <div className="relative">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-md ring-2 ring-purple-100">
+                    <span className="text-white text-xs font-bold">{user?.name?.split(' ').map(n=>n[0]).slice(0,2).join('') || 'AR'}</span>
+                  </div>
+                  <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white" />
                 </div>
                 <div className="hidden lg:block">
                   <p className="text-sm font-semibold text-slate-800 leading-none">{user?.name || 'Admin Ruiz'}</p>
@@ -110,9 +175,11 @@ export default function Layout() {
             </div>
           </header>
 
-          <main className="p-4 sm:p-6 lg:p-8">
+          <main className="p-4 sm:p-6 lg:p-8 pb-24 lg:pb-8">
             <Outlet />
           </main>
+
+          {isMobile && <MobileBottomNav onMenuOpen={() => setMobileOpen(true)} />}
         </div>
       </div>
     </SidebarContext.Provider>
