@@ -149,7 +149,7 @@ export interface PendingPayment {
   createdAt: string;
 }
 
-export type UserRole = 'admin' | 'comprador';
+export type UserRole = 'admin' | 'comprador' | 'optometrista_gerente';
 
 export interface User {
   id: string;

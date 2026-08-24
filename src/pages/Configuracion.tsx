@@ -204,8 +204,8 @@ export default function Configuracion() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${u.role === 'admin' ? 'bg-purple-100 text-purple-700 border border-purple-200' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
-                        {u.role === 'admin' ? 'Administrador' : 'Vendedor'}
+                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${u.role === 'admin' ? 'bg-purple-100 text-purple-700 border border-purple-200' : u.role === 'optometrista_gerente' ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
+                        {u.role === 'admin' ? 'Administrador' : u.role === 'optometrista_gerente' ? 'Optometrista Gerente' : 'Vendedor'}
                       </span>
                       {u.id !== currentUser?.id && (
                         <div className="flex items-center gap-1">
@@ -339,6 +339,7 @@ export default function Configuracion() {
                 <select value={userForm.role} onChange={e => setUserForm({ ...userForm, role: e.target.value as UserRole })}
                   className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
                   <option value="admin">Administrador</option>
+                  <option value="optometrista_gerente">Optometrista Gerente</option>
                   <option value="comprador">Vendedor</option>
                 </select>
               </div>

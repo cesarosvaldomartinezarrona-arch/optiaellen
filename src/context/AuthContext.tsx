@@ -29,8 +29,15 @@ const COMPRADOR_PERMISSIONS = [
   'ventas', 'cobrar', 'entregar', 'inventario',
 ];
 
+const OPTOMETRISTA_GERENTE_PERMISSIONS = [
+  'panel', 'clientes', 'recetas', 'ventas', 'cobrar', 'entregar',
+  'laboratorio', 'gastos', 'inventario',
+];
+
 function getPermissions(role: UserRole): string[] {
-  return role === 'admin' ? ADMIN_PERMISSIONS : COMPRADOR_PERMISSIONS;
+  if (role === 'admin') return ADMIN_PERMISSIONS;
+  if (role === 'optometrista_gerente') return OPTOMETRISTA_GERENTE_PERMISSIONS;
+  return COMPRADOR_PERMISSIONS;
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
