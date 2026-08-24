@@ -32,7 +32,7 @@ export default function Login() {
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
             <div className="mb-4">
-              <img src={`${import.meta.env.BASE_URL}logo.png.png`} alt="OptiÆllen" className="w-40 h-auto drop-shadow-lg" />
+              <img src={`${import.meta.env.BASE_URL}logo.png`} alt="OptiÆllen" className="w-40 h-auto drop-shadow-lg" />
             </div>
             <span className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase">opticællen</span>
           </div>
