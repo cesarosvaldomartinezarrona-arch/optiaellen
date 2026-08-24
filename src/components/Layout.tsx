@@ -100,7 +100,7 @@ export default function Layout() {
                   <span className={`block h-0.5 bg-white rounded-full transition-all ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
                 </span>
               </button>
-              <div className="hidden lg:block shrink-0 min-w-0">
+              <div className="hidden lg:block shrink-0">
                 <h1 className="text-[15px] font-bold text-slate-900 leading-none tracking-tight whitespace-nowrap">Dashboard</h1>
                 <p className="text-xs text-slate-500 font-medium whitespace-nowrap">Resumen general del negocio</p>
               </div>
@@ -113,7 +113,7 @@ export default function Layout() {
                   <p className="text-xs text-slate-500 font-medium truncate">opticællen</p>
                 </div>
               </div>
-              <div className="hidden lg:flex items-center flex-1 max-w-[320px] ml-6 min-w-0">
+              <div className="hidden lg:flex items-center flex-1 max-w-[320px] ml-6 shrink-0">
                 <div className="relative w-full">
                   <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   <input
