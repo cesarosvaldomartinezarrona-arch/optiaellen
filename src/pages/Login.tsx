@@ -34,10 +34,10 @@ export default function Login() {
 
       {/* Contenedor glassmorphism */}
       <div className="relative z-10 w-full max-w-[420px]">
-        <div className="backdrop-blur-xl bg-white/[0.07] rounded-2xl border border-white/[0.12] shadow-[0_8px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] p-8 sm:p-10">
+        <div className="backdrop-blur-xl bg-white/[0.07] rounded-2xl border border-white/[0.12] shadow-[0_8px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] p-10 sm:p-12">
           {/* Logo con resplandor */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="relative mb-5">
+          <div className="flex flex-col items-center mb-10">
+            <div className="relative mb-6">
               <div className="absolute inset-0 blur-2xl bg-[#7c3aed]/30 rounded-full scale-150" />
               <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.4)]">
                 <svg width="44" height="44" viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +50,7 @@ export default function Login() {
                 </svg>
               </div>
             </div>
-            <span className="text-[11px] font-bold text-white/40 tracking-[0.3em] uppercase mb-3">opticællen</span>
+            <span className="text-[11px] font-bold text-white/40 tracking-[0.3em] uppercase mb-4">opticællen</span>
             <h1 className="text-2xl font-extrabold text-white tracking-tight">Iniciar Sesión</h1>
           </div>
 
@@ -62,10 +62,10 @@ export default function Login() {
           )}
 
           {/* Formulario */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-7">
             {/* Correo */}
             <div>
-              <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Correo Electrónico</label>
+              <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Correo Electrónico</label>
               <div className="relative group">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
                 <input
@@ -81,7 +81,7 @@ export default function Login() {
 
             {/* Contraseña */}
             <div>
-              <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Contraseña</label>
+              <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Contraseña</label>
               <div className="relative group">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
                 <input
@@ -103,7 +103,7 @@ export default function Login() {
             </div>
 
             {/* Recordarme + Olvidaste */}
-            <div className="flex items-center justify-between pt-1">
+            <div className="flex items-center justify-between pt-2">
               <label className="flex items-center gap-2.5 cursor-pointer select-none">
                 <div className="relative">
                   <input
@@ -142,7 +142,7 @@ export default function Login() {
           </form>
 
           {/* Crear cuenta — enlace sutil */}
-          <div className="mt-8 text-center">
+          <div className="mt-10 text-center">
             <Link to="/register" className="text-xs text-white/30 hover:text-[#a78bfa] transition-colors font-medium">
               Crear una cuenta nueva
             </Link>
