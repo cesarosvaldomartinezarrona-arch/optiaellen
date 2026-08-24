@@ -32,7 +32,7 @@ export default function Panel() {
       {/* Stats - exact like image */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
         {/* VENTAS DEL DIA */}
-        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden">
           <div className="h-1 bg-[#7c3aed]" />
           <div className="p-5">
             <div className="flex items-start justify-between mb-3">
@@ -46,7 +46,7 @@ export default function Panel() {
           </div>
         </div>
         {/* PACIENTES ATENDIDOS */}
-        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden">
           <div className="h-1 bg-emerald-500" />
           <div className="p-5">
             <div className="flex items-start justify-between mb-3">
@@ -60,7 +60,7 @@ export default function Panel() {
           </div>
         </div>
         {/* ORDENES DE LAB */}
-        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden">
           <div className="h-1 bg-amber-400" />
           <div className="p-5">
             <div className="flex items-start justify-between mb-3">
@@ -74,7 +74,7 @@ export default function Panel() {
           </div>
         </div>
         {/* STOCK BAJO */}
-        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden">
           <div className="h-1 bg-red-500" />
           <div className="p-5">
             <div className="flex items-start justify-between mb-3">
@@ -91,7 +91,7 @@ export default function Panel() {
 
       {/* Charts */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2 bg-white rounded-xl border border-slate-200/70 shadow-sm p-6">
+        <div className="xl:col-span-2 bg-white rounded-lg border border-slate-200/70 shadow-sm p-6">
           <h3 className="text-[13px] font-bold text-slate-900 mb-5">Ventas Ultimos 7 Dias</h3>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={last7Days} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
@@ -113,7 +113,7 @@ export default function Panel() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm p-6 flex flex-col">
+        <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm p-6 flex flex-col">
           <h3 className="text-[13px] font-bold text-slate-900 mb-4">Categorias Vendidas</h3>
           <div className="flex-1 flex items-center justify-center">
             <ResponsiveContainer width="100%" height={280}>
@@ -137,7 +137,7 @@ export default function Panel() {
       </div>
 
       {/* Actividad Reciente */}
-      <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100">
           <h3 className="text-[13px] font-bold text-slate-900">Actividad Reciente</h3>
         </div>

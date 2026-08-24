@@ -61,7 +61,7 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="flex flex-col items-center pt-5 pb-4 px-4">
-        <div className="w-[52px] h-[52px] rounded-[14px] bg-[#7c3aed] flex items-center justify-center shadow-lg shadow-purple-500/20">
+        <div className="w-[52px] h-[52px] rounded-lg bg-[#7c3aed] flex items-center justify-center shadow-lg shadow-purple-500/20">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 12C1 12 5.5 5.5 12 5.5C18.5 5.5 23 12 23 12C23 12 18.5 18.5 12 18.5C5.5 18.5 1 12 1 12Z" fill="white" />
             <ellipse cx="12" cy="12" rx="5.2" ry="5.2" fill="#7c3aed" />
@@ -78,7 +78,7 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
           </div>
         )}
         {isMobile && (
-          <button onClick={onMobileClose} className="absolute top-4 right-4 w-8 h-8 rounded-xl bg-white/10 hover:bg-white/15 flex items-center justify-center text-white/70">
+          <button onClick={onMobileClose} className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-white/10 hover:bg-white/15 flex items-center justify-center text-white/70">
             <X className="w-4 h-4" />
           </button>
         )}

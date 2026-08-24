@@ -35,13 +35,13 @@ export default function Ventas() {
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input type="text" placeholder="Buscar productos..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-white rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all shadow-sm" />
+              className="w-full pl-11 pr-4 py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all shadow-sm" />
           </div>
 
           <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
             {['Todos', ...categories].map(cat => (
               <button key={cat} onClick={() => setActiveCategory(cat as any)}
-                className={`px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25' : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-50'}`}>
+                className={`px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25' : 'bg-white border border-slate-200 text-slate-500 hover:bg-slate-50'}`}>
                 {cat}
               </button>
             ))}
@@ -49,9 +49,9 @@ export default function Ventas() {
 
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
             {filtered.map(product => (
-              <div key={product.id} className="bg-white rounded-2xl border border-slate-200/80 p-3 sm:p-4 hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+              <div key={product.id} className="bg-white rounded-lg border border-slate-200/80 p-3 sm:p-4 hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
                 onClick={() => addToCart(product)}>
-                <div className="w-full h-20 sm:h-28 bg-gradient-to-br from-purple-50 to-slate-50 rounded-xl flex items-center justify-center mb-2 sm:mb-3 border border-slate-100 group-hover:border-purple-200 transition-colors">
+                <div className="w-full h-20 sm:h-28 bg-gradient-to-br from-purple-50 to-slate-50 rounded-lg flex items-center justify-center mb-2 sm:mb-3 border border-slate-100 group-hover:border-purple-200 transition-colors">
                   <Grid3X3 className="w-8 h-8 sm:w-10 sm:h-10 text-purple-200 group-hover:text-purple-400 transition-colors" />
                 </div>
                 <h3 className="text-xs sm:text-sm font-bold text-slate-800 truncate">{product.name}</h3>
@@ -72,7 +72,7 @@ export default function Ventas() {
         </div>
 
         {/* Desktop cart */}
-        <div className="hidden lg:flex w-[320px] xl:w-[360px] flex-shrink-0 bg-white rounded-2xl border border-slate-200/80 shadow-sm flex-col sticky top-20 h-fit max-h-[calc(100vh-120px)]">
+        <div className="hidden lg:flex w-[320px] xl:w-[360px] flex-shrink-0 bg-white rounded-lg border border-slate-200/80 shadow-sm flex-col sticky top-20 h-fit max-h-[calc(100vh-120px)]">
           <CartContent cart={cart} subtotal={subtotal} iva={iva} total={total} onNavigate={navigate} onClear={clearCart} onRemove={removeFromCart} onUpdateQty={updateCartQuantity} />
         </div>
       </div>
@@ -112,7 +112,7 @@ function CartContent({ cart, subtotal, iva, total, onNavigate, onClear, onRemove
     <>
       <div className="p-4 sm:p-5 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-md shadow-purple-500/25">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-md shadow-purple-500/25">
             <ShoppingCart className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -125,15 +125,15 @@ function CartContent({ cart, subtotal, iva, total, onNavigate, onClear, onRemove
       <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 sm:space-y-3 min-h-[150px]">
         {cart.length === 0 ? (
           <div className="text-center py-8 sm:py-12">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-100 flex items-center justify-center mx-auto mb-3">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-slate-100 flex items-center justify-center mx-auto mb-3">
               <ShoppingCart className="w-7 h-7 sm:w-8 sm:h-8 text-slate-300" />
             </div>
             <p className="text-sm font-medium text-slate-400">Carrito vacío</p>
             <p className="text-xs text-slate-300 mt-1">Haz clic en un producto</p>
           </div>
         ) : cart.map(item => (
-          <div key={item.product.id} className="bg-slate-50 rounded-xl p-3 flex gap-3 border border-slate-100">
-            <div className="w-10 h-10 sm:w-14 sm:h-14 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
+          <div key={item.product.id} className="bg-slate-50 rounded-lg p-3 flex gap-3 border border-slate-100">
+            <div className="w-10 h-10 sm:w-14 sm:h-14 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
               <Tag className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
             </div>
             <div className="flex-1 min-w-0">
@@ -167,10 +167,10 @@ function CartContent({ cart, subtotal, iva, total, onNavigate, onClear, onRemove
           <div className="flex justify-between text-sm"><span className="text-slate-500">Subtotal</span><span className="font-semibold text-slate-700">${subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span></div>
           <div className="flex justify-between text-sm"><span className="text-slate-500">IVA (16%)</span><span className="font-semibold text-slate-700">${iva.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span></div>
           <div className="flex justify-between text-lg font-extrabold border-t border-slate-200 pt-3"><span className="text-slate-900">Total</span><span className="text-[#7c3aed]">${total.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span></div>
-          <button onClick={() => onNavigate('/cobrar')} className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white py-3 sm:py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all">
+          <button onClick={() => onNavigate('/cobrar')} className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white py-3 sm:py-3.5 rounded-lg font-bold text-sm shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all">
             Ir a Cobrar
           </button>
-          <button onClick={onClear} className="w-full text-red-500 py-2 rounded-xl font-medium text-xs hover:bg-red-50 transition-colors">
+          <button onClick={onClear} className="w-full text-red-500 py-2 rounded-lg font-medium text-xs hover:bg-red-50 transition-colors">
             Vaciar Carrito
           </button>
         </div>

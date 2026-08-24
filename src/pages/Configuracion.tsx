@@ -45,12 +45,12 @@ export default function Configuracion() {
       {/* Mobile tab selector */}
       <div className="lg:hidden">
         <button onClick={() => setMobileTabOpen(!mobileTabOpen)}
-          className="w-full flex items-center justify-between bg-white rounded-2xl border border-slate-200 px-5 py-3.5 text-sm font-semibold text-slate-700">
+          className="w-full flex items-center justify-between bg-white rounded-lg border border-slate-200 px-5 py-3.5 text-sm font-semibold text-slate-700">
           <span>{activeTab}</span>
           <svg className={`w-4 h-4 transition-transform ${mobileTabOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
         </button>
         {mobileTabOpen && (
-          <div className="mt-3 bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
+          <div className="mt-3 bg-white rounded-lg border border-slate-200 shadow-lg overflow-hidden">
             {tabs.map(item => {
               const Icon = item.icon;
               return (
@@ -72,7 +72,7 @@ export default function Configuracion() {
             const isActive = activeTab === item.label;
             return (
               <button key={item.label} onClick={() => setActiveTab(item.label)}
-                className={`w-full flex items-center gap-3 px-5 py-3.5 rounded-2xl text-sm font-semibold transition-all ${
+                className={`w-full flex items-center gap-3 px-5 py-3.5 rounded-lg text-sm font-semibold transition-all ${
                   isActive ? 'bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25' : 'text-slate-500 hover:bg-white hover:text-slate-800 border border-transparent hover:border-slate-200'
                 }`}>
                 <Icon className="w-5 h-5" />{item.label}
@@ -81,13 +81,13 @@ export default function Configuracion() {
           })}
         </div>
 
-        <div className="lg:col-span-3 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-10">
+        <div className="lg:col-span-3 bg-white rounded-lg border border-slate-200/80 shadow-sm p-6 sm:p-10">
           <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-6 sm:mb-10">{activeTab}</h2>
 
           {activeTab === 'Perfil de Usuario' && (
             <div className="space-y-6 sm:space-y-8">
               <div className="flex items-center gap-5 sm:gap-6 mb-8 sm:mb-10">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-xl shadow-purple-500/30">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-xl shadow-purple-500/30">
                   <span className="text-xl sm:text-2xl font-bold text-white">AD</span>
                 </div>
                 <div>
@@ -101,40 +101,40 @@ export default function Configuracion() {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre</label>
                   <input type="text" value={form.name} onChange={e => update('name', e.target.value)}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Email</label>
                   <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Teléfono</label>
                   <input type="tel" value={form.phone} onChange={e => update('phone', e.target.value)}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Rol</label>
                   <input type="text" value={form.role} disabled
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm text-slate-400 cursor-not-allowed" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-400 cursor-not-allowed" />
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre de la Óptica</label>
                 <input type="text" value={form.optica} onChange={e => update('optica', e.target.value)}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección</label>
                 <input type="text" value={form.address} onChange={e => update('address', e.target.value)}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>
 
               <div className="flex justify-end pt-6 sm:pt-8 border-t border-slate-100">
                 <button onClick={handleSave}
-                  className="px-7 sm:px-8 py-3.5 rounded-2xl text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
+                  className="px-7 sm:px-8 py-3.5 rounded-lg text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
                   {showSaved ? <><Check className="w-4 h-4" /> Guardado</> : 'Guardar Cambios'}
                 </button>
               </div>
@@ -149,7 +149,7 @@ export default function Configuracion() {
                 { label: 'Stock bajo', desc: 'Notificar cuando un producto tenga menos de 10 unidades', on: false },
                 { label: 'Pago pendiente', desc: 'Recordatorio de pagos pendientes por cobrar', on: true },
               ].map(item => (
-                <div key={item.label} className="flex items-center justify-between p-5 sm:p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                <div key={item.label} className="flex items-center justify-between p-5 sm:p-6 bg-slate-50 rounded-lg border border-slate-100">
                   <div className="flex-1 min-w-0 mr-4">
                     <p className="text-sm font-bold text-slate-800">{item.label}</p>
                     <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
@@ -168,7 +168,7 @@ export default function Configuracion() {
                 <p className="text-sm font-bold text-slate-800 mb-4">Tema de color</p>
                 <div className="flex gap-4">
                   {['#7c3aed', '#2563eb', '#059669', '#dc2626', '#d97706'].map(color => (
-                    <button key={color} className="w-11 h-11 rounded-2xl border-2 border-slate-200 hover:border-slate-400 transition-colors shadow-sm"
+                    <button key={color} className="w-11 h-11 rounded-lg border-2 border-slate-200 hover:border-slate-400 transition-colors shadow-sm"
                       style={{ background: color }} />
                   ))}
                 </div>
@@ -176,8 +176,8 @@ export default function Configuracion() {
               <div>
                 <p className="text-sm font-bold text-slate-800 mb-4">Modo oscuro</p>
                 <div className="flex gap-4">
-                  <button className="px-6 py-3.5 rounded-2xl text-sm font-semibold bg-[#7c3aed] text-white shadow-md">Claro</button>
-                  <button className="px-6 py-3.5 rounded-2xl text-sm font-semibold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors border border-slate-200">Oscuro</button>
+                  <button className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-[#7c3aed] text-white shadow-md">Claro</button>
+                  <button className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors border border-slate-200">Oscuro</button>
                 </div>
               </div>
             </div>
@@ -188,21 +188,21 @@ export default function Configuracion() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Contraseña Actual</label>
                 <input type="password" placeholder="••••••••"
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nueva Contraseña</label>
                 <input type="password" placeholder="••••••••"
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Confirmar Contraseña</label>
                 <input type="password" placeholder="••••••••"
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>
               <div className="flex justify-end pt-6 border-t border-slate-100">
                 <button onClick={handleSave}
-                  className="px-7 sm:px-8 py-3.5 rounded-2xl text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
+                  className="px-7 sm:px-8 py-3.5 rounded-lg text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
                   {showSaved ? <><Check className="w-4 h-4" /> Actualizada</> : 'Actualizar Contraseña'}
                 </button>
               </div>
@@ -211,15 +211,15 @@ export default function Configuracion() {
 
           {activeTab === 'Base de Datos' && (
             <div className="space-y-6">
-              <div className="p-6 sm:p-8 bg-slate-50 rounded-2xl border border-slate-200">
+              <div className="p-6 sm:p-8 bg-slate-50 rounded-lg border border-slate-200">
                 <p className="text-sm font-bold text-slate-800 mb-1.5">Exportar Datos</p>
                 <p className="text-xs text-slate-400 mb-4 leading-relaxed">Descarga una copia de seguridad de todos los datos del sistema.</p>
-                <button className="px-6 py-3.5 rounded-2xl text-sm font-semibold bg-[#7c3aed] text-white shadow-md hover:shadow-lg transition-all">Exportar Backup</button>
+                <button className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-[#7c3aed] text-white shadow-md hover:shadow-lg transition-all">Exportar Backup</button>
               </div>
-              <div className="p-6 sm:p-8 bg-slate-50 rounded-2xl border border-slate-200">
+              <div className="p-6 sm:p-8 bg-slate-50 rounded-lg border border-slate-200">
                 <p className="text-sm font-bold text-slate-800 mb-1.5">Limpiar Caché</p>
                 <p className="text-xs text-slate-400 mb-4 leading-relaxed">Elimina datos temporales almacenados en el navegador.</p>
-                <button onClick={handleSave} className="px-6 py-3.5 rounded-2xl text-sm font-semibold bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors">
+                <button onClick={handleSave} className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors">
                   {showSaved ? '¡Limpiado!' : 'Limpiar Caché'}
                 </button>
               </div>
@@ -229,7 +229,7 @@ export default function Configuracion() {
       </div>
 
       {showSaved && (
-        <div className="fixed bottom-6 right-6 bg-emerald-600 text-white px-6 py-3.5 rounded-2xl shadow-xl shadow-emerald-500/30 flex items-center gap-2 text-sm font-semibold z-50">
+        <div className="fixed bottom-6 right-6 bg-emerald-600 text-white px-6 py-3.5 rounded-lg shadow-xl shadow-emerald-500/30 flex items-center gap-2 text-sm font-semibold z-50">
           <Check className="w-4 h-4" /> Cambios guardados correctamente
         </div>
       )}

@@ -219,9 +219,9 @@ export default function Recetas() {
   const EyeForm = ({ label, data, onChange, readonly = false }: { label: string; data: EyeData; onChange: (d: EyeData) => void; readonly?: boolean }) => {
     const isOD = label.includes('OD');
     return (
-      <div className="bg-[#fafaf8] rounded-2xl border border-slate-200/70 p-5 sm:p-6 shadow-sm">
+      <div className="bg-[#fafaf8] rounded-lg border border-slate-200/70 p-5 sm:p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-200/60">
-          <div className={`w-9 h-9 rounded-xl flex items-center justify-center shadow-sm ${isOD ? 'bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] text-white' : 'bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] text-white'}`}>
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-sm ${isOD ? 'bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] text-white' : 'bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] text-white'}`}>
             <Eye className="w-5 h-5" />
           </div>
           <div>
@@ -236,32 +236,32 @@ export default function Recetas() {
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Esfera (SPH)</label>
             <input type="text" value={data.sph} onChange={e => onChange({ ...data, sph: e.target.value })} readOnly={readonly}
               placeholder="+0.00"
-              className={`w-full px-4 py-3.5 rounded-xl border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
+              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
           </div>
           <div>
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Cilindro (CYL)</label>
             <input type="text" value={data.cyl} onChange={e => onChange({ ...data, cyl: e.target.value })} readOnly={readonly}
               placeholder="-0.00"
-              className={`w-full px-4 py-3.5 rounded-xl border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
+              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
           </div>
           <div>
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Eje (AXIS)</label>
             <input type="text" value={data.axis} onChange={e => onChange({ ...data, axis: e.target.value })} readOnly={readonly}
               placeholder="0 - 180"
-              className={`w-full px-4 py-3.5 rounded-xl border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
+              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
           </div>
           <div>
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Prisma</label>
             <input type="text" value={data.prisma} onChange={e => onChange({ ...data, prisma: e.target.value })} readOnly={readonly}
               placeholder="0.00"
-              className={`w-full px-4 py-3.5 rounded-xl border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
+              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
           </div>
         </div>
         <div className="mt-4">
           <label className="block text-[12px] font-bold text-slate-700 mb-2">Adición (ADD)</label>
           <input type="text" value={data.add} onChange={e => onChange({ ...data, add: e.target.value })} readOnly={readonly}
             placeholder="+0.00"
-            className={`w-full px-4 py-3.5 rounded-xl border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
+            className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] shadow-sm'}`} />
         </div>
         {/* DP y AV como campos secundarios colapsables */}
         <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200/40">
@@ -269,13 +269,13 @@ export default function Recetas() {
             <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">DP (mm)</label>
             <input type="text" value={data.dp} onChange={e => onChange({ ...data, dp: e.target.value })} readOnly={readonly}
               placeholder="32"
-              className={`w-full px-3.5 py-2.5 rounded-xl border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]'}`} />
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]'}`} />
           </div>
           <div>
             <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agudeza Visual</label>
             <input type="text" value={data.av} onChange={e => onChange({ ...data, av: e.target.value })} readOnly={readonly}
               placeholder="20/20"
-              className={`w-full px-3.5 py-2.5 rounded-xl border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]'}`} />
+              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]'}`} />
           </div>
         </div>
       </div>
@@ -289,15 +289,15 @@ export default function Recetas() {
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Recetas</h1>
           <p className="text-slate-500 text-sm mt-1">Exámenes optométricos, lentes y tratamientos</p>
         </div>
-        <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 py-3 rounded-2xl text-sm font-bold transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:-translate-y-0.5">
+        <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 py-3 rounded-lg text-sm font-bold transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:-translate-y-0.5">
           <Plus className="w-4 h-4" /> Nuevo Examen
         </button>
       </div>
 
-      <div className="flex gap-1 bg-white rounded-2xl p-1.5 border border-slate-200/60 w-fit shadow-sm">
+      <div className="flex gap-1 bg-white rounded-lg p-1.5 border border-slate-200/60 w-fit shadow-sm">
         {(['todas', 'vigentes', 'pasadas'] as const).map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all capitalize ${activeTab === tab ? 'bg-[#7c3aed] text-white shadow-md shadow-purple-500/25' : 'text-slate-500 hover:bg-slate-50'}`}>
+            className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all capitalize ${activeTab === tab ? 'bg-[#7c3aed] text-white shadow-md shadow-purple-500/25' : 'text-slate-500 hover:bg-slate-50'}`}>
             {tab === 'todas' ? 'Todas' : tab === 'vigentes' ? 'Vigentes' : 'Pasadas'}
           </button>
         ))}
@@ -305,10 +305,10 @@ export default function Recetas() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
         {filtered.map(rx => (
-          <div key={rx.id} className="bg-white rounded-2xl border border-slate-200/60 shadow-sm hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden group">
+          <div key={rx.id} className="bg-white rounded-lg border border-slate-200/60 shadow-sm hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden group">
             <div className="p-5">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-bold text-[#7c3aed] bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-100">{rx.id}</span>
+                <span className="text-xs font-bold text-[#7c3aed] bg-purple-50 px-3 py-1.5 rounded-lg border border-purple-100">{rx.id}</span>
                 <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold ${statusColor(rx.status)}`}>{rx.status}</span>
               </div>
               <h3 className="font-bold text-slate-900 text-base mb-3 group-hover:text-[#7c3aed] transition-colors">{rx.patientName}</h3>
@@ -317,19 +317,19 @@ export default function Recetas() {
                 <div className="flex items-center gap-2 text-slate-500"><Stethoscope className="w-4 h-4 text-slate-400" />{rx.doctor}</div>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3">
-                <div className="bg-gradient-to-br from-purple-50 to-indigo-50/50 rounded-2xl p-3.5 text-center border border-purple-100/50">
+                <div className="bg-gradient-to-br from-purple-50 to-indigo-50/50 rounded-lg p-3.5 text-center border border-purple-100/50">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">OD</p>
                   <p className="text-lg font-extrabold text-[#7c3aed] mt-1">{rx.rightEye.sph || '—'}</p>
                   <p className="text-[10px] text-slate-400 mt-0.5">{rx.rightEye.cyl && `CYL ${rx.rightEye.cyl}`} {rx.rightEye.prisma && rx.rightEye.prisma !== '0.00' ? `· Prisma ${rx.rightEye.prisma}` : ''}</p>
                 </div>
-                <div className="bg-gradient-to-br from-blue-50 to-sky-50/50 rounded-2xl p-3.5 text-center border border-blue-100/50">
+                <div className="bg-gradient-to-br from-blue-50 to-sky-50/50 rounded-lg p-3.5 text-center border border-blue-100/50">
                   <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">OI</p>
                   <p className="text-lg font-extrabold text-[#2563eb] mt-1">{rx.leftEye.sph || '—'}</p>
                   <p className="text-[10px] text-slate-400 mt-0.5">{rx.leftEye.cyl && `CYL ${rx.leftEye.cyl}`} {rx.leftEye.prisma && rx.leftEye.prisma !== '0.00' ? `· Prisma ${rx.leftEye.prisma}` : ''}</p>
                 </div>
               </div>
               {rx.grandTotal > 0 && (
-                <div className="mt-3 bg-gradient-to-r from-purple-50 to-slate-50 rounded-xl p-3 border border-purple-100">
+                <div className="mt-3 bg-gradient-to-r from-purple-50 to-slate-50 rounded-lg p-3 border border-purple-100">
                   <div className="flex justify-between text-xs text-slate-500">
                     {rx.totalLenses > 0 && <span>Lentes: ${rx.totalLenses.toLocaleString()}</span>}
                     {rx.totalTreatments > 0 && <span>Tratamientos: ${rx.totalTreatments.toLocaleString()}</span>}
@@ -339,13 +339,13 @@ export default function Recetas() {
               )}
             </div>
             <div className="border-t border-slate-100 p-3 bg-slate-50/30 flex gap-2">
-              <button onClick={() => setViewPrescription(rx)} className="flex-1 flex items-center justify-center gap-2 text-[#7c3aed] hover:text-white hover:bg-[#7c3aed] text-sm font-semibold py-2.5 rounded-xl hover:shadow-md transition-all">
+              <button onClick={() => setViewPrescription(rx)} className="flex-1 flex items-center justify-center gap-2 text-[#7c3aed] hover:text-white hover:bg-[#7c3aed] text-sm font-semibold py-2.5 rounded-lg hover:shadow-md transition-all">
                 <Eye className="w-4 h-4" /> Ver
               </button>
-              <button onClick={() => generatePDF(opticsName, rx)} className="flex-1 flex items-center justify-center gap-2 text-emerald-600 hover:text-white hover:bg-emerald-500 text-sm font-semibold py-2.5 rounded-xl hover:shadow-md transition-all">
+              <button onClick={() => generatePDF(opticsName, rx)} className="flex-1 flex items-center justify-center gap-2 text-emerald-600 hover:text-white hover:bg-emerald-500 text-sm font-semibold py-2.5 rounded-lg hover:shadow-md transition-all">
                 <FileDown className="w-4 h-4" /> PDF
               </button>
-              <button onClick={() => openTicketWindow(buildTicketHTML(opticsName, rx))} className="flex-1 flex items-center justify-center gap-2 text-amber-600 hover:text-white hover:bg-amber-500 text-sm font-semibold py-2.5 rounded-xl hover:shadow-md transition-all">
+              <button onClick={() => openTicketWindow(buildTicketHTML(opticsName, rx))} className="flex-1 flex items-center justify-center gap-2 text-amber-600 hover:text-white hover:bg-amber-500 text-sm font-semibold py-2.5 rounded-lg hover:shadow-md transition-all">
                 <Printer className="w-4 h-4" /> Ticket
               </button>
             </div>
@@ -356,20 +356,20 @@ export default function Recetas() {
       {/* View Detail Modal */}
       {viewPrescription && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-[#f8f9fb] rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/60">
+          <div className="bg-[#f8f9fb] rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/60">
             <div className="flex items-center justify-between p-6 border-b border-slate-200/60 sticky top-0 bg-white z-10 rounded-t-3xl">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2"><Sparkles className="w-5 h-5 text-[#7c3aed]" /> Receta {viewPrescription.id}</h2>
                 <p className="text-sm text-slate-500">{viewPrescription.patientName} — {viewPrescription.date} · {viewPrescription.doctor}</p>
               </div>
               <div className="flex items-center gap-2">
-                <button onClick={() => generatePDF(opticsName, viewPrescription)} className="hidden sm:flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-md">
+                <button onClick={() => generatePDF(opticsName, viewPrescription)} className="hidden sm:flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-md">
                   <FileDown className="w-4 h-4" /> PDF
                 </button>
-                <button onClick={() => openTicketWindow(buildTicketHTML(opticsName, viewPrescription))} className="hidden sm:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-md">
+                <button onClick={() => openTicketWindow(buildTicketHTML(opticsName, viewPrescription))} className="hidden sm:flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-md">
                   <Printer className="w-4 h-4" /> Ticket
                 </button>
-                <button onClick={() => setViewPrescription(null)} className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"><X className="w-4 h-4 text-slate-500" /></button>
+                <button onClick={() => setViewPrescription(null)} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"><X className="w-4 h-4 text-slate-500" /></button>
               </div>
             </div>
             <div className="p-6 space-y-6">
@@ -378,11 +378,11 @@ export default function Recetas() {
                 <EyeForm label="Refracción Final (OI)" data={viewPrescription.leftEye} onChange={() => {}} readonly />
               </div>
               {viewPrescription.selectedLenses && viewPrescription.selectedLenses.length > 0 && (
-                <div className="bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm">
+                <div className="bg-white rounded-lg p-5 border border-slate-200/60 shadow-sm">
                   <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2"><Glasses className="w-4 h-4 text-[#7c3aed]" /> Lentes Seleccionados</h4>
                   <div className="space-y-2">
                     {viewPrescription.selectedLenses.map(l => (
-                      <div key={l.id} className="flex justify-between items-center bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+                      <div key={l.id} className="flex justify-between items-center bg-slate-50 rounded-lg p-3.5 border border-slate-100">
                         <div>
                           <p className="text-sm font-bold text-slate-800">{l.name}</p>
                           <p className="text-xs text-slate-400">{l.brand} · {l.type} · Cant: {l.quantity}</p>
@@ -398,11 +398,11 @@ export default function Recetas() {
                 </div>
               )}
               {viewPrescription.treatments && viewPrescription.treatments.length > 0 && (
-                <div className="bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm">
+                <div className="bg-white rounded-lg p-5 border border-slate-200/60 shadow-sm">
                   <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2"><Treatment className="w-4 h-4 text-[#7c3aed]" /> Tratamientos</h4>
                   <div className="space-y-2">
                     {viewPrescription.treatments.map(t => (
-                      <div key={t.id} className="flex justify-between items-center bg-slate-50 rounded-xl p-3.5 border border-slate-100">
+                      <div key={t.id} className="flex justify-between items-center bg-slate-50 rounded-lg p-3.5 border border-slate-100">
                         <div>
                           <p className="text-sm font-bold text-slate-800">{t.name}</p>
                           <p className="text-xs text-slate-400">{t.description}</p>
@@ -418,7 +418,7 @@ export default function Recetas() {
                 </div>
               )}
               {viewPrescription.grandTotal > 0 && (
-                <div className="bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] rounded-2xl p-5 text-white shadow-lg shadow-purple-500/20">
+                <div className="bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] rounded-lg p-5 text-white shadow-lg shadow-purple-500/20">
                   <div className="flex justify-between items-center">
                     <span className="text-base font-bold">TOTAL ESTIMADO</span>
                     <span className="text-2xl font-extrabold">${viewPrescription.grandTotal.toLocaleString()}</span>
@@ -426,11 +426,11 @@ export default function Recetas() {
                 </div>
               )}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm">
+                <div className="bg-white rounded-lg p-5 border border-slate-200/60 shadow-sm">
                   <h4 className="text-sm font-bold text-slate-900 mb-2">Recomendaciones</h4>
                   <p className="text-sm text-slate-600 leading-relaxed">{viewPrescription.recommendations || 'Sin notas.'}</p>
                 </div>
-                <div className="bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm">
+                <div className="bg-white rounded-lg p-5 border border-slate-200/60 shadow-sm">
                   <h4 className="text-sm font-bold text-slate-900 mb-2">Observaciones</h4>
                   <p className="text-sm text-slate-600 leading-relaxed">{viewPrescription.observations || 'Sin observaciones.'}</p>
                 </div>
@@ -443,22 +443,22 @@ export default function Recetas() {
       {/* New Exam Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-[#f8f9fb] rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/60">
+          <div className="bg-[#f8f9fb] rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200/60">
             <div className="flex items-center justify-between p-6 border-b border-slate-200/60 sticky top-0 bg-white z-10 rounded-t-3xl">
               <div>
                 <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2"><Sparkles className="w-5 h-5 text-[#7c3aed]" /> Nuevo Examen Optométrico</h2>
                 <p className="text-xs text-slate-400 mt-1">Complete los datos de refracción final para cada ojo</p>
               </div>
-              <button onClick={() => setShowModal(false)} className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"><X className="w-4 h-4 text-slate-500" /></button>
+              <button onClick={() => setShowModal(false)} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"><X className="w-4 h-4 text-slate-500" /></button>
             </div>
             <div className="p-6 space-y-6">
               {/* Patient & Doctor */}
-              <div className="bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm">
+              <div className="bg-white rounded-lg p-5 border border-slate-200/60 shadow-sm">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Paciente *</label>
                     <select value={newRx.patientId} onChange={e => setNewRx({ ...newRx, patientId: e.target.value })}
-                      className="w-full px-4 py-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] font-medium">
+                      className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] font-medium">
                       <option value="">Seleccionar paciente</option>
                       {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                     </select>
@@ -466,7 +466,7 @@ export default function Recetas() {
                   <div>
                     <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Doctor</label>
                     <input type="text" value={newRx.doctor} onChange={e => setNewRx({ ...newRx, doctor: e.target.value })}
-                      className="w-full px-4 py-3.5 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] font-medium" />
+                      className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] font-medium" />
                   </div>
                 </div>
               </div>
@@ -478,14 +478,14 @@ export default function Recetas() {
               </div>
 
               {/* Lenses Selection */}
-              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/60 shadow-sm">
+              <div className="bg-white rounded-lg p-5 sm:p-6 border border-slate-200/60 shadow-sm">
                 <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2"><Glasses className="w-4 h-4 text-[#7c3aed]" /> Seleccionar Lentes</h4>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                   {availableLenses.map(lens => {
                     const isSelected = newRx.selectedLenses.some(l => l.id === lens.id);
                     return (
                       <button key={lens.id} onClick={() => toggleLens(lens)}
-                        className={`text-left p-3.5 rounded-2xl border-2 transition-all ${isSelected ? 'border-[#7c3aed] bg-purple-50 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'}`}>
+                        className={`text-left p-3.5 rounded-lg border-2 transition-all ${isSelected ? 'border-[#7c3aed] bg-purple-50 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'}`}>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-xs font-bold text-slate-800">{lens.name}</span>
                           {isSelected && <div className="w-6 h-6 rounded-full bg-[#7c3aed] flex items-center justify-center"><Check className="w-3.5 h-3.5 text-white" /></div>}
@@ -505,14 +505,14 @@ export default function Recetas() {
               </div>
 
               {/* Treatments Selection */}
-              <div className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/60 shadow-sm">
+              <div className="bg-white rounded-lg p-5 sm:p-6 border border-slate-200/60 shadow-sm">
                 <h4 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2"><Treatment className="w-4 h-4 text-[#7c3aed]" /> Seleccionar Tratamientos</h4>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
                   {availableTreatments.map(treatment => {
                     const isSelected = newRx.treatments.some(t => t.id === treatment.id);
                     return (
                       <button key={treatment.id} onClick={() => toggleTreatment(treatment)}
-                        className={`text-left p-3.5 rounded-2xl border-2 transition-all ${isSelected ? 'border-[#7c3aed] bg-purple-50 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'}`}>
+                        className={`text-left p-3.5 rounded-lg border-2 transition-all ${isSelected ? 'border-[#7c3aed] bg-purple-50 shadow-md' : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm'}`}>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-xs font-bold text-slate-800">{treatment.name}</span>
                           {isSelected && <div className="w-6 h-6 rounded-full bg-[#7c3aed] flex items-center justify-center"><Check className="w-3.5 h-3.5 text-white" /></div>}
@@ -533,7 +533,7 @@ export default function Recetas() {
 
               {/* Totals */}
               {(newRx.selectedLenses.length > 0 || newRx.treatments.length > 0) && (
-                <div className="bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] rounded-2xl p-5 text-white shadow-lg shadow-purple-500/20">
+                <div className="bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] rounded-lg p-5 text-white shadow-lg shadow-purple-500/20">
                   <div className="flex justify-between items-center">
                     <span className="text-base font-bold">TOTAL ESTIMADO</span>
                     <span className="text-2xl font-extrabold">${calcTotals().grandTotal.toLocaleString()}</span>
@@ -543,21 +543,21 @@ export default function Recetas() {
 
               {/* Notes */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm">
+                <div className="bg-white rounded-lg p-5 border border-slate-200/60 shadow-sm">
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Recomendaciones</label>
                   <textarea value={newRx.recommendations} onChange={e => setNewRx({ ...newRx, recommendations: e.target.value })} rows={3} placeholder="Notas clínicas y recomendaciones..."
-                    className="w-full px-4 py-3 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-300" />
+                    className="w-full px-4 py-3 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-300" />
                 </div>
-                <div className="bg-white rounded-2xl p-5 border border-slate-200/60 shadow-sm">
+                <div className="bg-white rounded-lg p-5 border border-slate-200/60 shadow-sm">
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Observaciones</label>
                   <textarea value={newRx.observations} onChange={e => setNewRx({ ...newRx, observations: e.target.value })} rows={3} placeholder="Observaciones adicionales..."
-                    className="w-full px-4 py-3 bg-slate-50 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-300" />
+                    className="w-full px-4 py-3 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-300" />
                 </div>
               </div>
             </div>
             <div className="flex justify-end gap-3 p-6 border-t border-slate-200/60 sticky bottom-0 bg-white rounded-b-3xl">
-              <button onClick={() => setShowModal(false)} className="px-6 py-3 rounded-xl text-sm font-semibold text-slate-500 hover:bg-slate-100 transition-colors">Cancelar</button>
-              <button onClick={handleAdd} className="px-8 py-3 rounded-xl text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:-translate-y-0.5 transition-all">Guardar Examen</button>
+              <button onClick={() => setShowModal(false)} className="px-6 py-3 rounded-lg text-sm font-semibold text-slate-500 hover:bg-slate-100 transition-colors">Cancelar</button>
+              <button onClick={handleAdd} className="px-8 py-3 rounded-lg text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:-translate-y-0.5 transition-all">Guardar Examen</button>
             </div>
           </div>
         </div>

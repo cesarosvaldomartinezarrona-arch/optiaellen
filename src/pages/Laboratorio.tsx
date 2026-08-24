@@ -40,14 +40,14 @@ export default function Laboratorio() {
           <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Seguimiento de órdenes de taller</p>
         </div>
         <button onClick={() => setShowModal(true)}
-          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-2xl text-sm font-semibold transition-all shadow-lg shadow-purple-500/25">
+          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-500/25">
           <Plus className="w-4 h-4" /> Nueva Orden
         </button>
       </div>
 
       <div className="space-y-6">
         {labOrders.map(order => (
-          <div key={order.id} className="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-8 hover:shadow-lg transition-all duration-300">
+          <div key={order.id} className="bg-white rounded-lg border border-slate-200/80 shadow-sm p-6 sm:p-8 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-5 sm:mb-6">
               <div className="flex-1 min-w-0 mr-4">
                 <div className="flex items-center gap-3 sm:gap-4 mb-1.5 flex-wrap">
@@ -58,7 +58,7 @@ export default function Laboratorio() {
               </div>
               {order.phase < 6 && (
                 <button onClick={() => handleAdvance(order.id)}
-                  className="flex items-center gap-1.5 sm:gap-2 bg-purple-50 hover:bg-purple-100 text-[#7c3aed] px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-colors border border-purple-200 flex-shrink-0">
+                  className="flex items-center gap-1.5 sm:gap-2 bg-purple-50 hover:bg-purple-100 text-[#7c3aed] px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors border border-purple-200 flex-shrink-0">
                   Avanzar <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               )}
@@ -70,7 +70,7 @@ export default function Laboratorio() {
               <div className="flex items-center gap-2"><Clock className="w-4 h-4 sm:w-4 sm:h-4 text-slate-400" />{order.estimatedDelivery}</div>
             </div>
             {/* Phase progress - scrollable on mobile */}
-            <div className="flex items-center gap-2 sm:gap-3 bg-slate-50 rounded-2xl p-4 sm:p-6 border border-slate-100 overflow-x-auto">
+            <div className="flex items-center gap-2 sm:gap-3 bg-slate-50 rounded-lg p-4 sm:p-6 border border-slate-100 overflow-x-auto">
               {phases.map((phase, idx) => {
                 const PhaseIcon = phase.icon;
                 const isCompleted = order.phase > idx;
@@ -95,16 +95,16 @@ export default function Laboratorio() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl border border-slate-200/80 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg w-full max-w-2xl shadow-2xl border border-slate-200/80 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between p-6 sm:p-8 border-b border-slate-100">
               <h2 className="text-lg font-bold text-slate-900">Nueva Orden</h2>
-              <button onClick={() => setShowModal(false)} className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center"><span className="text-slate-500 text-lg">&times;</span></button>
+              <button onClick={() => setShowModal(false)} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center"><span className="text-slate-500 text-lg">&times;</span></button>
             </div>
             <div className="p-6 sm:p-8 space-y-6">
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Paciente *</label>
                 <select value={newOrder.patientId} onChange={e => setNewOrder({ ...newOrder, patientId: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
                   <option value="">Seleccionar paciente</option>
                   {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                 </select>
@@ -112,17 +112,17 @@ export default function Laboratorio() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Productos / Trabajo *</label>
                 <input type="text" value={newOrder.products} onChange={e => setNewOrder({ ...newOrder, products: e.target.value })}
-                  placeholder="Ej: Montura X + Cristal Progresivo" className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  placeholder="Ej: Montura X + Cristal Progresivo" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Operador</label>
                 <input type="text" value={newOrder.operator} onChange={e => setNewOrder({ ...newOrder, operator: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>
             </div>
             <div className="flex justify-end gap-4 p-6 sm:p-8 border-t border-slate-100">
-              <button onClick={() => setShowModal(false)} className="px-6 py-3.5 rounded-xl text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors">Cancelar</button>
-              <button onClick={handleAddOrder} className="px-6 py-3.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Crear Orden</button>
+              <button onClick={() => setShowModal(false)} className="px-6 py-3.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors">Cancelar</button>
+              <button onClick={handleAddOrder} className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Crear Orden</button>
             </div>
           </div>
         </div>
