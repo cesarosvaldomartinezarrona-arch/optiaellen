@@ -67,12 +67,12 @@ export default function Login() {
             <div>
               <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Correo Electrónico</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
+                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
                 <input
                   type="text"
                   value={username}
                   onChange={e => setUsername(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3.5 bg-white/[0.05] rounded-xl border border-white/[0.08] text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/40 focus:border-[#7c3aed]/30 focus:bg-white/[0.08] transition-all"
+                  className="w-full pl-12 pr-4 py-3.5 bg-white/[0.05] rounded-xl border border-white/[0.08] text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/40 focus:border-[#7c3aed]/30 focus:bg-white/[0.08] transition-all"
                   placeholder="tu@correo.com"
                   required
                 />
@@ -83,19 +83,19 @@ export default function Login() {
             <div>
               <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-3">Contraseña</label>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
+                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-12 py-3.5 bg-white/[0.05] rounded-xl border border-white/[0.08] text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/40 focus:border-[#7c3aed]/30 focus:bg-white/[0.08] transition-all"
+                  className="w-full pl-12 pr-13 py-3.5 bg-white/[0.05] rounded-xl border border-white/[0.08] text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/40 focus:border-[#7c3aed]/30 focus:bg-white/[0.08] transition-all"
                   placeholder="••••••••"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
