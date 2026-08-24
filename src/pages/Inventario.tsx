@@ -118,7 +118,7 @@ export default function Inventario() {
         </div>
         <div className="flex justify-end gap-3 p-6 sm:p-8 border-t border-slate-100 bg-slate-50/50 rounded-b-3xl">
           <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200 transition-all">Cancelar</button>
-          <button onClick={onSave} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 flex items-center gap-3 hover:shadow-purple-500/30 transition-all"><Save className="w-4 h-4" /> Guardar</button>
+          <button onClick={onSave} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/30 transition-all">Guardar</button>
         </div>
       </div>
     </div>
