@@ -26,93 +26,84 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#6b3fa0] via-[#7c4db8] to-[#a78bfa] flex items-center justify-center p-4 sm:p-6">
-      <div className="w-full max-w-[440px]">
-        <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8 sm:p-10">
-          {/* Logo */}
-          <div className="flex flex-col items-center mb-2">
-            <div className="w-20 h-20 rounded-lg bg-[#1a1a2e] flex items-center justify-center mb-4 shadow-xl">
-              <svg width="40" height="40" viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 65 C45 20 75 5 100 5 C125 5 155 20 185 65" fill="none" stroke="#1a1a2e" strokeWidth="7" strokeLinecap="round" />
-                <path d="M100 25 C30 25 5 85 5 85 C5 85 30 145 100 145 C170 145 195 85 195 85 C195 85 170 25 100 25Z" fill="#7c3aed" />
-                <path d="M100 40 C45 40 25 85 25 85 C25 85 45 130 100 130 C155 130 175 85 175 85 C175 85 155 40 100 40Z" fill="white" />
-                <circle cx="100" cy="85" r="38" fill="#7c3aed" />
-                <circle cx="100" cy="85" r="16" fill="#0f0720" />
-                <circle cx="107" cy="78" r="5" fill="white" opacity="0.9" />
-              </svg>
-            </div>
-            <span className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase">opticællen</span>
-          </div>
+    <div className="relative min-h-screen overflow-hidden flex items-center justify-center p-4">
+      {/* Fondo profundo con textura orgánica */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e] via-[#2d1b4e] to-[#0f0720]" />
+      <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.4) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(167,139,250,0.25) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(139,92,246,0.2) 0%, transparent 50%)' }} />
+      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
 
-          {/* Title */}
-          <h1 className="text-[26px] font-extrabold text-slate-900 text-center mb-2">Iniciar Sesión</h1>
-          <p className="text-sm text-slate-400 text-center mb-10">Ingresa tus credenciales para acceder</p>
+      {/* Contenedor glassmorphism */}
+      <div className="relative z-10 w-full max-w-[420px]">
+        <div className="backdrop-blur-xl bg-white/[0.07] rounded-2xl border border-white/[0.12] shadow-[0_8px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.1)] p-8 sm:p-10">
+          {/* Logo con resplandor */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="relative mb-5">
+              <div className="absolute inset-0 blur-2xl bg-[#7c3aed]/30 rounded-full scale-150" />
+              <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.4)]">
+                <svg width="44" height="44" viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 65 C45 20 75 5 100 5 C125 5 155 20 185 65" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="6" strokeLinecap="round" />
+                  <path d="M100 25 C30 25 5 85 5 85 C5 85 30 145 100 145 C170 145 195 85 195 85 C195 85 170 25 100 25Z" fill="rgba(255,255,255,0.15)" />
+                  <path d="M100 40 C45 40 25 85 25 85 C25 85 45 130 100 130 C155 130 175 85 175 85 C175 85 155 40 100 40Z" fill="white" />
+                  <circle cx="100" cy="85" r="38" fill="white" />
+                  <circle cx="100" cy="85" r="20" fill="#1a0a2e" />
+                  <circle cx="108" cy="77" r="6" fill="white" opacity="0.9" />
+                </svg>
+              </div>
+            </div>
+            <span className="text-[11px] font-bold text-white/40 tracking-[0.3em] uppercase mb-3">opticællen</span>
+            <h1 className="text-2xl font-extrabold text-white tracking-tight">Iniciar Sesión</h1>
+          </div>
 
           {/* Error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 text-red-600 text-sm text-center">
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 mb-6 text-red-300 text-sm text-center backdrop-blur-sm">
               {error}
             </div>
           )}
 
-          {/* Form */}
-          <form onSubmit={handleSubmit}>
-            {/* Section: Credenciales */}
-            <div className="mb-8">
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 rounded-lg bg-[#7c3aed]/10 flex items-center justify-center">
-                  <Lock className="w-3.5 h-3.5 text-[#7c3aed]" />
-                </div>
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Credenciales</span>
-              </div>
-
-              <div className="space-y-4">
-                {/* Email */}
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
-                    <input
-                      type="text"
-                      value={username}
-                      onChange={e => setUsername(e.target.value)}
-                      className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
-                      placeholder="tu@correo.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                {/* Password */}
-                <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contraseña</label>
-                  <div className="relative">
-                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}
-                      className="w-full pl-11 pr-12 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
-                      placeholder="••••••••"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="w-[18px] h-[18px]" /> : <Eye className="w-[18px] h-[18px]" />}
-                    </button>
-                  </div>
-                </div>
+          {/* Formulario */}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Correo */}
+            <div>
+              <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Correo Electrónico</label>
+              <div className="relative group">
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
+                <input
+                  type="text"
+                  value={username}
+                  onChange={e => setUsername(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3.5 bg-white/[0.05] rounded-xl border border-white/[0.08] text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/40 focus:border-[#7c3aed]/30 focus:bg-white/[0.08] transition-all"
+                  placeholder="tu@correo.com"
+                  required
+                />
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="h-px bg-slate-100 mb-6" />
+            {/* Contraseña */}
+            <div>
+              <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-2">Contraseña</label>
+              <div className="relative group">
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within:text-[#a78bfa] transition-colors" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  className="w-full pl-11 pr-12 py-3.5 bg-white/[0.05] rounded-xl border border-white/[0.08] text-sm text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/40 focus:border-[#7c3aed]/30 focus:bg-white/[0.08] transition-all"
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
 
-            {/* Remember + Forgot */}
-            <div className="flex items-center justify-between mb-8">
+            {/* Recordarme + Olvidaste */}
+            <div className="flex items-center justify-between pt-1">
               <label className="flex items-center gap-2.5 cursor-pointer select-none">
                 <div className="relative">
                   <input
@@ -121,26 +112,26 @@ export default function Login() {
                     onChange={e => setRemember(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-5 h-5 border-2 border-slate-300 rounded-lg peer-checked:border-[#7c3aed] peer-checked:bg-[#7c3aed] transition-all flex items-center justify-center">
+                  <div className="w-4 h-4 border border-white/20 rounded peer-checked:border-[#7c3aed] peer-checked:bg-[#7c3aed] transition-all flex items-center justify-center">
                     {remember && (
-                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     )}
                   </div>
                 </div>
-                <span className="text-sm text-slate-600">Recordarme</span>
+                <span className="text-xs text-white/40">Recordarme</span>
               </label>
-              <button type="button" className="text-sm text-[#7c3aed] hover:text-[#6b21a8] font-semibold transition-colors">
+              <button type="button" className="text-xs text-[#a78bfa] hover:text-[#c4b5fd] font-medium transition-colors">
                 ¿Olvidaste tu contraseña?
               </button>
             </div>
 
-            {/* Submit */}
+            {/* Botón iniciar sesión */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#7c3aed] hover:bg-[#6b21a8] disabled:opacity-50 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-purple-500/25 text-[15px] flex items-center justify-center gap-2.5"
+              className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] disabled:opacity-50 text-white font-bold py-4 rounded-xl transition-all shadow-[0_4px_20px_rgba(124,58,237,0.3)] hover:shadow-[0_4px_30px_rgba(124,58,237,0.5)] text-sm flex items-center justify-center gap-3"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -150,21 +141,16 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Divider */}
-          <div className="flex items-center gap-3 my-8">
-            <div className="flex-1 h-px bg-slate-100" />
-            <span className="text-[11px] text-slate-300 font-medium">o</span>
-            <div className="flex-1 h-px bg-slate-100" />
+          {/* Crear cuenta — enlace sutil */}
+          <div className="mt-8 text-center">
+            <Link to="/register" className="text-xs text-white/30 hover:text-[#a78bfa] transition-colors font-medium">
+              Crear una cuenta nueva
+            </Link>
           </div>
-
-          {/* Register link */}
-          <Link to="/register" className="w-full flex items-center justify-center gap-2 py-3.5 rounded-lg border-2 border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all">
-            Crear una cuenta nueva
-          </Link>
         </div>
 
         {/* Footer */}
-        <p className="text-center text-xs text-white/50 mt-6">
+        <p className="text-center text-[10px] text-white/20 mt-8 tracking-wide">
           © 2026 opticællen. Todos los derechos reservados.
         </p>
       </div>
