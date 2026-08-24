@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
@@ -143,17 +142,6 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Divider */}
-          <div className="flex items-center gap-3 my-8">
-            <div className="flex-1 h-px bg-slate-100" />
-            <span className="text-[11px] text-slate-300 font-medium">o</span>
-            <div className="flex-1 h-px bg-slate-100" />
-          </div>
-
-          {/* Register link */}
-          <Link to="/register" className="w-full flex items-center justify-center gap-2 py-3.5 rounded-lg border-2 border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all">
-            Crear una cuenta nueva
-          </Link>
         </div>
 
         {/* Footer */}
