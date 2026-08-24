@@ -31,15 +31,8 @@ export default function Login() {
         <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8 sm:p-10">
           {/* Logo */}
           <div className="flex flex-col items-center mb-8">
-            <div className="w-20 h-20 rounded-lg bg-[#1a1a2e] flex items-center justify-center mb-4 shadow-xl">
-              <svg width="40" height="40" viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 65 C45 20 75 5 100 5 C125 5 155 20 185 65" fill="none" stroke="#1a1a2e" strokeWidth="7" strokeLinecap="round" />
-                <path d="M100 25 C30 25 5 85 5 85 C5 85 30 145 100 145 C170 145 195 85 195 85 C195 85 170 25 100 25Z" fill="#7c3aed" />
-                <path d="M100 40 C45 40 25 85 25 85 C25 85 45 130 100 130 C155 130 175 85 175 85 C175 85 155 40 100 40Z" fill="white" />
-                <circle cx="100" cy="85" r="38" fill="#7c3aed" />
-                <circle cx="100" cy="85" r="16" fill="#0f0720" />
-                <circle cx="107" cy="78" r="5" fill="white" opacity="0.9" />
-              </svg>
+            <div className="mb-4">
+              <img src={`${import.meta.env.BASE_URL}logo.png.png`} alt="OptiÆllen" className="w-40 h-auto drop-shadow-lg" />
             </div>
             <span className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase">opticællen</span>
           </div>
