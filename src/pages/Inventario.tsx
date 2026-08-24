@@ -10,6 +10,75 @@ const categoryColors: Record<ProductCategory, string> = {
   'Accesorios': 'bg-emerald-50 text-emerald-700 border border-emerald-200',
 };
 
+type ProductFormData = {
+  name: string; model: string; category: ProductCategory;
+  price: string; cost: string; stock: string;
+  brand: string; type: string; color: string;
+};
+
+function ProductForm({ form, setForm, onSave, onCancel, title }: {
+  form: ProductFormData; setForm: (f: ProductFormData) => void;
+  onSave: () => void; onCancel: () => void; title: string;
+}) {
+  const update = (field: keyof ProductFormData, value: string) => setForm({ ...form, [field]: value });
+  return (
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg w-full max-w-2xl shadow-2xl border border-slate-200/80 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-6 sm:p-8 border-b border-slate-100 sticky top-0 bg-white rounded-t-3xl z-10">
+          <h2 className="text-xl font-bold text-slate-900 tracking-tight">{title}</h2>
+          <button onClick={onCancel} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"><X className="w-4 h-4 text-slate-500" /></button>
+        </div>
+        <div className="p-6 sm:p-8 space-y-6">
+          <div>
+            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
+              <span className="w-8 h-px bg-slate-200" /> Información general
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Nombre *</label>
+                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Gafas Urban Chic" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Modelo</label>
+                <input type="text" value={form.model} onChange={e => update('model', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: UC-2024" /></div>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
+              <span className="w-8 h-px bg-slate-200" /> Clasificación
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Categoría</label>
+                <select value={form.category} onChange={e => update('category', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                  {(['Monturas', 'Lentes de Contacto', 'Cristales', 'Accesorios'] as ProductCategory[]).map(c => (<option key={c} value={c}>{c}</option>))}</select></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Marca</label>
+                <input type="text" value={form.brand} onChange={e => update('brand', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Ray-Ban" /></div>
+            </div>
+            <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Tipo</label>
+              <input type="text" value={form.type} onChange={e => update('type', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Acetato, Metal, Diario..." /></div>
+            <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Color de armazón / montura</label>
+              <input type="text" value={form.color} onChange={e => update('color', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Negro, Carey, Dorado..." /></div>
+          </div>
+          <div>
+            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
+              <span className="w-8 h-px bg-slate-200" /> Detalles comerciales
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Costo Real</label>
+                <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Precio de Venta *</label>
+                <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Stock</label>
+                <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0" /></div>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-end gap-3 p-6 sm:p-8 border-t border-slate-100 bg-slate-50/50 rounded-b-3xl">
+          <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200 transition-all">Cancelar</button>
+          <button onClick={onSave} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/30 transition-all">Guardar</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Inventario() {
   const { products, setProducts } = useApp();
   const [search, setSearch] = useState('');
@@ -61,68 +130,6 @@ export default function Inventario() {
   };
 
   const handleDelete = (id: string) => setProducts(prev => prev.filter(p => p.id !== id));
-
-  const ProductForm = ({ form, setForm, onSave, onCancel, title }: {
-    form: typeof newProduct; setForm: any; onSave: () => void; onCancel: () => void; title: string;
-  }) => (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg w-full max-w-2xl shadow-2xl border border-slate-200/80 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 sm:p-8 border-b border-slate-100 sticky top-0 bg-white rounded-t-3xl z-10">
-          <h2 className="text-xl font-bold text-slate-900 tracking-tight">{title}</h2>
-          <button onClick={onCancel} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"><X className="w-4 h-4 text-slate-500" /></button>
-        </div>
-        <div className="p-6 sm:p-8 space-y-6">
-          {/* Información general */}
-          <div>
-            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
-              <span className="w-8 h-px bg-slate-200" /> Información general
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Nombre *</label>
-                <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Gafas Urban Chic" /></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Modelo</label>
-                <input type="text" value={form.model} onChange={e => setForm({ ...form, model: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: UC-2024" /></div>
-            </div>
-          </div>
-          {/* Clasificación */}
-          <div>
-            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
-              <span className="w-8 h-px bg-slate-200" /> Clasificación
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Categoría</label>
-                <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value as ProductCategory })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
-                  {(['Monturas', 'Lentes de Contacto', 'Cristales', 'Accesorios'] as ProductCategory[]).map(c => (<option key={c} value={c}>{c}</option>))}</select></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Marca</label>
-                <input type="text" value={form.brand} onChange={e => setForm({ ...form, brand: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Ray-Ban" /></div>
-            </div>
-            <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Tipo</label>
-              <input type="text" value={form.type} onChange={e => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Acetato, Metal, Diario..." /></div>
-            <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Color de armazón / montura</label>
-              <input type="text" value={form.color} onChange={e => setForm({ ...form, color: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Negro, Carey, Dorado..." /></div>
-          </div>
-          {/* Detalles comerciales */}
-          <div>
-            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
-              <span className="w-8 h-px bg-slate-200" /> Detalles comerciales
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Costo Real</label>
-                <input type="number" value={form.cost} onChange={e => setForm({ ...form, cost: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Precio de Venta *</label>
-                <input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Stock</label>
-                <input type="number" value={form.stock} onChange={e => setForm({ ...form, stock: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0" /></div>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-end gap-3 p-6 sm:p-8 border-t border-slate-100 bg-slate-50/50 rounded-b-3xl">
-          <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200 transition-all">Cancelar</button>
-          <button onClick={onSave} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/30 transition-all">Guardar</button>
-        </div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="space-y-6 sm:space-y-8">
