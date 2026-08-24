@@ -30,8 +30,8 @@ function MobileBottomNav({ onMenuOpen }: { onMenuOpen: () => void }) {
               className={`relative flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all min-w-[64px] ${active ? 'text-white' : 'text-white/40'}`}
             >
               {active && <div className="absolute inset-0 bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] rounded-lg shadow-lg shadow-purple-500/20" />}
-              <Icon className={`relative w-5 h-5 ${active ? 'text-white' : 'text-white/50'}`} strokeWidth={active ? 2.5 : 2} />
-              <span className={`relative text-[10px] font-bold tracking-wide ${active ? 'text-white' : 'text-white/50'}`}>{item.label}</span>
+              <Icon className={`relative w-5 h-5 ${active ? 'text-white' : 'text-white/60'}`} strokeWidth={active ? 2.5 : 2} />
+              <span className={`relative text-[11px] font-bold tracking-wide ${active ? 'text-white' : 'text-white/60'}`}>{item.label}</span>
             </NavLink>
           );
         })}
@@ -119,16 +119,16 @@ export default function Layout() {
                 </div>
               </button>
               <div className="hidden lg:block">
-                <h1 className="text-[15px] font-extrabold text-slate-900 leading-none">Dashboard</h1>
-                <p className="text-[11px] text-slate-400 mt-0.5">Resumen general del negocio</p>
+                <h1 className="text-[15px] font-extrabold text-slate-900 leading-none tracking-tight">Dashboard</h1>
+                <p className="text-xs text-slate-500 mt-0.5 font-medium">Resumen general del negocio</p>
               </div>
               <div className="lg:hidden flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow">
-                  <span className="text-white text-[11px] font-bold">{user?.name?.charAt(0) || 'A'}</span>
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow ring-1 ring-purple-200">
+                  <span className="text-white text-xs font-bold">{user?.name?.charAt(0) || 'A'}</span>
                 </div>
                 <div>
-                  <p className="text-[13px] font-bold text-slate-900 leading-none">{user?.name?.split(' ')[0] || 'Admin'}</p>
-                  <p className="text-[10px] text-slate-400">opticællen</p>
+                  <p className="text-sm font-bold text-slate-900 leading-none tracking-tight">{user?.name?.split(' ')[0] || 'Admin'}</p>
+                  <p className="text-xs text-slate-600 font-medium">opticællen</p>
                 </div>
               </div>
               <div className="hidden lg:flex items-center flex-1 max-w-md ml-8">

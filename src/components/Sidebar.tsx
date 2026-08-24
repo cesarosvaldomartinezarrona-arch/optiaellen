@@ -74,7 +74,7 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
             <h1 className="text-[16px] font-extrabold tracking-tight text-white leading-none">
               OptiAEllen
             </h1>
-            <p className="text-[9px] text-white/35 tracking-wide mt-1">Ver bien es vivir mejor</p>
+            <p className="text-[10px] text-white/50 tracking-wide mt-1">Ver bien es vivir mejor</p>
           </div>
         )}
         {isMobile && (
@@ -95,7 +95,7 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
           .map((section) => (
             <div key={section.label}>
               {!collapsed && (
-                <p className="text-[9px] font-bold text-white/20 uppercase tracking-[0.14em] px-3 mb-2">
+                <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.14em] px-3 mb-2.5">
                   {section.label}
                 </p>
               )}
@@ -109,13 +109,13 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
                       key={item.to}
                       to={item.to}
                       onClick={isMobile ? onMobileClose : undefined}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-colors ${
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13.5px] font-medium transition-colors ${
                         isActive
-                          ? 'bg-[#7c3aed] text-white'
-                          : 'text-white/40 hover:text-white/80 hover:bg-white/[0.04]'
+                          ? 'bg-[#7c3aed] text-white shadow-sm'
+                          : 'text-white/65 hover:text-white hover:bg-white/[0.07]'
                       }`}
                     >
-                      <Icon className={`w-[18px] h-[18px] flex-shrink-0 ${isActive ? 'text-white' : 'text-white/40'}`} strokeWidth={1.9} />
+                      <Icon className={`w-[18px] h-[18px] flex-shrink-0 ${isActive ? 'text-white' : 'text-white/60'}`} strokeWidth={1.9} />
                       {!collapsed && <span className="truncate">{item.label}</span>}
                       {!collapsed && badge > 0 && (
                         <span className="ml-auto bg-[#ef4444] text-white text-[11px] font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">
@@ -144,7 +144,7 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose }: Sidebar
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold text-white leading-none truncate">{user.name || 'Admin Ruiz'}</p>
-              <p className="text-[10px] text-white/35 capitalize leading-none mt-1">{user.role === 'admin' ? 'Administrador' : user.role}</p>
+              <p className="text-[11px] text-white/50 capitalize leading-none mt-1">{user.role === 'admin' ? 'Administrador' : user.role}</p>
             </div>
           </div>
         )}
