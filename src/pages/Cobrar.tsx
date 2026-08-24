@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { CreditCard, Banknote, Building2, Wallet, Check, ArrowRight, Printer } from 'lucide-react';
+import { CreditCard, Banknote, Building2, Wallet, Check, ArrowRight, Printer, MessageCircle } from 'lucide-react';
 import type { PaymentMethod } from '../types';
 
 function buildSaleTicketHTML(opticsName: string, data: {
@@ -69,7 +69,7 @@ function openTicketWindow(html: string) {
 }
 
 export default function Cobrar() {
-  const { pendingPayments, setPendingPayments, setSales, opticsName, sales } = useApp();
+  const { pendingPayments, setPendingPayments, setSales, opticsName, sales, patients } = useApp();
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [paymentData, setPaymentData] = useState({ method: 'Efectivo' as PaymentMethod, cashAmount: '', cardReference: '', partialAmount: '' });
@@ -122,6 +122,44 @@ export default function Cobrar() {
       date: new Date().toLocaleString('es-MX'),
     });
     openTicketWindow(html);
+  };
+
+  const handleSendWhatsApp = () => {
+    if (!lastPaidSaleId) return;
+    const sale = sales.find(s => s.id === lastPaidSaleId);
+    if (!sale) return;
+    const patient = patients.find(p => p.name === sale.patientName);
+    const phone = patient?.phone?.replace(/[^0-9+]/g, '') || '';
+    const line = '─'.repeat(28);
+    const itemsText = sale.items.map(i =>
+      `• ${i.product.name} x${i.quantity}  $${(i.product.price * i.quantity).toLocaleString('es-MX', { minimumFractionDigits: 2 })}`
+    ).join('\n');
+    const text = [
+      `*${opticsName}*`,
+      'Ver bien es vivir mejor',
+      '',
+      `*TICKET DE VENTA*`,
+      line,
+      `Venta: ${sale.id}`,
+      `Fecha: ${new Date().toLocaleString('es-MX')}`,
+      `Cliente: ${sale.patientName}`,
+      `Pago: ${paymentData.method}`,
+      line,
+      '',
+      itemsText,
+      '',
+      line,
+      `Subtotal: $${sale.subtotal.toLocaleString('es-MX', { minimumFractionDigits: 2 })}`,
+      `IVA (16%): $${sale.tax.toLocaleString('es-MX', { minimumFractionDigits: 2 })}`,
+      `*TOTAL: $${sale.total.toLocaleString('es-MX', { minimumFractionDigits: 2 })}*`,
+      line,
+      '',
+      '¡Gracias por su compra! 💜',
+    ].join('\n');
+    const url = phone
+      ? `https://wa.me/${phone}?text=${encodeURIComponent(text)}`
+      : `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
   };
 
   const statusColor = (s: string) => s === 'Pendiente' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-blue-50 text-blue-700 border border-blue-200';
@@ -254,11 +292,15 @@ export default function Cobrar() {
                 className="flex-1 flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-lg text-sm font-bold transition-all shadow-md shadow-amber-500/25">
                 <Printer className="w-4 h-4" /> Imprimir Ticket
               </button>
-              <button onClick={() => { setShowSuccess(false); setSelectedPayment(null); setPaymentData({ method: 'Efectivo', cashAmount: '', cardReference: '', partialAmount: '' }); setLastPaidSaleId(null); }}
-                className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-lg text-sm font-bold transition-colors">
-                Cerrar
+              <button onClick={handleSendWhatsApp}
+                className="flex-1 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-lg text-sm font-bold transition-all shadow-md shadow-emerald-500/25">
+                <MessageCircle className="w-4 h-4" /> WhatsApp
               </button>
             </div>
+            <button onClick={() => { setShowSuccess(false); setSelectedPayment(null); setPaymentData({ method: 'Efectivo', cashAmount: '', cardReference: '', partialAmount: '' }); setLastPaidSaleId(null); }}
+              className="w-full mt-3 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-lg text-sm font-bold transition-colors">
+              Cerrar
+            </button>
           </div>
         </div>
       )}
