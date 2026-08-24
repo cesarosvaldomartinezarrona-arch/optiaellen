@@ -4,14 +4,18 @@ import type { User, UserRole } from '../types';
 
 interface AuthContextType {
   user: User | null;
+  users: User[];
   login: (username: string, password: string) => boolean;
   logout: () => void;
   hasPermission: (permission: string) => boolean;
+  addUser: (data: { username: string; name: string; role: UserRole; password: string }) => void;
+  updateUser: (id: string, data: Partial<User> & { password?: string }) => void;
+  deleteUser: (id: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const USERS: (User & { password: string })[] = [
+const INITIAL_USERS: (User & { password: string })[] = [
   { id: 'U001', username: 'admin', password: 'admin123', name: 'Administrador', role: 'admin' },
   { id: 'U002', username: 'vendedor', password: 'vendedor123', name: 'Vendedor General', role: 'comprador' },
 ];
@@ -35,8 +39,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return saved ? JSON.parse(saved) : null;
   });
 
+  const [usersList, setUsersList] = useState<(User & { password: string })[]>(() => {
+    const saved = localStorage.getItem('optia_users');
+    return saved ? JSON.parse(saved) : INITIAL_USERS;
+  });
+
+  const saveUsers = (list: (User & { password: string })[]) => {
+    setUsersList(list);
+    localStorage.setItem('optia_users', JSON.stringify(list));
+  };
+
   const login = useCallback((username: string, password: string): boolean => {
-    const found = USERS.find(u => u.username === username && u.password === password);
+    const found = usersList.find(u => u.username === username && u.password === password);
     if (found) {
       const u: User = { id: found.id, username: found.username, name: found.name, role: found.role };
       setUser(u);
@@ -44,7 +58,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return true;
     }
     return false;
-  }, []);
+  }, [usersList]);
 
   const logout = useCallback(() => {
     setUser(null);
@@ -56,8 +70,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return getPermissions(user.role).includes(permission);
   }, [user]);
 
+  const addUser = useCallback((data: { username: string; name: string; role: UserRole; password: string }) => {
+    const newUser: User & { password: string } = {
+      id: `U${String(usersList.length + 1).padStart(3, '0')}`,
+      ...data,
+    };
+    saveUsers([...usersList, newUser]);
+  }, [usersList]);
+
+  const updateUser = useCallback((id: string, data: Partial<User> & { password?: string }) => {
+    saveUsers(usersList.map(u => u.id === id ? { ...u, ...data } : u));
+  }, [usersList]);
+
+  const deleteUser = useCallback((id: string) => {
+    saveUsers(usersList.filter(u => u.id !== id));
+  }, [usersList]);
+
+  const users: User[] = usersList.map(({ password: _, ...u }) => u);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, hasPermission }}>
+    <AuthContext.Provider value={{ user, users, login, logout, hasPermission, addUser, updateUser, deleteUser }}>
       {children}
     </AuthContext.Provider>
   );

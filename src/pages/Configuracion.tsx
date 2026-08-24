@@ -1,12 +1,19 @@
 import { useState } from 'react';
-import { User, Bell, Palette, Shield, Database, Check } from 'lucide-react';
+import { User, Bell, Palette, Shield, Database, Check, Users, Plus, Edit2, Trash2, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
+import type { UserRole } from '../types';
 
 export default function Configuracion() {
   const { opticsName, setOpticsName } = useApp();
+  const { users, addUser, updateUser, deleteUser, user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('Perfil de Usuario');
   const [showSaved, setShowSaved] = useState(false);
   const [mobileTabOpen, setMobileTabOpen] = useState(false);
+
+  const [showUserModal, setShowUserModal] = useState(false);
+  const [editingUserId, setEditingUserId] = useState<string | null>(null);
+  const [userForm, setUserForm] = useState({ username: '', name: '', role: 'comprador' as UserRole, password: '' });
 
   const [form, setForm] = useState({
     name: 'Administrador',
@@ -19,6 +26,7 @@ export default function Configuracion() {
 
   const tabs = [
     { icon: User, label: 'Perfil de Usuario' },
+    { icon: Users, label: 'Usuarios' },
     { icon: Bell, label: 'Notificaciones' },
     { icon: Palette, label: 'Apariencia' },
     { icon: Shield, label: 'Seguridad' },
@@ -33,6 +41,38 @@ export default function Configuracion() {
 
   const update = (field: string, value: string) => {
     setForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const openAddUser = () => {
+    setEditingUserId(null);
+    setUserForm({ username: '', name: '', role: 'comprador', password: '' });
+    setShowUserModal(true);
+  };
+
+  const openEditUser = (u: { id: string; username: string; name: string; role: UserRole }) => {
+    setEditingUserId(u.id);
+    setUserForm({ username: u.username, name: u.name, role: u.role, password: '' });
+    setShowUserModal(true);
+  };
+
+  const handleSaveUser = () => {
+    if (!userForm.username || !userForm.name) return;
+    if (editingUserId) {
+      const updateData: Partial<any> = { username: userForm.username, name: userForm.name, role: userForm.role };
+      if (userForm.password) updateData.password = userForm.password;
+      updateUser(editingUserId, updateData);
+    } else {
+      if (!userForm.password) return;
+      addUser(userForm);
+    }
+    setShowUserModal(false);
+    setShowSaved(true);
+    setTimeout(() => setShowSaved(false), 2000);
+  };
+
+  const handleDeleteUser = (id: string) => {
+    if (id === currentUser?.id) return;
+    deleteUser(id);
   };
 
   return (
@@ -141,6 +181,52 @@ export default function Configuracion() {
             </div>
           )}
 
+          {activeTab === 'Usuarios' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-slate-500">Gestiona los usuarios y roles del sistema</p>
+                <button onClick={openAddUser}
+                  className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-md flex items-center gap-2 hover:shadow-lg transition-all">
+                  <Plus className="w-4 h-4" /> Nuevo Usuario
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {users.map(u => (
+                  <div key={u.id} className="flex items-center justify-between p-5 bg-slate-50 rounded-lg border border-slate-100 hover:border-slate-200 transition-all">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center shadow-sm ${u.role === 'admin' ? 'bg-gradient-to-br from-[#7c3aed] to-[#6d28d9]' : 'bg-slate-200'}`}>
+                        <span className="text-sm font-bold text-white">{u.name.charAt(0)}</span>
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-slate-800">{u.name}</p>
+                        <p className="text-xs text-slate-400">@{u.username}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${u.role === 'admin' ? 'bg-purple-100 text-purple-700 border border-purple-200' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
+                        {u.role === 'admin' ? 'Administrador' : 'Vendedor'}
+                      </span>
+                      {u.id !== currentUser?.id && (
+                        <div className="flex items-center gap-1">
+                          <button onClick={() => openEditUser(u)} className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors">
+                            <Edit2 className="w-3.5 h-3.5 text-slate-500" />
+                          </button>
+                          <button onClick={() => handleDeleteUser(u.id)} className="w-8 h-8 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:bg-red-50 hover:border-red-200 transition-colors">
+                            <Trash2 className="w-3.5 h-3.5 text-slate-500 hover:text-red-500" />
+                          </button>
+                        </div>
+                      )}
+                      {u.id === currentUser?.id && (
+                        <span className="text-[10px] text-slate-400 font-medium">Tú</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {activeTab === 'Notificaciones' && (
             <div className="space-y-5 sm:space-y-6">
               {[
@@ -227,6 +313,52 @@ export default function Configuracion() {
           )}
         </div>
       </div>
+
+      {showUserModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg w-full max-w-md shadow-2xl border border-slate-200/80">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+              <h3 className="text-lg font-bold text-slate-900">{editingUserId ? 'Editar Usuario' : 'Nuevo Usuario'}</h3>
+              <button onClick={() => setShowUserModal(false)} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors">
+                <X className="w-4 h-4 text-slate-500" />
+              </button>
+            </div>
+            <div className="p-6 space-y-5">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre *</label>
+                <input type="text" value={userForm.name} onChange={e => setUserForm({ ...userForm, name: e.target.value })}
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Nombre completo" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Usuario *</label>
+                <input type="text" value={userForm.username} onChange={e => setUserForm({ ...userForm, username: e.target.value })}
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Nombre de usuario" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Rol *</label>
+                <select value={userForm.role} onChange={e => setUserForm({ ...userForm, role: e.target.value as UserRole })}
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                  <option value="admin">Administrador</option>
+                  <option value="comprador">Vendedor</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">
+                  {editingUserId ? 'Nueva Contraseña (dejar vacío para mantener)' : 'Contraseña *'}
+                </label>
+                <input type="password" value={userForm.password} onChange={e => setUserForm({ ...userForm, password: e.target.value })}
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="••••••••" />
+              </div>
+            </div>
+            <div className="flex justify-end gap-3 p-6 border-t border-slate-100 bg-slate-50/50 rounded-b-lg">
+              <button onClick={() => setShowUserModal(false)} className="px-6 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200 transition-all">Cancelar</button>
+              <button onClick={handleSaveUser} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/30 transition-all">
+                {editingUserId ? 'Guardar Cambios' : 'Crear Usuario'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showSaved && (
         <div className="fixed bottom-6 right-6 bg-emerald-600 text-white px-6 py-3.5 rounded-lg shadow-xl shadow-emerald-500/30 flex items-center gap-2 text-sm font-semibold z-50">
