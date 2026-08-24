@@ -18,8 +18,8 @@ export default function Inventario() {
   const [editProduct, setEditProduct] = useState<string | null>(null);
   const [showSaved, setShowSaved] = useState(false);
 
-  const [newProduct, setNewProduct] = useState({ name: '', model: '', category: 'Monturas' as ProductCategory, price: '', stock: '', brand: '', type: '' });
-  const [editForm, setEditForm] = useState({ name: '', model: '', category: '' as ProductCategory, price: '', stock: '', brand: '', type: '' });
+  const [newProduct, setNewProduct] = useState({ name: '', model: '', category: 'Monturas' as ProductCategory, price: '', cost: '', stock: '', brand: '', type: '', color: '' });
+  const [editForm, setEditForm] = useState({ name: '', model: '', category: '' as ProductCategory, price: '', cost: '', stock: '', brand: '', type: '', color: '' });
 
   const filtered = products.filter(p => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase()) || p.model.toLowerCase().includes(search.toLowerCase());
@@ -35,25 +35,25 @@ export default function Inventario() {
     if (!newProduct.name || !newProduct.price) return;
     setProducts([...products, {
       id: `PRD${String(products.length + 1).padStart(3, '0')}`, name: newProduct.name, model: newProduct.model,
-      category: newProduct.category, price: parseFloat(newProduct.price), stock: parseInt(newProduct.stock) || 0, brand: newProduct.brand, type: newProduct.type,
+      category: newProduct.category, price: parseFloat(newProduct.price), cost: parseFloat(newProduct.cost) || 0, stock: parseInt(newProduct.stock) || 0, brand: newProduct.brand, type: newProduct.type, color: newProduct.color,
     }]);
     setShowAddModal(false);
-    setNewProduct({ name: '', model: '', category: 'Monturas', price: '', stock: '', brand: '', type: '' });
+    setNewProduct({ name: '', model: '', category: 'Monturas', price: '', cost: '', stock: '', brand: '', type: '', color: '' });
   };
 
   const startEdit = (id: string) => {
     const p = products.find(pr => pr.id === id);
     if (!p) return;
     setEditProduct(id);
-    setEditForm({ name: p.name, model: p.model, category: p.category, price: String(p.price), stock: String(p.stock), brand: p.brand || '', type: p.type || '' });
+    setEditForm({ name: p.name, model: p.model, category: p.category, price: String(p.price), cost: String(p.cost || ''), stock: String(p.stock), brand: p.brand || '', type: p.type || '', color: p.color || '' });
   };
 
   const saveEdit = () => {
     if (!editProduct) return;
     setProducts(products.map(p => p.id === editProduct ? {
       ...p, name: editForm.name, model: editForm.model, category: editForm.category,
-      price: parseFloat(editForm.price) || p.price, stock: parseInt(editForm.stock) || p.stock,
-      brand: editForm.brand, type: editForm.type,
+      price: parseFloat(editForm.price) || p.price, cost: parseFloat(editForm.cost) || 0, stock: parseInt(editForm.stock) || p.stock,
+      brand: editForm.brand, type: editForm.type, color: editForm.color,
     } : p));
     setEditProduct(null);
     setShowSaved(true);
@@ -98,14 +98,18 @@ export default function Inventario() {
             </div>
             <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Tipo</label>
               <input type="text" value={form.type} onChange={e => setForm({ ...form, type: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Acetato, Metal, Diario..." /></div>
+            <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Color de armazón / montura</label>
+              <input type="text" value={form.color} onChange={e => setForm({ ...form, color: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Negro, Carey, Dorado..." /></div>
           </div>
           {/* Detalles comerciales */}
           <div>
             <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-slate-200" /> Detalles comerciales
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Precio *</label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Costo Real</label>
+                <input type="number" value={form.cost} onChange={e => setForm({ ...form, cost: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Precio de Venta *</label>
                 <input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Stock</label>
                 <input type="number" value={form.stock} onChange={e => setForm({ ...form, stock: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0" /></div>

@@ -67,11 +67,13 @@ export interface Product {
   model: string;
   category: ProductCategory;
   price: number;
+  cost?: number;
   stock: number;
   image?: string;
   description?: string;
   brand?: string;
   type?: string;
+  color?: string;
 }
 
 export type ProductCategory = 'Monturas' | 'Lentes de Contacto' | 'Cristales' | 'Accesorios';

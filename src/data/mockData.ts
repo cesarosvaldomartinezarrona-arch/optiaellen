@@ -12,21 +12,21 @@ export const patients: Patient[] = [
 ];
 
 export const products: Product[] = [
-  { id: 'PRD001', name: 'Montura Ray-Ban', model: 'Wayfarer RB2140', category: 'Monturas', price: 2800, stock: 15, brand: 'Ray-Ban', type: 'Acetato' },
-  { id: 'PRD002', name: 'Montura Oakley', model: 'Holbrook OO9102', category: 'Monturas', price: 3200, stock: 8, brand: 'Oakley', type: 'Metal' },
-  { id: 'PRD003', name: 'Montura Prada', model: 'PR 17VV', category: 'Monturas', price: 4500, stock: 5, brand: 'Prada', type: 'Acetato' },
-  { id: 'PRD004', name: 'Montura Nike', model: 'N 7189', category: 'Monturas', price: 1800, stock: 20, brand: 'Nike', type: 'Flexible' },
-  { id: 'PRD005', name: 'Lente Contacto Acuvue', model: 'Oasys 1-Day', category: 'Lentes de Contacto', price: 1200, stock: 50, brand: 'Johnson & Johnson', type: 'Diario' },
-  { id: 'PRD006', name: 'Lente Contacto Biofinity', model: 'Torric', category: 'Lentes de Contacto', price: 1800, stock: 30, brand: 'CooperVision', type: 'Tórico' },
-  { id: 'PRD007', name: 'Lente Contacto Air Optix', model: 'Colors', category: 'Lentes de Contacto', price: 900, stock: 40, brand: 'Alcon', type: 'Cosmético' },
-  { id: 'PRD008', name: 'Cristal Antirreflejante', model: '1.67 Alto Índice', category: 'Cristales', price: 1500, stock: 25, brand: 'Essilor', type: 'Antirreflejante' },
-  { id: 'PRD009', name: 'Cristal Blue Light', model: 'Crizal Prevencia', category: 'Cristales', price: 2200, stock: 18, brand: 'Essilor', type: 'Filtro Luz Azul' },
-  { id: 'PRD010', name: 'Cristal Progresivo', model: 'Varilux X', category: 'Cristales', price: 4800, stock: 12, brand: 'Essilor', type: 'Progresivo' },
-  { id: 'PRD011', name: 'Cristal Fotocromático', model: 'Transitions Gen 8', category: 'Cristales', price: 2500, stock: 15, brand: 'Transitions', type: 'Fotocromático' },
-  { id: 'PRD012', name: 'Estuche Premium', model: 'Cuero Negro', category: 'Accesorios', price: 350, stock: 45, brand: 'Genérico', type: 'Estuche' },
-  { id: 'PRD013', name: 'Limpia Cristales Kit', model: 'Spray + Paño', category: 'Accesorios', price: 120, stock: 60, brand: 'OptiClean', type: 'Limpieza' },
-  { id: 'PRD014', name: 'Cadena para Montura', model: 'Metálica Dorada', category: 'Accesorios', price: 180, stock: 35, brand: 'Genérico', type: 'Cadena' },
-  { id: 'PRD015', name: 'Spray Lente Contacto', model: 'ReNu MultiPlus', category: 'Accesorios', price: 250, stock: 40, brand: 'Bausch + Lomb', type: 'Solución' },
+  { id: 'PRD001', name: 'Montura Ray-Ban', model: 'Wayfarer RB2140', category: 'Monturas', price: 2800, cost: 1400, stock: 15, brand: 'Ray-Ban', type: 'Acetato', color: 'Negro' },
+  { id: 'PRD002', name: 'Montura Oakley', model: 'Holbrook OO9102', category: 'Monturas', price: 3200, cost: 1600, stock: 8, brand: 'Oakley', type: 'Metal', color: 'Carey' },
+  { id: 'PRD003', name: 'Montura Prada', model: 'PR 17VV', category: 'Monturas', price: 4500, cost: 2250, stock: 5, brand: 'Prada', type: 'Acetato', color: 'Dorado' },
+  { id: 'PRD004', name: 'Montura Nike', model: 'N 7189', category: 'Monturas', price: 1800, cost: 900, stock: 20, brand: 'Nike', type: 'Flexible', color: 'Azul' },
+  { id: 'PRD005', name: 'Lente Contacto Acuvue', model: 'Oasys 1-Day', category: 'Lentes de Contacto', price: 1200, cost: 600, stock: 50, brand: 'Johnson & Johnson', type: 'Diario' },
+  { id: 'PRD006', name: 'Lente Contacto Biofinity', model: 'Torric', category: 'Lentes de Contacto', price: 1800, cost: 900, stock: 30, brand: 'CooperVision', type: 'Tórico' },
+  { id: 'PRD007', name: 'Lente Contacto Air Optix', model: 'Colors', category: 'Lentes de Contacto', price: 900, cost: 450, stock: 40, brand: 'Alcon', type: 'Cosmético' },
+  { id: 'PRD008', name: 'Cristal Antirreflejante', model: '1.67 Alto Índice', category: 'Cristales', price: 1500, cost: 750, stock: 25, brand: 'Essilor', type: 'Antirreflejante' },
+  { id: 'PRD009', name: 'Cristal Blue Light', model: 'Crizal Prevencia', category: 'Cristales', price: 2200, cost: 1100, stock: 18, brand: 'Essilor', type: 'Filtro Luz Azul' },
+  { id: 'PRD010', name: 'Cristal Progresivo', model: 'Varilux X', category: 'Cristales', price: 4800, cost: 2400, stock: 12, brand: 'Essilor', type: 'Progresivo' },
+  { id: 'PRD011', name: 'Cristal Fotocromático', model: 'Transitions Gen 8', category: 'Cristales', price: 2500, cost: 1250, stock: 15, brand: 'Transitions', type: 'Fotocromático' },
+  { id: 'PRD012', name: 'Estuche Premium', model: 'Cuero Negro', category: 'Accesorios', price: 350, cost: 175, stock: 45, brand: 'Genérico', type: 'Estuche' },
+  { id: 'PRD013', name: 'Limpia Cristales Kit', model: 'Spray + Paño', category: 'Accesorios', price: 120, cost: 60, stock: 60, brand: 'OptiClean', type: 'Limpieza' },
+  { id: 'PRD014', name: 'Cadena para Montura', model: 'Metálica Dorada', category: 'Accesorios', price: 180, cost: 90, stock: 35, brand: 'Genérico', type: 'Cadena', color: 'Dorado' },
+  { id: 'PRD015', name: 'Spray Lente Contacto', model: 'ReNu MultiPlus', category: 'Accesorios', price: 250, cost: 125, stock: 40, brand: 'Bausch + Lomb', type: 'Solución' },
 ];
 
 export const availableLenses: SelectedLens[] = [
