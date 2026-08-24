@@ -135,15 +135,15 @@ export default function Inventario() {
 
       <div className="grid grid-cols-3 gap-5 sm:gap-6">
         <div className="bg-white rounded-lg p-4 sm:p-6 border border-slate-200/80 shadow-sm">
-          <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider p-[2px]">Total</p>
+          <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider lg:p-[2px]">Total</p>
           <p className="text-xl sm:text-3xl font-extrabold text-[#7c3aed] mt-2 sm:mt-3">{totalProducts}</p>
         </div>
         <div className="bg-white rounded-lg p-4 sm:p-6 border border-slate-200/80 shadow-sm">
-          <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider p-[2px]">Valor</p>
+          <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider lg:p-[2px]">Valor</p>
           <p className="text-xl sm:text-3xl font-extrabold text-emerald-600 mt-2 sm:mt-3">${totalValue.toLocaleString()}</p>
         </div>
         <div className="bg-white rounded-lg p-4 sm:p-6 border border-slate-200/80 shadow-sm">
-          <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider p-[2px]">Stock Bajo</p>
+          <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider lg:p-[2px]">Stock Bajo</p>
           <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3"><AlertTriangle className="w-4 h-4 sm:w-6 sm:h-6 text-red-500" /><p className="text-xl sm:text-3xl font-extrabold text-red-600">{lowStockCount}</p></div>
         </div>
       </div>
@@ -155,13 +155,13 @@ export default function Inventario() {
             <input type="text" placeholder="Buscar productos..." value={search} onChange={e => setSearch(e.target.value)}
               className="w-full pl-11 pr-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
           </div>
-          <div className="flex gap-3 overflow-x-auto pb-1 p-[2px]">
+          <div className="flex gap-3 overflow-x-auto pb-1 lg:p-[2px]">
             {['Todos', 'Monturas', 'Lentes', 'Cristales', 'Accesorios'].map((cat, i) => {
               const full = ['Todos', 'Monturas', 'Lentes de Contacto', 'Cristales', 'Accesorios'][i];
               return (
                 <button key={cat} onClick={() => setFilterCategory(full as any)}
-                  className={`px-[18px] py-[12px] m-[2px] rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${filterCategory === full ? 'bg-[#7c3aed] text-white shadow-md' : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border border-slate-200'}`}>
-                  <span className="p-[2px]">{cat}</span>
+                  className={`px-4 py-2.5 lg:px-[18px] lg:py-[12px] lg:m-[2px] rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${filterCategory === full ? 'bg-[#7c3aed] text-white shadow-md' : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border border-slate-200'}`}>
+                  <span className="lg:p-[2px]">{cat}</span>
                 </button>
               );
             })}
