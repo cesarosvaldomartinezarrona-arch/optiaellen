@@ -71,12 +71,12 @@ export default function Login() {
                 <div>
                   <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">Correo Electrónico</label>
                   <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
+                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                     <input
                       type="text"
                       value={username}
                       onChange={e => setUsername(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
+                      className="w-full pl-13 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
                       placeholder="tu@correo.com"
                       required
                     />
@@ -87,12 +87,12 @@ export default function Login() {
                 <div>
                   <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">Contraseña</label>
                   <div className="relative">
-                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
+                    <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      className="w-full pl-12 pr-12 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
+                      className="w-full pl-13 pr-12 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
                       placeholder="••••••••"
                       required
                     />
