@@ -28,22 +28,29 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#6b3fa0] via-[#7c4db8] to-[#a78bfa] flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-[440px]">
-        <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-10 sm:p-12">
+        <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8 sm:p-10">
           {/* Logo */}
-          <div className="flex flex-col items-center mb-10">
-            <div className="mb-5">
-              <img src={`${import.meta.env.BASE_URL}logo.png`} alt="OptiÆllen" className="w-40 h-auto drop-shadow-lg" />
+          <div className="flex flex-col items-center mb-8">
+            <div className="w-20 h-20 rounded-lg bg-[#1a1a2e] flex items-center justify-center mb-4 shadow-xl">
+              <svg width="40" height="40" viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 65 C45 20 75 5 100 5 C125 5 155 20 185 65" fill="none" stroke="#1a1a2e" strokeWidth="7" strokeLinecap="round" />
+                <path d="M100 25 C30 25 5 85 5 85 C5 85 30 145 100 145 C170 145 195 85 195 85 C195 85 170 25 100 25Z" fill="#7c3aed" />
+                <path d="M100 40 C45 40 25 85 25 85 C25 85 45 130 100 130 C155 130 175 85 175 85 C175 85 155 40 100 40Z" fill="white" />
+                <circle cx="100" cy="85" r="38" fill="#7c3aed" />
+                <circle cx="100" cy="85" r="16" fill="#0f0720" />
+                <circle cx="107" cy="78" r="5" fill="white" opacity="0.9" />
+              </svg>
             </div>
             <span className="text-xs font-bold text-slate-400 tracking-[0.2em] uppercase">opticællen</span>
           </div>
 
           {/* Title */}
           <h1 className="text-[26px] font-extrabold text-slate-900 text-center mb-2">Iniciar Sesión</h1>
-          <p className="text-sm text-slate-400 text-center mb-10">Ingresa tus credenciales para acceder</p>
+          <p className="text-sm text-slate-400 text-center mb-8">Ingresa tus credenciales para acceder</p>
 
           {/* Error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8 text-red-600 text-sm text-center">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 text-red-600 text-sm text-center">
               {error}
             </div>
           )}
@@ -51,25 +58,25 @@ export default function Login() {
           {/* Form */}
           <form onSubmit={handleSubmit}>
             {/* Section: Credenciales */}
-            <div className="mb-10">
-              <div className="flex items-center gap-2.5 mb-6">
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-5">
                 <div className="w-6 h-6 rounded-lg bg-[#7c3aed]/10 flex items-center justify-center">
                   <Lock className="w-3.5 h-3.5 text-[#7c3aed]" />
                 </div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Credenciales</span>
               </div>
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {/* Email */}
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">Correo Electrónico</label>
+                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
                   <div className="relative">
-                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                     <input
                       type="text"
                       value={username}
                       onChange={e => setUsername(e.target.value)}
-                      className="w-full pl-13 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
+                      className="w-full pl-12 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
                       placeholder="tu@correo.com"
                       required
                     />
@@ -78,14 +85,14 @@ export default function Login() {
 
                 {/* Password */}
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2.5">Contraseña</label>
+                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Contraseña</label>
                   <div className="relative">
-                    <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      className="w-full pl-13 pr-12 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
+                      className="w-full pl-12 pr-12 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
                       placeholder="••••••••"
                       required
                     />
@@ -102,10 +109,10 @@ export default function Login() {
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-slate-100 mb-8" />
+            <div className="h-px bg-slate-100 mb-6" />
 
             {/* Remember + Forgot */}
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex items-center justify-between mb-8">
               <label className="flex items-center gap-2.5 cursor-pointer select-none">
                 <div className="relative">
                   <input
@@ -144,7 +151,7 @@ export default function Login() {
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 my-10">
+          <div className="flex items-center gap-3 my-8">
             <div className="flex-1 h-px bg-slate-100" />
             <span className="text-[11px] text-slate-300 font-medium">o</span>
             <div className="flex-1 h-px bg-slate-100" />
@@ -157,7 +164,7 @@ export default function Login() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-xs text-white/50 mt-8">
+        <p className="text-center text-xs text-white/50 mt-6">
           © 2026 opticællen. Todos los derechos reservados.
         </p>
       </div>
