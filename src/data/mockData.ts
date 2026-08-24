@@ -1,14 +1,14 @@
 import type { Patient, Prescription, Product, Sale, LabOrder, Expense, DeliveryOrder, PendingPayment, SelectedLens, Treatment } from '../types';
 
 export const patients: Patient[] = [
-  { id: 'P001', name: 'María García López', age: '39', dateOfBirth: '1985-03-15', address: 'Av. Reforma 123, CDMX', phone: '+52 55 1234 5678', reasonForVisit: 'Dolor de cabeza frecuente', discomforts: 'Visión borrosa de lejos', hasIllness: 'No', otherInfo: '', usesGlasses: true, howFeelsWithGlasses: 'No se siente cómoda', occupation: 'Contadora', registrationDate: '2024-01-10' },
-  { id: 'P002', name: 'Carlos Rodríguez Pérez', age: '36', dateOfBirth: '1990-07-22', address: 'Calle Insurgentes 456', phone: '+52 55 8765 4321', reasonForVisit: 'Revisión anual', discomforts: 'Cansancio visual en computadora', hasIllness: 'No', otherInfo: '', usesGlasses: true, howFeelsWithGlasses: 'Bien pero se le empañan', occupation: 'Ingeniero', registrationDate: '2024-01-15' },
-  { id: 'P003', name: 'Ana Martínez Sánchez', age: '46', dateOfBirth: '1978-11-08', address: 'Blvd. Ángeles 789', phone: '+52 55 1122 3344', reasonForVisit: 'Renovar receta', discomforts: 'No ve de cerca', hasIllness: 'Hipertensión', otherInfo: 'Tratamiento con Losartán', usesGlasses: true, howFeelsWithGlasses: 'Necesita nuevos', occupation: 'Doctora', registrationDate: '2024-02-01' },
-  { id: 'P004', name: 'Roberto Hernández Díaz', age: '29', dateOfBirth: '1995-05-30', address: 'Calle Juárez 321', phone: '+52 55 4433 2211', reasonForVisit: 'Primera vez', discomforts: 'Dolor de cabeza', hasIllness: 'No', otherInfo: '', usesGlasses: false, howFeelsWithGlasses: '', occupation: 'Diseñador', registrationDate: '2024-02-10' },
-  { id: 'P005', name: 'Laura Jiménez Flores', age: '36', dateOfBirth: '1988-09-12', address: 'Av. Universidad 654', phone: '+52 55 5566 7788', reasonForVisit: 'Molestia en los ojos', discomforts: 'Ojos rojos y lagrimeo', hasIllness: 'Diabetes tipo 2', otherInfo: 'Control con Metformina', usesGlasses: true, howFeelsWithGlasses: 'Regular', occupation: 'Profesora', registrationDate: '2024-02-15' },
-  { id: 'P006', name: 'Fernando Torres Ruiz', age: '42', dateOfBirth: '1982-01-25', address: 'Calle Morelos 987', phone: '+52 55 9988 7766', reasonForVisit: 'Examen completo', discomforts: 'Visión doble a veces', hasIllness: 'No', otherInfo: 'Cirugía de cataratas previa', usesGlasses: true, howFeelsWithGlasses: 'Necesita cambio', occupation: 'Abogado', registrationDate: '2024-03-01' },
-  { id: 'P007', name: 'Patricia Vargas Mendoza', age: '49', dateOfBirth: '1975-12-03', address: 'Blvd. Díaz Ordaz 147', phone: '+52 55 3344 5566', reasonForVisit: 'Dificultad para leer', discomforts: 'No puede leer letras pequeñas', hasIllness: 'No', otherInfo: '', usesGlasses: false, howFeelsWithGlasses: '', occupation: 'Maestra', registrationDate: '2024-03-05' },
-  { id: 'P008', name: 'Miguel Ángel Castro', age: '24', dateOfBirth: '2000-06-18', address: 'Av. Hidalgo 258', phone: '+52 55 7788 9900', reasonForVisit: 'Revisión de contacto', discomforts: 'Sequedad con lente de contacto', hasIllness: 'No', otherInfo: 'Usa Biofinity Toric', usesGlasses: true, howFeelsWithGlasses: 'Usa más lentes de contacto', occupation: 'Estudiante', registrationDate: '2024-03-10' },
+  { id: 'P001', name: 'María García López', age: '39', dateOfBirth: '1985-03-15', address: 'Av. Reforma 123, CDMX', phone: '+52 55 1234 5678', email: 'maria.garcia@email.com', reasonForVisit: 'Dolor de cabeza frecuente', discomforts: 'Visión borrosa de lejos', hasIllness: 'No', otherInfo: '', usesGlasses: true, howFeelsWithGlasses: 'No se siente cómoda', occupation: 'Contadora', registrationDate: '2024-01-10', biography: 'Paciente con miopía leve desde la adolescencia. Usa lentes de forma intermitente. Trabaja 8h frente a computadora. Antecedentes familiares de miopía.' },
+  { id: 'P002', name: 'Carlos Rodríguez Pérez', age: '36', dateOfBirth: '1990-07-22', address: 'Calle Insurgentes 456', phone: '+52 55 8765 4321', email: 'carlos.rodriguez@email.com', reasonForVisit: 'Revisión anual', discomforts: 'Cansancio visual en computadora', hasIllness: 'No', otherInfo: '', usesGlasses: true, howFeelsWithGlasses: 'Bien pero se le empañan', occupation: 'Ingeniero', registrationDate: '2024-01-15', biography: 'Ingeniero de software con alta exposición a pantallas. Hipermetropía diagnosticada en 2018. Requiere control anual.' },
+  { id: 'P003', name: 'Ana Martínez Sánchez', age: '46', dateOfBirth: '1978-11-08', address: 'Blvd. Ángeles 789', phone: '+52 55 1122 3344', email: 'ana.martinez@email.com', reasonForVisit: 'Renovar receta', discomforts: 'No ve de cerca', hasIllness: 'Hipertensión', otherInfo: 'Tratamiento con Losartán', usesGlasses: true, howFeelsWithGlasses: 'Necesita nuevos', occupation: 'Doctora', registrationDate: '2024-02-01', biography: 'Médica con presbicia incipiente. Miopía moderada con astigmatismo. Control de hipertensión con medicamento.' },
+  { id: 'P004', name: 'Roberto Hernández Díaz', age: '29', dateOfBirth: '1995-05-30', address: 'Calle Juárez 321', phone: '+52 55 4433 2211', email: 'roberto.hernandez@email.com', reasonForVisit: 'Primera vez', discomforts: 'Dolor de cabeza', hasIllness: 'No', otherInfo: '', usesGlasses: false, howFeelsWithGlasses: '', occupation: 'Diseñador', registrationDate: '2024-02-10', biography: 'Diseñador gráfico, primera consulta oftalmológica. Síntomas recientes de astenopia.' },
+  { id: 'P005', name: 'Laura Jiménez Flores', age: '36', dateOfBirth: '1988-09-12', address: 'Av. Universidad 654', phone: '+52 55 5566 7788', email: 'laura.jimenez@email.com', reasonForVisit: 'Molestia en los ojos', discomforts: 'Ojos rojos y lagrimeo', hasIllness: 'Diabetes tipo 2', otherInfo: 'Control con Metformina', usesGlasses: true, howFeelsWithGlasses: 'Regular', occupation: 'Profesora', registrationDate: '2024-02-15', biography: 'Profesora con diabetes tipo 2 controlada. Requiere seguimiento oftalmológico anual por retinopatía.' },
+  { id: 'P006', name: 'Fernando Torres Ruiz', age: '42', dateOfBirth: '1982-01-25', address: 'Calle Morelos 987', phone: '+52 55 9988 7766', email: 'fernando.torres@email.com', reasonForVisit: 'Examen completo', discomforts: 'Visión doble a veces', hasIllness: 'No', otherInfo: 'Cirugía de cataratas previa', usesGlasses: true, howFeelsWithGlasses: 'Necesita cambio', occupation: 'Abogado', registrationDate: '2024-03-01', biography: 'Abogado con miopía alta y cirugía de cataratas en 2020. Graduación con cambios anuales significativos.' },
+  { id: 'P007', name: 'Patricia Vargas Mendoza', age: '49', dateOfBirth: '1975-12-03', address: 'Blvd. Díaz Ordaz 147', phone: '+52 55 3344 5566', email: 'patricia.vargas@email.com', reasonForVisit: 'Dificultad para leer', discomforts: 'No puede leer letras pequeñas', hasIllness: 'No', otherInfo: '', usesGlasses: false, howFeelsWithGlasses: '', occupation: 'Maestra', registrationDate: '2024-03-05', biography: 'Maestra con presbicia. Aún no usa corrección, evalúa primera graduación para cerca.' },
+  { id: 'P008', name: 'Miguel Ángel Castro', age: '24', dateOfBirth: '2000-06-18', address: 'Av. Hidalgo 258', phone: '+52 55 7788 9900', email: 'miguel.castro@email.com', reasonForVisit: 'Revisión de contacto', discomforts: 'Sequedad con lente de contacto', hasIllness: 'No', otherInfo: 'Usa Biofinity Toric', usesGlasses: true, howFeelsWithGlasses: 'Usa más lentes de contacto', occupation: 'Estudiante', registrationDate: '2024-03-10', biography: 'Estudiante universitario, usuario de lentes de contacto tóricos. Presenta síndrome de ojo seco leve.' },
 ];
 
 export const products: Product[] = [
@@ -54,6 +54,7 @@ export const availableTreatments: Treatment[] = [
 ];
 
 export const prescriptions: Prescription[] = [
+  // María García López — evolución anual
   {
     id: 'R001', patientId: 'P001', patientName: 'María García López', date: '2024-11-15', doctor: 'Dr. Elena Ruiz',
     status: 'Vigente',
@@ -63,6 +64,22 @@ export const prescriptions: Prescription[] = [
     selectedLenses: [{ ...availableLenses[0], quantity: 2 }, { ...availableLenses[3], quantity: 2 }],
     treatments: [{ ...availableTreatments[0] }],
     totalLenses: 2800, totalTreatments: 150, grandTotal: 2950,
+  },
+  {
+    id: 'R001-2023', patientId: 'P001', patientName: 'María García López', date: '2023-11-10', doctor: 'Dr. Elena Ruiz',
+    status: 'Vencida',
+    rightEye: { sph: '-2.00', cyl: '-0.50', axis: '180', prisma: '0.00', add: '+0.75', dp: '32', av: '20/20' },
+    leftEye: { sph: '-1.75', cyl: '-0.50', axis: '175', prisma: '0.00', add: '+0.75', dp: '32', av: '20/20' },
+    recommendations: 'Miopía leve estable', observations: 'Control anual',
+    selectedLenses: [], treatments: [], totalLenses: 0, totalTreatments: 0, grandTotal: 0,
+  },
+  {
+    id: 'R001-2022', patientId: 'P001', patientName: 'María García López', date: '2022-10-05', doctor: 'Dr. Elena Ruiz',
+    status: 'Vencida',
+    rightEye: { sph: '-1.75', cyl: '-0.50', axis: '180', prisma: '0.00', add: '+0.50', dp: '32', av: '20/20' },
+    leftEye: { sph: '-1.50', cyl: '-0.25', axis: '175', prisma: '0.00', add: '+0.50', dp: '32', av: '20/20' },
+    recommendations: 'Miopía leve inicial', observations: 'Primera graduación',
+    selectedLenses: [], treatments: [], totalLenses: 0, totalTreatments: 0, grandTotal: 0,
   },
   {
     id: 'R002', patientId: 'P002', patientName: 'Carlos Rodríguez Pérez', date: '2024-10-20', doctor: 'Dr. Elena Ruiz',
@@ -101,6 +118,22 @@ export const prescriptions: Prescription[] = [
     selectedLenses: [{ ...availableLenses[2], quantity: 2 }, { ...availableLenses[5], quantity: 2 }],
     treatments: [{ ...availableTreatments[3] }, { ...availableTreatments[4] }],
     totalLenses: 9400, totalTreatments: 900, grandTotal: 10300,
+  },
+  {
+    id: 'R005-2024', patientId: 'P006', patientName: 'Fernando Torres Ruiz', date: '2024-01-12', doctor: 'Dr. Elena Ruiz',
+    status: 'Vencida',
+    rightEye: { sph: '-5.25', cyl: '-1.75', axis: '160', prisma: '0.50', add: '+2.00', dp: '33', av: '20/30' },
+    leftEye: { sph: '-4.75', cyl: '-1.50', axis: '155', prisma: '0.25', add: '+2.00', dp: '33', av: '20/30' },
+    recommendations: 'Miopía alta progresiva', observations: 'Aumento anual -0.75',
+    selectedLenses: [], treatments: [], totalLenses: 0, totalTreatments: 0, grandTotal: 0,
+  },
+  {
+    id: 'R005-2023', patientId: 'P006', patientName: 'Fernando Torres Ruiz', date: '2023-01-10', doctor: 'Dr. Elena Ruiz',
+    status: 'Vencida',
+    rightEye: { sph: '-4.50', cyl: '-1.50', axis: '160', prisma: '0.25', add: '+1.75', dp: '33', av: '20/25' },
+    leftEye: { sph: '-4.00', cyl: '-1.25', axis: '155', prisma: '0.25', add: '+1.75', dp: '33', av: '20/25' },
+    recommendations: 'Miopía alta', observations: 'Control post-cirugía',
+    selectedLenses: [], treatments: [], totalLenses: 0, totalTreatments: 0, grandTotal: 0,
   },
 ];
 

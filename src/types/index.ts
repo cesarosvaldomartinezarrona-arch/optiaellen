@@ -5,6 +5,7 @@ export interface Patient {
   dateOfBirth: string;
   address: string;
   phone: string;
+  email: string;
   reasonForVisit: string;
   discomforts: string;
   hasIllness: string;
@@ -13,6 +14,7 @@ export interface Patient {
   howFeelsWithGlasses: string;
   occupation: string;
   registrationDate: string;
+  biography?: string;
 }
 
 export interface Prescription {
