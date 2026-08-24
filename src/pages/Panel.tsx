@@ -1,17 +1,15 @@
 import { useApp } from '../context/AppContext';
 import { DollarSign, UserCheck, FlaskConical, AlertTriangle } from 'lucide-react';
-import { XAxis, YAxis, Tooltip, ResponsiveContainer, Area, AreaChart, PieChart, Pie, Cell } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 export default function Panel() {
   const { sales, patients, labOrders, products } = useApp();
 
-  const totalSales = sales.reduce((sum, s) => sum + s.total, 0);
   const totalPatients = patients.length;
   const labPending = labOrders.filter(l => l.status !== 'Listo').length;
   const lowStock = products.filter(p => p.stock < 10).length;
   const recentSales = [...sales].reverse().slice(0, 6);
 
-  // 7 days mock like image
   const last7Days = [
     { name: 'Lun', ventas: 2780 },
     { name: 'Mar', ventas: 3180 },
@@ -23,90 +21,115 @@ export default function Panel() {
   ];
 
   const categoryData = [
-    { name: 'Monturas', value: 45, color: '#7c3aed' },
-    { name: 'Cristales', value: 25, color: '#f59e0b' },
+    { name: 'Monturas', value: 42, color: '#7c3aed' },
+    { name: 'Cristales', value: 28, color: '#f59e0b' },
     { name: 'Contacto', value: 18, color: '#10b981' },
     { name: 'Accesorios', value: 12, color: '#6b7280' },
   ];
 
-  const stats = [
-    { label: 'VENTAS DEL DIA', value: `$${(4280).toLocaleString()}`, sub: '↑ 12.5% vs ayer', subColor: 'text-emerald-500', border: 'border-t-[#7c3aed]', icon: DollarSign, iconBg: 'bg-[#ede9fe] text-[#7c3aed]' },
-    { label: 'PACIENTES ATENDIDOS', value: '18', sub: '↑ 3 mas que ayer', subColor: 'text-emerald-500', border: 'border-t-emerald-500', icon: UserCheck, iconBg: 'bg-emerald-50 text-emerald-600' },
-    { label: 'ORDENES DE LAB', value: '7', sub: '↓ 2 pendientes', subColor: 'text-red-500', border: 'border-t-amber-400', icon: FlaskConical, iconBg: 'bg-amber-50 text-amber-500' },
-    { label: 'STOCK BAJO', value: '4', sub: '↓ Requiere reposicion', subColor: 'text-red-500', border: 'border-t-red-500', icon: AlertTriangle, iconBg: 'bg-red-50 text-red-500' },
-  ];
-
-  // Use real totals where possible but show image-like values for demo
-  const displaySales = totalSales > 0 ? `$${totalSales.toLocaleString('es-MX')}` : stats[0].value;
-  const displayPatients = totalPatients || 18;
-
   return (
     <div className="space-y-6">
-      {/* Page title - hidden on desktop shown via header, but keep for mobile */}
-      <div className="lg:hidden">
-        <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">Dashboard</h1>
-        <p className="text-slate-500 text-sm">Resumen general del negocio</p>
-      </div>
-
-      {/* Stats - 4 cards with top border like image */}
+      {/* Stats - exact like image */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        {stats.map((stat, idx) => {
-          const Icon = stat.icon;
-          const val = idx === 0 ? displaySales : idx === 1 ? String(displayPatients) : idx === 2 ? String(labPending || 7) : String(lowStock || 4);
-          return (
-            <div key={stat.label} className={`bg-white rounded-xl border border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border-t-[3px] ${stat.border}`}>
-              <div className="p-5">
-                <div className="flex items-start justify-between mb-3">
-                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{stat.label}</p>
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${stat.iconBg}`}>
-                    <Icon className="w-4 h-4" strokeWidth={2} />
-                  </div>
-                </div>
-                <p className="text-2xl font-extrabold text-slate-900 tracking-tight">{val}</p>
-                <p className={`text-xs font-medium mt-1 ${stat.subColor}`}>{stat.sub}</p>
+        {/* VENTAS DEL DIA */}
+        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+          <div className="h-1 bg-[#7c3aed]" />
+          <div className="p-5">
+            <div className="flex items-start justify-between mb-3">
+              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">VENTAS DEL DIA</p>
+              <div className="w-8 h-8 rounded-lg bg-[#ede9fe] flex items-center justify-center">
+                <DollarSign className="w-4 h-4 text-[#7c3aed]" strokeWidth={2} />
               </div>
             </div>
-          );
-        })}
+            <p className="text-[22px] font-extrabold text-slate-900 leading-none">${(4280).toLocaleString()}</p>
+            <p className="text-xs font-medium text-emerald-500 mt-1.5 flex items-center gap-1">↑ 12.5% vs ayer</p>
+          </div>
+        </div>
+        {/* PACIENTES ATENDIDOS */}
+        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+          <div className="h-1 bg-emerald-500" />
+          <div className="p-5">
+            <div className="flex items-start justify-between mb-3">
+              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">PACIENTES ATENDIDOS</p>
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+                <UserCheck className="w-4 h-4 text-emerald-600" strokeWidth={2} />
+              </div>
+            </div>
+            <p className="text-[22px] font-extrabold text-slate-900 leading-none">{totalPatients || 18}</p>
+            <p className="text-xs font-medium text-emerald-500 mt-1.5 flex items-center gap-1">↑ 3 mas que ayer</p>
+          </div>
+        </div>
+        {/* ORDENES DE LAB */}
+        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+          <div className="h-1 bg-amber-400" />
+          <div className="p-5">
+            <div className="flex items-start justify-between mb-3">
+              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">ORDENES DE LAB</p>
+              <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                <FlaskConical className="w-4 h-4 text-amber-500" strokeWidth={2} />
+              </div>
+            </div>
+            <p className="text-[22px] font-extrabold text-slate-900 leading-none">{labPending || 7}</p>
+            <p className="text-xs font-medium text-red-500 mt-1.5 flex items-center gap-1">↓ 2 pendientes</p>
+          </div>
+        </div>
+        {/* STOCK BAJO */}
+        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+          <div className="h-1 bg-red-500" />
+          <div className="p-5">
+            <div className="flex items-start justify-between mb-3">
+              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">STOCK BAJO</p>
+              <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
+                <AlertTriangle className="w-4 h-4 text-red-500" strokeWidth={2} />
+              </div>
+            </div>
+            <p className="text-[22px] font-extrabold text-slate-900 leading-none">{lowStock || 4}</p>
+            <p className="text-xs font-medium text-red-500 mt-1.5 flex items-center gap-1">↓ Requiere reposicion</p>
+          </div>
+        </div>
       </div>
 
-      {/* Charts row */}
+      {/* Charts */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Line chart - 7 dias */}
-        <div className="xl:col-span-2 bg-white rounded-xl border border-slate-200/60 shadow-sm p-6">
-          <h3 className="text-sm font-bold text-slate-900 mb-5">Ventas Ultimos 7 Dias</h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <AreaChart data={last7Days} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+        <div className="xl:col-span-2 bg-white rounded-xl border border-slate-200/70 shadow-sm p-6">
+          <h3 className="text-[13px] font-bold text-slate-900 mb-5">Ventas Ultimos 7 Dias</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={last7Days} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
               <defs>
-                <linearGradient id="colorVentas" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.15} />
-                  <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
+                <linearGradient id="ventasFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.14} />
+                  <stop offset="100%" stopColor="#7c3aed" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 11, fontWeight: 500 }} />
-              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#9ca3af', fontSize: 11 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)},000`} width={55} />
-              <Tooltip formatter={(value: any) => [`$${Number(value).toLocaleString()}`, 'Ventas']} contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.08)' }} />
-              <Area type="monotone" dataKey="ventas" stroke="#7c3aed" strokeWidth={2.5} fill="url(#colorVentas)" dot={{ r: 3, fill: '#7c3aed', strokeWidth: 0 }} activeDot={{ r: 5, fill: '#7c3aed' }} />
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11 }} />
+              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 11 }} width={48} tickFormatter={(v) => `$${(v/1000).toFixed(0)},000`} domain={[0, 6000]} ticks={[0,1000,2000,3000,4000,5000,6000]} />
+              <Tooltip
+                formatter={(value: any) => [`$${Number(value).toLocaleString()}`, 'Ventas']}
+                contentStyle={{ borderRadius: 12, border: '1px solid #e5e7eb', fontSize: 12 }}
+                cursor={{ stroke: '#e5e7eb', strokeDasharray: '4 4' }}
+              />
+              <Area type="monotone" dataKey="ventas" stroke="#7c3aed" strokeWidth={2.5} fill="url(#ventasFill)" dot={{ r: 3.5, fill: '#7c3aed', stroke: 'white', strokeWidth: 2 }} activeDot={{ r: 5 }} />
             </AreaChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Donut */}
-        <div className="bg-white rounded-xl border border-slate-200/60 shadow-sm p-6">
-          <h3 className="text-sm font-bold text-slate-900 mb-2">Categorias Vendidas</h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <PieChart>
-              <Pie data={categoryData} cx="50%" cy="50%" innerRadius={70} outerRadius={110} dataKey="value" paddingAngle={0} strokeWidth={0}>
-                {categoryData.map((entry, index) => (<Cell key={index} fill={entry.color} />))}
-              </Pie>
-              <Tooltip formatter={(value: any) => [`${value}%`]} contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0' }} />
-            </PieChart>
-          </ResponsiveContainer>
-          <div className="flex flex-wrap justify-center gap-4 mt-2">
+        <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm p-6 flex flex-col">
+          <h3 className="text-[13px] font-bold text-slate-900 mb-4">Categorias Vendidas</h3>
+          <div className="flex-1 flex items-center justify-center">
+            <ResponsiveContainer width="100%" height={280}>
+              <PieChart>
+                <Pie data={categoryData} cx="50%" cy="50%" innerRadius={78} outerRadius={118} dataKey="value" strokeWidth={0} paddingAngle={0}>
+                  {categoryData.map((entry, index) => (<Cell key={index} fill={entry.color} />))}
+                </Pie>
+                <Tooltip formatter={(value: any) => [`${value}%`, '']} contentStyle={{ borderRadius: 10, border: '1px solid #e5e7eb', fontSize: 12 }} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-3">
             {categoryData.map((cat) => (
               <div key={cat.name} className="flex items-center gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full" style={{ background: cat.color }} />
-                <span className="text-[11px] font-medium text-slate-500">{cat.name}</span>
+                <span className="text-[11px] font-medium text-slate-600">{cat.name}</span>
               </div>
             ))}
           </div>
@@ -114,16 +137,16 @@ export default function Panel() {
       </div>
 
       {/* Actividad Reciente */}
-      <div className="bg-white rounded-xl border border-slate-200/60 shadow-sm overflow-hidden">
-        <div className="px-6 py-4">
-          <h3 className="text-sm font-bold text-slate-900">Actividad Reciente</h3>
+      <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-slate-100">
+          <h3 className="text-[13px] font-bold text-slate-900">Actividad Reciente</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-y border-slate-100 bg-slate-50/50">
+              <tr className="bg-[#f8f7ff] border-b border-slate-100">
                 {['FECHA', 'TIPO', 'DESCRIPCION', 'CLIENTE', 'MONTO', 'ESTADO'].map(h => (
-                  <th key={h} className="text-left text-[11px] font-bold text-slate-400 uppercase tracking-wider px-6 py-3 whitespace-nowrap">{h}</th>
+                  <th key={h} className="text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider px-6 py-3 whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -132,11 +155,11 @@ export default function Panel() {
                 <tr><td colSpan={6} className="px-6 py-10 text-center text-sm text-slate-400">Sin actividad reciente</td></tr>
               ) : recentSales.map((sale) => (
                 <tr key={sale.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-6 py-4 text-sm text-slate-600 whitespace-nowrap">{sale.createdAt}</td>
+                  <td className="px-6 py-4 text-[13px] text-slate-600 whitespace-nowrap">{sale.createdAt}</td>
                   <td className="px-6 py-4"><span className="inline-flex px-2.5 py-1 rounded-full text-[11px] font-semibold bg-violet-50 text-violet-700 border border-violet-200">Venta</span></td>
-                  <td className="px-6 py-4 text-sm text-slate-600 truncate max-w-[200px]">{sale.items.map(i => i.product.name).join(', ')}</td>
-                  <td className="px-6 py-4 text-sm font-medium text-slate-800">{sale.patientName}</td>
-                  <td className="px-6 py-4 text-sm font-bold text-slate-900">${sale.total.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
+                  <td className="px-6 py-4 text-[13px] text-slate-600 truncate max-w-[220px]">{sale.items.map(i => i.product.name).join(', ')}</td>
+                  <td className="px-6 py-4 text-[13px] font-medium text-slate-800">{sale.patientName}</td>
+                  <td className="px-6 py-4 text-[13px] font-bold text-slate-900">${sale.total.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
                       sale.status === 'Pagado' || sale.status === 'Entregado' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
