@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Printer, RotateCcw, Save, X } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Printer, RotateCcw, Save, X, User } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 import SignaturePad from './SignaturePad';
 
 export interface TicketVentaData {
@@ -9,7 +10,7 @@ export interface TicketVentaData {
   paciente: string;
   fechaNacimiento: string;
   direccion: string;
-  clinica: string;
+  sucursal: string;
   rfc: string;
   optometrista: string;
   trabajo: string;
@@ -42,7 +43,7 @@ export const defaultData: TicketVentaData = {
   paciente: '',
   fechaNacimiento: '',
   direccion: '',
-  clinica: '',
+  sucursal: '',
   rfc: '',
   optometrista: '',
   trabajo: '—',
@@ -103,11 +104,76 @@ function formatDateLong(d: string): string {
 interface TicketVentaProps {
   data?: TicketVentaData;
   opticsName?: string;
+  rfc?: string;
   onClose?: () => void;
 }
 
-export default function TicketVenta({ data: initialData, opticsName, onClose }: TicketVentaProps) {
-  const [data, setData] = useState<TicketVentaData>(initialData ?? { ...defaultData });
+export default function TicketVenta({ data: initialData, opticsName, rfc: rfcContext, onClose }: TicketVentaProps) {
+  const { patients, prescriptions, sales } = useApp();
+
+  // Generar folio automático
+  const nextFolio = useMemo(() => {
+    const num = sales.length + 1;
+    return `V${String(num).padStart(4, '0')}`;
+  }, [sales]);
+
+  const [data, setData] = useState<TicketVentaData>(() => {
+    if (initialData) return initialData;
+    return {
+      ...defaultData,
+      folio: nextFolio,
+      sucursal: opticsName ?? '',
+      rfc: rfcContext ?? '',
+    };
+  });
+
+  // Selector de paciente: auto-llena datos + último examen
+  const handlePatientSelect = (patientId: string) => {
+    if (!patientId) {
+      setData(prev => ({
+        ...prev,
+        paciente: '',
+        fechaNacimiento: '',
+        direccion: '',
+        trabajo: '—',
+        graduacion: defaultData.graduacion,
+      }));
+      return;
+    }
+    const patient = patients.find(p => p.id === patientId);
+    if (!patient) return;
+
+    // Buscar la receta más reciente del paciente
+    const patientRx = prescriptions
+      .filter(r => r.patientId === patientId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+
+    setData(prev => ({
+      ...prev,
+      paciente: patient.name.toUpperCase(),
+      fechaNacimiento: patient.dateOfBirth || '',
+      direccion: patient.address || '',
+      trabajo: patient.occupation || '—',
+      graduacion: patientRx ? {
+        od: {
+          dnpL: patientRx.rightEye.dp || '',
+          dnpC: '',
+          alt: '',
+          esfera: patientRx.rightEye.sph || '',
+          cilindro: patientRx.rightEye.cyl || '',
+          ejeAdd: patientRx.rightEye.axis ? `${patientRx.rightEye.axis}°` : '',
+        },
+        oi: {
+          dnpL: patientRx.leftEye.dp || '',
+          dnpC: '',
+          alt: '',
+          esfera: patientRx.leftEye.sph || '',
+          cilindro: patientRx.leftEye.cyl || '',
+          ejeAdd: patientRx.leftEye.axis ? `${patientRx.leftEye.axis}°` : '',
+        },
+      } : prev.graduacion,
+    }));
+  };
 
   const update = (field: string, value: string) => {
     setData(prev => ({ ...prev, [field]: value }));
@@ -220,7 +286,20 @@ export default function TicketVenta({ data: initialData, opticsName, onClose }: 
 
           {/* DATOS DEL PACIENTE */}
           <Section title="Datos del Paciente">
-            <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Seleccionar Paciente</label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <select onChange={e => handlePatientSelect(e.target.value)} defaultValue=""
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] appearance-none transition-all">
+                  <option value="">— Seleccionar paciente registrado —</option>
+                  {patients.map(p => (
+                    <option key={p.id} value={p.id}>{p.name} ({p.id})</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
               <InputField label="Paciente" value={data.paciente} onChange={v => update('paciente', v)} />
               <InputField label="Fecha de Nacimiento" value={data.fechaNacimiento} onChange={v => update('fechaNacimiento', v)} type="date" />
             </div>
@@ -228,7 +307,7 @@ export default function TicketVenta({ data: initialData, opticsName, onClose }: 
               <InputField label="Dirección" value={data.direccion} onChange={v => update('direccion', v)} />
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
-              <InputField label="Clínica" value={data.clinica} onChange={v => update('clinica', v)} />
+              <InputField label="Sucursal" value={data.sucursal} onChange={v => update('sucursal', v)} />
               <InputField label="RFC" value={data.rfc} onChange={v => update('rfc', v)} />
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">

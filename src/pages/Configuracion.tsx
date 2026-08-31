@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import type { UserRole } from '../types';
 
 export default function Configuracion() {
-  const { opticsName, setOpticsName } = useApp();
+  const { opticsName, setOpticsName, rfc, setRfc } = useApp();
   const { users, addUser, updateUser, deleteUser, user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('Perfil de Usuario');
   const [showSaved, setShowSaved] = useState(false);
@@ -21,6 +21,7 @@ export default function Configuracion() {
     phone: '+52 55 1234 5678',
     role: 'Administrador General',
     optica: opticsName,
+    rfc: rfc,
     address: 'Av. Principal 123, Centro, CDMX',
   });
 
@@ -35,6 +36,7 @@ export default function Configuracion() {
 
   const handleSave = () => {
     setOpticsName(form.optica);
+    setRfc(form.rfc);
     setShowSaved(true);
     setTimeout(() => setShowSaved(false), 2500);
   };
@@ -160,10 +162,17 @@ export default function Configuracion() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre de la Óptica</label>
-                <input type="text" value={form.optica} onChange={e => update('optica', e.target.value)}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre de la Óptica</label>
+                  <input type="text" value={form.optica} onChange={e => update('optica', e.target.value)}
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">RFC</label>
+                  <input type="text" value={form.rfc} onChange={e => update('rfc', e.target.value)} placeholder="SDI121109B14"
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                </div>
               </div>
 
               <div>

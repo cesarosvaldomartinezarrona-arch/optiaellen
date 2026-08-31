@@ -37,7 +37,7 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
     paciente: sale.patientName.toUpperCase(),
     fechaNacimiento: defaultData.fechaNacimiento,
     direccion: defaultData.direccion,
-    clinica: opticsName,
+    sucursal: opticsName,
     rfc: defaultData.rfc,
     optometrista: defaultData.optometrista,
     trabajo: defaultData.trabajo,
@@ -62,7 +62,7 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
 }
 
 export default function TicketPage() {
-  const { sales, opticsName } = useApp();
+  const { sales, opticsName, rfc } = useApp();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const saleParam = searchParams.get("sale");
@@ -151,6 +151,7 @@ export default function TicketPage() {
         <TicketVenta
           data={ticketData}
           opticsName={opticsName}
+          rfc={rfc}
           onClose={handleClose}
         />
       )}
