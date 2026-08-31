@@ -36,6 +36,7 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
     fechaVenta: new Date(sale.createdAt).toISOString().split("T")[0],
     paciente: sale.patientName.toUpperCase(),
     fechaNacimiento: defaultData.fechaNacimiento,
+    colonia: defaultData.colonia,
     direccion: defaultData.direccion,
     sucursal: opticsName,
     rfc: defaultData.rfc,

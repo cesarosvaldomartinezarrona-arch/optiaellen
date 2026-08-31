@@ -9,6 +9,7 @@ export interface TicketVentaData {
   fechaVenta: string;
   paciente: string;
   fechaNacimiento: string;
+  colonia: string;
   direccion: string;
   sucursal: string;
   rfc: string;
@@ -43,6 +44,7 @@ export const defaultData: TicketVentaData = {
   fechaVenta: new Date().toISOString().split('T')[0],
   paciente: '',
   fechaNacimiento: '',
+  colonia: '',
   direccion: '',
   sucursal: '',
   rfc: '',
@@ -136,6 +138,7 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
         ...prev,
         paciente: '',
         fechaNacimiento: '',
+        colonia: '',
         direccion: '',
         trabajo: '—',
         graduacion: defaultData.graduacion,
@@ -325,7 +328,8 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
               <InputField label="Paciente" value={data.paciente} onChange={v => update('paciente', v)} />
               <InputField label="Fecha de Nacimiento" value={data.fechaNacimiento} onChange={v => update('fechaNacimiento', v)} type="date" />
             </div>
-            <div className="mt-4">
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <InputField label="Colonia" value={data.colonia} onChange={v => update('colonia', v)} />
               <InputField label="Dirección" value={data.direccion} onChange={v => update('direccion', v)} />
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
