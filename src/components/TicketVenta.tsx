@@ -170,7 +170,7 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
       </div>
 
       {/* Ticket card */}
-      <div className="max-w-[820px] mx-auto mb-6 bg-white rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.10)] overflow-hidden print:shadow-none print:rounded-none print:max-w-full">
+      <div className="print-card max-w-[820px] mx-auto mb-6 bg-white rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.10)] overflow-hidden print:shadow-none print:rounded-none print:max-w-full">
 
         {/* Header */}
         <div className="bg-gradient-to-r from-[#3a0d6d] via-[#5b1a9e] to-[#7c3aed] px-8 py-6 flex items-center justify-between">
@@ -457,7 +457,19 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
       <style>{`
         @media print {
           .no-print { display: none !important; }
-          body { background: white !important; }
+          body { background: white !important; margin: 0 !important; padding: 0 !important; }
+          @page { size: letter; margin: 12mm 15mm; }
+          .print-card { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; margin: 0 !important; }
+          .print-card .p-8 { padding: 16px 20px !important; }
+          .print-card .space-y-8 > div { margin-bottom: 12px !important; }
+          .print-card .space-y-7 > div { margin-bottom: 10px !important; }
+          input, textarea, select { border: none !important; background: transparent !important; padding: 0 !important; box-shadow: none !important; }
+          canvas { border: 1px solid #ccc !important; }
+          .bg-slate-50 { background: #f8f8f8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          .bg-gradient-to-r { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          .bg-\\[\\#4a148c\\] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          .bg-\\[\\#7c3aed\\] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          table { page-break-inside: avoid; }
         }
       `}</style>
     </div>

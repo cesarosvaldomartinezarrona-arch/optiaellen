@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { CreditCard, Banknote, Building2, Wallet, Check, ArrowRight, Printer, MessageCircle } from 'lucide-react';
+import { CreditCard, Banknote, Building2, Wallet, Check, ArrowRight, Printer, MessageCircle, FileText } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import type { PaymentMethod } from '../types';
 
 function buildSaleTicketHTML(opticsName: string, data: {
@@ -70,6 +71,7 @@ function openTicketWindow(html: string) {
 
 export default function Cobrar() {
   const { pendingPayments, setPendingPayments, setSales, opticsName, sales, patients } = useApp();
+  const navigate = useNavigate();
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [paymentData, setPaymentData] = useState({ method: 'Efectivo' as PaymentMethod, cashAmount: '', cardReference: '', partialAmount: '' });
@@ -292,6 +294,12 @@ export default function Cobrar() {
                 className="flex-1 flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-lg text-sm font-bold transition-all shadow-md shadow-amber-500/25">
                 <Printer className="w-4 h-4" /> Imprimir Ticket
               </button>
+              <button onClick={() => { setShowSuccess(false); navigate(`/ticket?sale=${lastPaidSaleId}`); }}
+                className="flex-1 flex items-center justify-center gap-2 bg-[#7c3aed] hover:bg-[#6d28d9] text-white py-3 rounded-lg text-sm font-bold transition-all shadow-md shadow-purple-500/25">
+                <FileText className="w-4 h-4" /> Nota de Venta
+              </button>
+            </div>
+            <div className="flex gap-3 mt-3">
               <button onClick={handleSendWhatsApp}
                 className="flex-1 flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-lg text-sm font-bold transition-all shadow-md shadow-emerald-500/25">
                 <MessageCircle className="w-4 h-4" /> WhatsApp

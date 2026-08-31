@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import TicketVenta, { defaultData, type TicketVentaData } from "../components/TicketVenta";
 import { useApp } from "../context/AppContext";
 import type { Sale } from "../types";
@@ -66,7 +67,16 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
 
 export default function TicketPage() {
   const { sales, opticsName } = useApp();
-  const [selectedSaleId, setSelectedSaleId] = useState<string>(sales[0]?.id ?? "");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const saleParam = searchParams.get("sale");
+
+  const [selectedSaleId, setSelectedSaleId] = useState<string>(saleParam ?? sales[0]?.id ?? "");
+
+  useEffect(() => {
+    if (saleParam && sales.find(s => s.id === saleParam)) {
+      setSelectedSaleId(saleParam);
+    }
+  }, [saleParam, sales]);
 
   const sale = sales.find((s) => s.id === selectedSaleId) ?? sales[0];
   const ticketData = sale ? saleToTicketData(sale, opticsName) : defaultData;
@@ -75,9 +85,9 @@ export default function TicketPage() {
     <div className="space-y-6">
       <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm no-print">
         <div>
-          <h1 className="text-lg font-extrabold text-slate-900 tracking-tight">Ticket de Venta — Formato Óptico</h1>
+          <h1 className="text-lg font-extrabold text-slate-900 tracking-tight">Nota de Venta — Formato Óptico</h1>
           <p className="text-sm text-slate-500 mt-1">
-            Selecciona una venta para generar el ticket con firma digital
+            Formulario detallado para entregar al cliente · Selecciona una venta o llena manualmente
           </p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -86,9 +96,13 @@ export default function TicketPage() {
           </label>
           <select
             value={selectedSaleId}
-            onChange={(e) => setSelectedSaleId(e.target.value)}
+            onChange={(e) => {
+              setSelectedSaleId(e.target.value);
+              setSearchParams(e.target.value ? { sale: e.target.value } : {});
+            }}
             className="flex-1 sm:w-64 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]"
           >
+            <option value="">— Llenar manualmente —</option>
             {sales.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.id} — {s.patientName} (${s.total.toLocaleString()})
