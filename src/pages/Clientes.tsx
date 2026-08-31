@@ -87,76 +87,67 @@ export default function Clientes() {
       </div>
 
       {/* Patient cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+      <div className="space-y-4">
         {filtered.map(patient => {
           const isExpanded = expandedCard === patient.id;
           const rxs = getPatientPrescriptions(patient.id);
           const lastVisit = getLastVisit(patient.id, patient.registrationDate);
           const totalRecetas = rxs.length;
           return (
-            <div key={patient.id} className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden hover:shadow-md transition-shadow flex flex-col">
-              <div className="p-5 sm:p-6 flex-1">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#7c3aed]/15 to-[#a855f7]/10 flex items-center justify-center shrink-0 border border-purple-100/50">
+            <div key={patient.id} className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+              <div className="p-4 sm:p-5">
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-[#7c3aed]/15 to-[#a855f7]/10 flex items-center justify-center shrink-0 border border-purple-100/50">
                     <span className="text-sm font-bold text-[#7c3aed]">{patient.name.split(' ').map(n => n[0]).slice(0, 2).join('')}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <p className="text-sm font-bold text-slate-900 truncate">{patient.name}</p>
                       <span className="text-[11px] text-slate-500 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200">{patient.id}</span>
+                      <span className="text-xs bg-purple-50 text-[#7c3aed] border border-purple-100 px-2.5 py-0.5 rounded-full font-medium">{patient.occupation || '—'}</span>
+                      <span className="text-[11px] text-slate-400">{patient.age} años</span>
+                      <span className="text-[11px] text-slate-400">{totalRecetas} receta{totalRecetas !== 1 ? 's' : ''}</span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 mt-1.5 text-xs text-slate-500">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-slate-500">
                       <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{patient.phone}</span>
                       <span className="flex items-center gap-1"><Mail className="w-3 h-3" />{patient.email}</span>
+                      <span className="flex items-center gap-1"><Calendar className="w-3 h-3" />{formatDate(lastVisit)}</span>
+                      <span className="text-slate-400">{monthsSince(lastVisit)}</span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-2 mt-2">
-                      <span className="inline-flex items-center gap-1 text-xs bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full font-medium text-slate-600"><Calendar className="w-3 h-3" />Última visita: {formatDate(lastVisit)}</span>
-                      <span className="text-[11px] text-slate-400">{monthsSince(lastVisit)}</span>
-                    </div>
-                    <div className="flex items-center gap-2 mt-2.5">
-                      <span className="text-xs bg-purple-50 text-[#7c3aed] border border-purple-100 px-2.5 py-1 rounded-full font-semibold">{patient.occupation || '—'}</span>
-                      <span className="text-xs bg-slate-50 text-slate-600 border border-slate-200 px-2.5 py-1 rounded-full">{totalRecetas} receta{totalRecetas !== 1 ? 's' : ''}</span>
-                      <span className="text-xs text-slate-500">{patient.age} años</span>
-                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button onClick={() => openBio(patient, 'bio')} className="w-9 h-9 rounded-lg bg-[#0f0a1f] text-white hover:bg-[#1a1033] flex items-center justify-center transition-colors" title="Biografía">
+                      <User className="w-4 h-4" />
+                    </button>
+                    <button onClick={() => openExam(patient)} className="w-9 h-9 rounded-lg bg-[#7c3aed] text-white hover:bg-[#6d28d9] flex items-center justify-center transition-colors" title="Nuevo Examen">
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <a href={`https://wa.me/${cleanPhone(patient.phone)}`} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-200 flex items-center justify-center transition-colors" title="WhatsApp">
+                      <MessageCircle className="w-4 h-4" />
+                    </a>
+                    <a href={`mailto:${patient.email}`} className="w-9 h-9 rounded-lg bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200 flex items-center justify-center transition-colors" title="Correo">
+                      <Mail className="w-4 h-4" />
+                    </a>
+                    <button onClick={() => setExpandedCard(isExpanded ? null : patient.id)} className="w-9 h-9 rounded-lg bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200 flex items-center justify-center transition-colors" title="Resumen">
+                      {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </button>
+                    <button onClick={() => openBio(patient, 'recetas')} className="w-9 h-9 rounded-lg bg-violet-50 text-violet-600 hover:bg-violet-100 border border-violet-200 flex items-center justify-center transition-colors" title={`${totalRecetas} Recetas`}>
+                      <FileText className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <button onClick={() => openBio(patient, 'bio')} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-[#0f0a1f] text-white text-xs font-semibold hover:bg-[#1a1033] transition-colors">
-                    <User className="w-3.5 h-3.5" /> Biografía
-                  </button>
-                  <button onClick={() => openExam(patient)} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-[#7c3aed] text-white text-xs font-semibold hover:bg-[#6d28d9] transition-colors">
-                    <Eye className="w-3.5 h-3.5" /> Nuevo Examen
-                  </button>
-                  <a href={`https://wa.me/${cleanPhone(patient.phone)}`} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold hover:bg-emerald-100 transition-colors">
-                    <MessageCircle className="w-3.5 h-3.5" /> WhatsApp
-                  </a>
-                  <a href={`mailto:${patient.email}`} className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-semibold hover:bg-slate-50 transition-colors">
-                    <Mail className="w-3.5 h-3.5" /> Correo
-                  </a>
-                </div>
-
-                <div className="flex items-center gap-2 mt-3">
-                  <button onClick={() => setExpandedCard(isExpanded ? null : patient.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-slate-50 text-slate-600 text-xs font-medium hover:bg-slate-100 border border-slate-200">
-                    {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                    {isExpanded ? 'Ocultar' : 'Ver resumen'}
-                  </button>
-                  <button onClick={() => openBio(patient, 'recetas')} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg bg-violet-50 text-violet-700 border border-violet-200 text-xs font-medium hover:bg-violet-100">
-                    <FileText className="w-3.5 h-3.5" /> {totalRecetas} Recetas
-                  </button>
-                </div>
+                {isExpanded && (
+                  <div className="mt-4 pt-4 border-t border-slate-100 bg-[#f8f7ff]/50 -mx-4 sm:-mx-5 px-4 sm:px-5 pb-4 rounded-b-lg space-y-3">
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Biografía rápida</p>
+                    <p className="text-sm text-slate-700 leading-relaxed bg-white p-3 rounded-lg border border-slate-100">{patient.biography || 'Sin biografía registrada.'}</p>
+                    <div className="grid grid-cols-2 gap-3 text-xs">
+                      <div className="bg-white p-3 rounded-lg border border-slate-100"><span className="text-slate-400 font-semibold block">Motivo</span><span className="text-slate-700 font-medium">{patient.reasonForVisit || '—'}</span></div>
+                      <div className="bg-white p-3 rounded-lg border border-slate-100"><span className="text-slate-400 font-semibold block">Molestias</span><span className="text-slate-700 font-medium">{patient.discomforts || '—'}</span></div>
+                    </div>
+                  </div>
+                )}
               </div>
-
-              {isExpanded && (
-                <div className="px-5 sm:px-6 pb-5 pt-4 border-t border-slate-100 bg-[#f8f7ff]/50 space-y-3">
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Biografía rápida</p>
-                  <p className="text-sm text-slate-700 leading-relaxed bg-white p-3 rounded-lg border border-slate-100">{patient.biography || 'Sin biografía registrada.'}</p>
-                  <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className="bg-white p-3 rounded-lg border border-slate-100"><span className="text-slate-400 font-semibold block">Motivo</span><span className="text-slate-700 font-medium">{patient.reasonForVisit || '—'}</span></div>
-                    <div className="bg-white p-3 rounded-lg border border-slate-100"><span className="text-slate-400 font-semibold block">Molestias</span><span className="text-slate-700 font-medium">{patient.discomforts || '—'}</span></div>
-                  </div>
-                </div>
-              )}
             </div>
           );
         })}
