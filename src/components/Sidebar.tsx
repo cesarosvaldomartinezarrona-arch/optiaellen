@@ -28,6 +28,7 @@ const navSections: { label: string; items: NavItem[] }[] = [
     label: 'OPERACIONES',
     items: [
       { to: '/ventas', icon: ShoppingCart, label: 'Ventas', permission: 'ventas' },
+      { to: '/ticket', icon: FileText, label: 'Ticket de Venta', permission: 'ventas' },
       { to: '/inventario', icon: Package, label: 'Inventario', permission: 'inventario' },
       { to: '/gastos', icon: Receipt, label: 'Gastos', permission: 'gastos' },
       { to: '/laboratorio', icon: FlaskConical, label: 'Laboratorio', badgeKey: 'lab', permission: 'laboratorio' },

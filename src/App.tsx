@@ -14,6 +14,7 @@ import Laboratorio from './pages/Laboratorio';
 import Gastos from './pages/Gastos';
 import Inventario from './pages/Inventario';
 import Configuracion from './pages/Configuracion';
+import Ticket from './pages/Ticket';
 
 function ProtectedRoute({ permission, children }: { permission: string; children: React.ReactNode }) {
   const { hasPermission, user } = useAuth();
@@ -49,6 +50,7 @@ function AppRoutes() {
         <Route path="/laboratorio" element={<ProtectedRoute permission="laboratorio"><Laboratorio /></ProtectedRoute>} />
         <Route path="/gastos" element={<ProtectedRoute permission="gastos"><Gastos /></ProtectedRoute>} />
         <Route path="/configuracion" element={<ProtectedRoute permission="configuracion"><Configuracion /></ProtectedRoute>} />
+        <Route path="/ticket" element={<ProtectedRoute permission="ventas"><Ticket /></ProtectedRoute>} />
       </Route>
     </Routes>
   );
