@@ -42,6 +42,7 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
     optometrista: defaultData.optometrista,
     trabajo: defaultData.trabajo,
     descripcionProducto: sale.items.map(it => `${it.product.name} ${it.product.model}`).join(", "),
+    tratamientos: defaultData.tratamientos,
     armazon: defaultData.armazon,
     graduacion: defaultData.graduacion,
     observaciones: "Sin observaciones",

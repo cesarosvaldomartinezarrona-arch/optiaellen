@@ -15,6 +15,7 @@ export interface TicketVentaData {
   optometrista: string;
   trabajo: string;
   descripcionProducto: string;
+  tratamientos: string;
   armazon: string;
   graduacion: {
     od: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; ejeAdd: string };
@@ -48,6 +49,7 @@ export const defaultData: TicketVentaData = {
   optometrista: '',
   trabajo: '—',
   descripcionProducto: '',
+  tratamientos: '',
   armazon: '',
   graduacion: {
     od: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', ejeAdd: '' },
@@ -109,7 +111,7 @@ interface TicketVentaProps {
 }
 
 export default function TicketVenta({ data: initialData, opticsName, rfc: rfcContext, onClose }: TicketVentaProps) {
-  const { patients, prescriptions, sales } = useApp();
+  const { patients, prescriptions, sales, products } = useApp();
 
   // Generar folio automático
   const nextFolio = useMemo(() => {
@@ -137,6 +139,8 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
         direccion: '',
         trabajo: '—',
         graduacion: defaultData.graduacion,
+        descripcionProducto: '',
+        tratamientos: '',
       }));
       return;
     }
@@ -147,6 +151,22 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
     const patientRx = prescriptions
       .filter(r => r.patientId === patientId)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+
+    // Construir base/mica desde selectedLenses
+    let baseMica = '';
+    if (patientRx?.selectedLenses?.length) {
+      baseMica = patientRx.selectedLenses
+        .map(l => `${l.name} ${l.brand} ${l.type}`)
+        .join(' + ');
+    }
+
+    // Construir tratamientos
+    let tratamientosStr = '';
+    if (patientRx?.treatments?.length) {
+      tratamientosStr = patientRx.treatments
+        .map(t => t.name)
+        .join(', ');
+    }
 
     setData(prev => ({
       ...prev,
@@ -172,6 +192,8 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
           ejeAdd: patientRx.leftEye.axis ? `${patientRx.leftEye.axis}°` : '',
         },
       } : prev.graduacion,
+      descripcionProducto: baseMica || prev.descripcionProducto,
+      tratamientos: tratamientosStr || prev.tratamientos,
     }));
   };
 
@@ -316,11 +338,23 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
             </div>
           </Section>
 
-          {/* DESCRIPCIÓN DEL PRODUCTO */}
-          <Section title="Descripción del Producto">
-            <InputField label="Descripción" value={data.descripcionProducto} onChange={v => update('descripcionProducto', v)} />
+          {/* BASE / MICA */}
+          <Section title="Base / Mica">
+            <InputField label="Descripción (Lente)" value={data.descripcionProducto} onChange={v => update('descripcionProducto', v)} />
             <div className="mt-4">
-              <InputField label="Armazón" value={data.armazon} onChange={v => update('armazon', v)} />
+              <InputField label="Tratamientos" value={data.tratamientos} onChange={v => update('tratamientos', v)} />
+            </div>
+            <div className="mt-4">
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Armazón (Inventario)</label>
+              <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
+                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all">
+                <option value="">— Seleccionar armazón —</option>
+                {products.filter(p => p.category === 'Monturas').map(p => (
+                  <option key={p.id} value={`${p.name} ${p.model} ${p.brand ?? ''}`.trim()}>
+                    {p.name} {p.model} {p.brand ? `(${p.brand})` : ''} — ${p.price.toLocaleString()}
+                  </option>
+                ))}
+              </select>
             </div>
           </Section>
 
