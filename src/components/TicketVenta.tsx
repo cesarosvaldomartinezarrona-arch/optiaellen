@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Printer, RotateCcw, Save } from 'lucide-react';
+import { Printer, RotateCcw, Save, X } from 'lucide-react';
 import SignaturePad from './SignaturePad';
 
 export interface TicketVentaData {
@@ -100,7 +100,13 @@ function formatDateLong(d: string): string {
   return `${date.getDate()}-${months[date.getMonth()]}-${date.getFullYear()}`;
 }
 
-export default function TicketVenta({ data: initialData }: { data?: TicketVentaData; opticsName?: string }) {
+interface TicketVentaProps {
+  data?: TicketVentaData;
+  opticsName?: string;
+  onClose?: () => void;
+}
+
+export default function TicketVenta({ data: initialData, opticsName, onClose }: TicketVentaProps) {
   const [data, setData] = useState<TicketVentaData>(initialData ?? { ...defaultData });
 
   const update = (field: string, value: string) => {
@@ -160,36 +166,48 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
   };
 
   return (
-    <div className="min-h-screen bg-[#f0f0f0]" style={{ backgroundImage: 'radial-gradient(circle, #e0e0e0 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
-      {/* Title outside ticket */}
-      <div className="text-center pt-8 pb-4 no-print">
-        <h1 className="text-3xl font-extrabold text-slate-900">
-          Ticket de <span className="text-[#7c3aed]">Venta</span>
-        </h1>
-        <p className="text-sm text-slate-400 mt-1">Salud Digna — Formulario de registro con firma digital</p>
-      </div>
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[60] p-3 sm:p-4">
+      <div className="bg-white rounded-lg w-full max-w-5xl shadow-2xl border border-slate-200 max-h-[92vh] overflow-hidden flex flex-col print:shadow-none print:rounded-none print:max-w-full print:border-none">
 
-      {/* Ticket card */}
-      <div className="print-card max-w-[820px] mx-auto mb-6 bg-white rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.10)] overflow-hidden print:shadow-none print:rounded-none print:max-w-full">
-
-        {/* Header */}
-        <div className="bg-gradient-to-r from-[#3a0d6d] via-[#5b1a9e] to-[#7c3aed] px-8 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg">
-              <span className="text-[#4a148c] font-extrabold text-base">SD</span>
+        {/* Header sticky */}
+        <div className="bg-gradient-to-r from-[#3a0d6d] via-[#5b1a9e] to-[#7c3aed] px-6 py-4 flex items-center justify-between shrink-0 no-print">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-lg shrink-0">
+              <span className="text-[#4a148c] font-extrabold text-sm">SD</span>
             </div>
             <div>
-              <h2 className="text-white text-xl font-extrabold">Salud Digna</h2>
-              <p className="text-white/60 text-[11px] mt-0.5">A.C.</p>
-              <p className="text-white/50 text-[10px] mt-0.5">Desde 2015, la principal fuente de lentes para los Mexicanos</p>
+              <h2 className="text-white text-lg font-extrabold">Ticket de Venta</h2>
+              <p className="text-white/50 text-[10px] mt-0.5">{opticsName ?? 'Salud Digna'} — Formulario de registro con firma digital</p>
             </div>
           </div>
-          <span className="px-5 py-2 rounded-full border border-white/30 text-white text-[10px] font-bold tracking-widest uppercase">
-            Ticket de Venta
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="px-4 py-1.5 rounded-full border border-white/30 text-white text-[9px] font-bold tracking-widest uppercase hidden sm:block">
+              Nota de Venta
+            </span>
+            {onClose && (
+              <button onClick={onClose} className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors ml-2">
+                <X className="w-5 h-5 text-white" />
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="p-8 space-y-7">
+        {/* Header para impresión */}
+        <div className="hidden print:block bg-gradient-to-r from-[#3a0d6d] via-[#5b1a9e] to-[#7c3aed] px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
+              <span className="text-[#4a148c] font-extrabold text-sm">SD</span>
+            </div>
+            <div>
+              <h2 className="text-white text-lg font-extrabold">Ticket de Venta</h2>
+              <p className="text-white/50 text-[10px]">{opticsName ?? 'Salud Digna'} — Formulario de registro con firma digital</p>
+            </div>
+          </div>
+          <span className="px-4 py-1.5 rounded-full border border-white/30 text-white text-[9px] font-bold tracking-widest uppercase">Nota de Venta</span>
+        </div>
+
+        {/* Content scrollable */}
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
 
           {/* DATOS DE VENTA */}
           <Section title="Datos de Venta">
@@ -267,8 +285,8 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
 
           {/* OBSERVACIONES */}
           <Section title="Observaciones">
-            <textarea value={data.observaciones} onChange={e => update('observaciones', e.target.value)} rows={3}
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none transition-all" />
+            <textarea value={data.observaciones} onChange={e => update('observaciones', e.target.value)} rows={2}
+              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none transition-all" />
           </Section>
 
           {/* DETALLE DE VENTA */}
@@ -278,11 +296,11 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
                 <thead>
                   <tr className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]">
                     <th className="px-4 py-2.5 text-left font-bold text-white text-[10px] uppercase tracking-wider">Descripción</th>
-                    <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">Precio Unitario</th>
+                    <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">P. Unitario</th>
                     <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">Descuento</th>
                     <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">IVA</th>
                     <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">Importe</th>
-                    <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">Precio Final</th>
+                    <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">P. Final</th>
                     <th className="px-2 py-2.5 w-8"></th>
                   </tr>
                 </thead>
@@ -328,7 +346,7 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
           {/* TOTALES */}
           <Section title="Totales">
             <div className="flex justify-end">
-              <div className="w-80 bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+              <div className="w-72 bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-slate-500">Subtotal</span>
                   <span className="font-bold text-slate-800">${data.totales.subtotal.toLocaleString()}</span>
@@ -342,9 +360,9 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
                   <span className="font-bold text-slate-800">${data.totales.iva.toLocaleString()}</span>
                 </div>
                 <div className="h-px bg-slate-200" />
-                <div className="flex justify-between items-center bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-5 py-3 rounded-xl">
+                <div className="flex justify-between items-center bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-4 py-2.5 rounded-lg">
                   <span className="font-bold text-sm">Total</span>
-                  <span className="font-extrabold text-xl">${data.totales.total.toLocaleString()}</span>
+                  <span className="font-extrabold text-lg">${data.totales.total.toLocaleString()}</span>
                 </div>
               </div>
             </div>
@@ -378,12 +396,12 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
           </Section>
 
           {/* MONTO EN LETRAS + FECHA RECOGE */}
-          <div className="space-y-4">
-            <div className="px-5 py-3 bg-slate-50 border border-slate-200 rounded-lg">
+          <div className="space-y-3">
+            <div className="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg">
               <span className="text-xs text-slate-500">Son: </span>
               <span className="text-xs font-semibold text-slate-700 italic">{data.son || 'UN MIL DOSCIENTOS OCHENTA Y CINCO PESOS 00/100 M.N.'}</span>
             </div>
-            <div className="px-5 py-3 bg-purple-50 border border-purple-200 rounded-lg text-center">
+            <div className="px-4 py-2.5 bg-purple-50 border border-purple-200 rounded-lg text-center">
               <p className="text-sm text-slate-600">
                 Su lente solicitado podrá recogerlo a partir del día <strong className="text-[#7c3aed]">{data.fechaRecoge ? formatDateLong(data.fechaRecoge) : '24-MAY-2026'}</strong>, después de las <strong className="text-[#7c3aed]">{data.horaRecoge || '09:40'}</strong> hrs.
               </p>
@@ -391,7 +409,7 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
           </div>
 
           {/* FIRMAS DIVIDER */}
-          <div className="flex items-center gap-4 py-2">
+          <div className="flex items-center gap-4 py-1">
             <div className="flex-1 h-px border-t-2 border-dashed border-slate-300" />
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Firmas</span>
             <div className="flex-1 h-px border-t-2 border-dashed border-slate-300" />
@@ -399,7 +417,7 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
 
           {/* FIRMAS DIGITALES */}
           <Section title="Firmas Digitales">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-5">
               <SignaturePad
                 label="Firma de Responsable Sanitario"
                 name="JUANA GUADALUPE ALVARADO OLALDE"
@@ -416,8 +434,8 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
           </Section>
 
           {/* FOOTER LEGAL */}
-          <div className="pt-6 space-y-4">
-            <div className="bg-[#f8f7fc] border border-slate-200 rounded-xl p-5 space-y-3">
+          <div className="pt-4 space-y-3">
+            <div className="bg-[#f8f7fc] border border-slate-200 rounded-xl p-4 space-y-2">
               <p className="text-[10px] text-slate-500 leading-relaxed">
                 <strong className="text-slate-600">Salud Digna A.C.</strong> con domicilio fiscal en calle Francisco Villa #113 Sur, Colonia Centro, C.P. 80000, Culiacán Sinaloa, México; utilizará sus datos personales aquí recabados con fines dirigidos a la prestación de los servicios que ofrece. Para mayor información acerca del tratamiento y de los derechos que puede hacer valer, puede acceder al aviso de privacidad en <a href="https://salud-digna.org/aviso-de-privacidad/" className="text-[#7c3aed] underline hover:text-[#6d28d9]" target="_blank" rel="noreferrer">https://salud-digna.org/aviso-de-privacidad/</a>
               </p>
@@ -425,7 +443,7 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
                 Términos y condiciones de promociones: Desde este momento, y por un plazo de 30 días siguientes a la que se haya realizado la venta de la presente oferta comercial, Salud Digna concede al comprador el beneficio de adquirir a mitad de precio un segundo modelo. Aplican restricciones. Visita la página <a href="https://lentes.salud-digna.org/terminos-y-condiciones/" className="text-[#7c3aed] underline hover:text-[#6d28d9]" target="_blank" rel="noreferrer">https://lentes.salud-digna.org/terminos-y-condiciones/</a>
               </p>
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200">
-                <div className="flex items-center gap-4 text-[10px] text-slate-400">
+                <div className="flex items-center gap-3 text-[10px] text-slate-400">
                   <span>667 758 0094</span>
                   <span>667 758 0670</span>
                   <span>55 3956 6729</span>
@@ -436,33 +454,33 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom actions */}
-      <div className="no-print max-w-[820px] mx-auto flex justify-center gap-4 pb-8">
-        <button onClick={handleReset}
-          className="flex items-center gap-2 px-8 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all shadow-sm">
-          <RotateCcw className="w-4 h-4" /> Reiniciar
-        </button>
-        <button onClick={handlePrint}
-          className="flex items-center gap-2 px-8 py-3 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all shadow-sm">
-          <Printer className="w-4 h-4" /> Imprimir
-        </button>
-        <button
-          className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] rounded-xl text-sm font-bold text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all">
-          <Save className="w-4 h-4" /> Guardar Ticket
-        </button>
+        {/* Footer sticky */}
+        <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-3 flex items-center justify-between no-print">
+          <button onClick={handleReset}
+            className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
+            <RotateCcw className="w-4 h-4" /> Reiniciar
+          </button>
+          <div className="flex items-center gap-3">
+            <button onClick={handlePrint}
+              className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
+              <Printer className="w-4 h-4" /> Imprimir
+            </button>
+            <button
+              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] rounded-lg text-sm font-bold text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all">
+              <Save className="w-4 h-4" /> Guardar Ticket
+            </button>
+          </div>
+        </div>
       </div>
 
       <style>{`
         @media print {
           .no-print { display: none !important; }
           body { background: white !important; margin: 0 !important; padding: 0 !important; }
+          .fixed { position: static !important; background: none !important; backdrop-filter: none !important; }
+          .fixed > div { max-height: none !important; overflow: visible !important; border: none !important; box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; width: 100% !important; }
           @page { size: letter; margin: 12mm 15mm; }
-          .print-card { box-shadow: none !important; border-radius: 0 !important; max-width: 100% !important; margin: 0 !important; }
-          .print-card .p-8 { padding: 16px 20px !important; }
-          .print-card .space-y-8 > div { margin-bottom: 12px !important; }
-          .print-card .space-y-7 > div { margin-bottom: 10px !important; }
           input, textarea, select { border: none !important; background: transparent !important; padding: 0 !important; box-shadow: none !important; }
           canvas { border: 1px solid #ccc !important; }
           .bg-slate-50 { background: #f8f8f8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -479,7 +497,7 @@ export default function TicketVenta({ data: initialData }: { data?: TicketVentaD
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-3 mb-3">
         <h3 className="text-[11px] font-bold text-[#7c3aed] uppercase tracking-widest whitespace-nowrap">{title}</h3>
         <div className="flex-1 h-px bg-slate-200" />
       </div>

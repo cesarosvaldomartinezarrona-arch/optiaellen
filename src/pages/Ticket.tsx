@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import TicketVenta, { defaultData, type TicketVentaData } from "../components/TicketVenta";
 import { useApp } from "../context/AppContext";
+import { FileText } from "lucide-react";
 import type { Sale } from "../types";
 
 function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
@@ -45,12 +46,7 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
     graduacion: defaultData.graduacion,
     observaciones: "Sin observaciones",
     detalle: detalle.length ? detalle : defaultData.detalle,
-    totales: {
-      subtotal,
-      descuento: discount,
-      iva,
-      total: totalFinal,
-    },
+    totales: { subtotal, descuento: discount, iva, total: totalFinal },
     pago: {
       estatus: sale.status === "Pagado" || sale.status === "Entregado" ? "Pagado" : "Adeudo",
       formaPago: sale.paymentMethod ?? "—",
@@ -67,38 +63,51 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
 
 export default function TicketPage() {
   const { sales, opticsName } = useApp();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const saleParam = searchParams.get("sale");
 
-  const [selectedSaleId, setSelectedSaleId] = useState<string>(saleParam ?? sales[0]?.id ?? "");
+  const [selectedSaleId, setSelectedSaleId] = useState<string>(saleParam ?? "");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (saleParam && sales.find(s => s.id === saleParam)) {
       setSelectedSaleId(saleParam);
+      setShowModal(true);
     }
   }, [saleParam, sales]);
 
-  const sale = sales.find((s) => s.id === selectedSaleId) ?? sales[0];
+  const sale = sales.find((s) => s.id === selectedSaleId);
   const ticketData = sale ? saleToTicketData(sale, opticsName) : defaultData;
+
+  const handleClose = () => {
+    setShowModal(false);
+    setSearchParams({});
+    navigate('/ticket');
+  };
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm no-print">
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
         <div>
-          <h1 className="text-lg font-extrabold text-slate-900 tracking-tight">Nota de Venta — Formato Óptico</h1>
+          <h1 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+            <FileText className="w-5 h-5 text-[#7c3aed]" /> Nota de Venta
+          </h1>
           <p className="text-sm text-slate-500 mt-1">
             Formulario detallado para entregar al cliente · Selecciona una venta o llena manualmente
           </p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <label className="text-xs font-bold tracking-widest uppercase text-slate-400 whitespace-nowrap">
-            Venta
-          </label>
           <select
             value={selectedSaleId}
             onChange={(e) => {
-              setSelectedSaleId(e.target.value);
-              setSearchParams(e.target.value ? { sale: e.target.value } : {});
+              const val = e.target.value;
+              setSelectedSaleId(val);
+              if (val) {
+                setSearchParams({ sale: val });
+              } else {
+                setSearchParams({});
+              }
             }}
             className="flex-1 sm:w-64 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]"
           >
@@ -109,12 +118,42 @@ export default function TicketPage() {
               </option>
             ))}
           </select>
+          <button
+            onClick={() => setShowModal(true)}
+            className="flex items-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-500/25 whitespace-nowrap"
+          >
+            <FileText className="w-4 h-4" /> Abrir Formulario
+          </button>
         </div>
       </div>
 
-      <div className="-mx-4 sm:-mx-6 lg:-mx-7 xl:-mx-8">
-        <TicketVenta data={ticketData} opticsName={opticsName} />
+      {/* Cards resumen */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Última venta</p>
+          <p className="text-lg font-extrabold text-[#7c3aed] mt-1">{sales[0]?.id ?? '—'}</p>
+          <p className="text-xs text-slate-500 mt-0.5">{sales[0]?.patientName ?? 'Sin ventas'}</p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total ventas</p>
+          <p className="text-lg font-extrabold text-emerald-600 mt-1">{sales.length}</p>
+          <p className="text-xs text-slate-500 mt-0.5">registros</p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tickets</p>
+          <p className="text-lg font-extrabold text-amber-600 mt-1">{sales.length}</p>
+          <p className="text-xs text-slate-500 mt-0.5">notas generadas</p>
+        </div>
       </div>
+
+      {/* Modal Ticket de Venta */}
+      {showModal && (
+        <TicketVenta
+          data={ticketData}
+          opticsName={opticsName}
+          onClose={handleClose}
+        />
+      )}
     </div>
   );
 }
