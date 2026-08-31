@@ -4,24 +4,20 @@ import { useApp } from "../context/AppContext";
 import type { Sale } from "../types";
 
 function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
-  // Map sale / mock to ticket structure — fallback to defaults for missing fields
   const subtotal = sale.subtotal;
   const discount = sale.discount;
   const iva = sale.tax;
   const total = sale.total;
 
-  // Build detalle from sale items
   const detalle = sale.items.map((it) => {
     const unit = it.product.price;
     const qty = it.quantity;
     const importe = unit * qty;
-    // distribute discount proportionally roughly
     const disc = sale.discount ? Math.round((importe / subtotal) * sale.discount * 100) / 100 : 0;
     const base = importe - disc;
     const ivaLine = Math.round(base * 0.16 * 100) / 100;
     return {
-      descripcion: it.product.name,
-      subtitulo: `${it.product.model} · ${it.product.brand ?? ""} x${qty}`.trim(),
+      descripcion: `${it.product.name} ${it.product.model} ${it.product.brand ?? ""}`.trim(),
       precioUnitario: unit,
       descuento: disc,
       iva: ivaLine,
@@ -30,43 +26,41 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
     };
   });
 
+  const totalFinal = detalle.length ? detalle.reduce((s, d) => s + d.precioFinal, 0) : total;
+
   return {
+    recepcionista: defaultData.recepcionista,
     folio: sale.id.replace("V", "SD-2025-"),
-    fecha: new Date(sale.createdAt).toLocaleDateString("es-MX", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }) + " — 10:42 AM",
-    sucursal: `${opticsName} Centro — Óptica`,
-    vendedor: "Dra. Elena Ruiz — Optometrista",
-    tipoVenta: sale.status === "Pendiente" ? "Crédito" : "Contado",
-    paciente: {
-      nombre: sale.patientName.toUpperCase(),
-      edad: defaultData.paciente.edad,
-      fechaNacimiento: defaultData.paciente.fechaNacimiento,
-      telefono: defaultData.paciente.telefono,
-      correo: defaultData.paciente.correo,
-      direccion: defaultData.paciente.direccion,
-      ocupacion: defaultData.paciente.ocupacion,
-    },
-    producto: defaultData.producto,
+    fechaVenta: new Date(sale.createdAt).toISOString().split("T")[0],
+    paciente: sale.patientName.toUpperCase(),
+    fechaNacimiento: defaultData.fechaNacimiento,
+    direccion: defaultData.direccion,
+    clinica: opticsName,
+    rfc: defaultData.rfc,
+    optometrista: defaultData.optometrista,
+    trabajo: defaultData.trabajo,
+    descripcionProducto: sale.items.map(it => `${it.product.name} ${it.product.model}`).join(", "),
+    armazon: defaultData.armazon,
     graduacion: defaultData.graduacion,
+    observaciones: "Sin observaciones",
     detalle: detalle.length ? detalle : defaultData.detalle,
     totales: {
       subtotal,
       descuento: discount,
       iva,
-      total,
+      total: totalFinal,
     },
     pago: {
-      metodo: sale.paymentMethod ?? "Pendiente",
-      referencia: "—",
-      anticipo: sale.status === "Pagado" || sale.status === "Entregado" ? total : 0,
-      saldo: sale.status === "Pagado" || sale.status === "Entregado" ? 0 : total,
-      fechaPago: sale.paymentDate
-        ? new Date(sale.paymentDate).toLocaleDateString("es-MX")
-        : new Date().toLocaleDateString("es-MX"),
+      estatus: sale.status === "Pagado" || sale.status === "Entregado" ? "Pagado" : "Adeudo",
+      formaPago: sale.paymentMethod ?? "—",
+      exento: "Sin exento",
+      pagoTotalEmpresa: 0,
+      pagoCliente: sale.status === "Pagado" || sale.status === "Entregado" ? total : 0,
+      universidad: "",
     },
+    son: defaultData.son,
+    fechaRecoge: defaultData.fechaRecoge,
+    horaRecoge: defaultData.horaRecoge,
   };
 }
 
@@ -79,11 +73,11 @@ export default function TicketPage() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm no-print">
         <div>
           <h1 className="text-lg font-extrabold text-slate-900 tracking-tight">Ticket de Venta — Formato Óptico</h1>
           <p className="text-sm text-slate-500 mt-1">
-            Vista previa pixel-perfect · Salud Digna — Formulario con firma digital · Selecciona una venta real
+            Selecciona una venta para generar el ticket con firma digital
           </p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -93,7 +87,7 @@ export default function TicketPage() {
           <select
             value={selectedSaleId}
             onChange={(e) => setSelectedSaleId(e.target.value)}
-            className="flex-1 sm:w-64 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#4a148c]/20 focus:border-[#4a148c]"
+            className="flex-1 sm:w-64 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]"
           >
             {sales.map((s) => (
               <option key={s.id} value={s.id}>
@@ -104,7 +98,6 @@ export default function TicketPage() {
         </div>
       </div>
 
-      {/* Ticket render — sin padding extra del Layout */}
       <div className="-mx-4 sm:-mx-6 lg:-mx-7 xl:-mx-8">
         <TicketVenta data={ticketData} opticsName={opticsName} />
       </div>
