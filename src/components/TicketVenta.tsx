@@ -399,33 +399,33 @@ export default function TicketVenta({ data: initialData, onClose: _onClose }: Ti
           {/* ESPECIFICACIONES */}
           <Section title="Especificaciones">
             <div className="overflow-hidden rounded-lg border border-slate-200">
-              <table className="w-full text-xs">
+              <table className="w-full text-sm">
                 <thead>
                   <tr>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-[11px] tracking-wide" colSpan={6}>Ojo Derecho</th>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-[11px] tracking-wide" colSpan={6}>Ojo Izquierdo</th>
+                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={6}>Ojo Derecho</th>
+                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={6}>Ojo Izquierdo</th>
                   </tr>
                   <tr className="bg-slate-50">
                     {['DNP (L)', 'DNP (C)', 'ALT', 'Esfera', 'Cilindro', 'Eje / ADD'].map(h => (
-                      <th key={`h-${h}`} className="px-2 py-2 text-center font-bold text-slate-500 text-[10px] uppercase">{h}</th>
+                      <th key={`h-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-xs uppercase">{h}</th>
                     ))}
                     {['DNP (L)', 'DNP (C)', 'ALT', 'Esfera', 'Cilindro', 'Eje / ADD'].map(h => (
-                      <th key={`i-${h}`} className="px-2 py-2 text-center font-bold text-slate-500 text-[10px] uppercase">{h}</th>
+                      <th key={`i-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-xs uppercase">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-t border-slate-100">
                     {(['dnpL', 'dnpC', 'alt', 'esfera', 'cilindro', 'ejeAdd'] as const).map(f => (
-                      <td key={`od-${f}`} className="px-1 py-1">
+                      <td key={`od-${f}`} className="px-1.5 py-1.5">
                         <input type="text" value={data.graduacion.od[f]} onChange={e => updateGrad('od', f, e.target.value)}
-                          className="w-full text-center py-1.5 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
+                          className="w-full text-center py-2.5 px-2 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
                       </td>
                     ))}
                     {(['dnpL', 'dnpC', 'alt', 'esfera', 'cilindro', 'ejeAdd'] as const).map(f => (
-                      <td key={`oi-${f}`} className="px-1 py-1">
+                      <td key={`oi-${f}`} className="px-1.5 py-1.5">
                         <input type="text" value={data.graduacion.oi[f]} onChange={e => updateGrad('oi', f, e.target.value)}
-                          className="w-full text-center py-1.5 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
+                          className="w-full text-center py-2.5 px-2 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
                       </td>
                     ))}
                   </tr>
