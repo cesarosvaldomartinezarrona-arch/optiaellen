@@ -426,16 +426,16 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input type="text" placeholder="Nombre, teléfono o ID del paciente..." value={searchPatient} onChange={e => setSearchPatient(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
+                  className="w-full pl-10 pr-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
               </div>
               {searchPatient && (
                 <div className="mt-2 max-h-40 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-lg">
                   {filteredPatients.length === 0 ? (
-                    <p className="px-4 py-3 text-xs text-slate-400">No se encontraron pacientes</p>
+                    <p className="px-4 py-2 text-xs text-slate-400">No se encontraron pacientes</p>
                   ) : (
                     filteredPatients.map(p => (
                       <button key={p.id} onClick={() => { handlePatientSelect(p.id); setSearchPatient(''); }}
-                        className="w-full text-left px-4 py-2.5 hover:bg-purple-50 border-b border-slate-100 last:border-0 transition-colors">
+                        className="w-full text-left px-4 py-2 hover:bg-purple-50 border-b border-slate-100 last:border-0 transition-colors">
                         <p className="text-sm font-semibold text-slate-800">{p.name}</p>
                         <p className="text-[10px] text-slate-400">{p.id} · {p.phone} · {p.occupation || '—'}</p>
                       </button>
@@ -466,7 +466,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
             <div className="mt-4">
               <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Armazón (Inventario)</label>
               <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all">
+                className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all">
                 <option value="">— Seleccionar armazón —</option>
                 {products.filter(p => p.category === 'Monturas').map(p => (
                   <option key={p.id} value={`${p.name} ${p.model} ${p.brand ?? ''}`.trim()}>
@@ -518,7 +518,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
           {/* OBSERVACIONES */}
           <Section title="Observaciones">
             <textarea value={data.observaciones} onChange={e => update('observaciones', e.target.value)} rows={2}
-              className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none transition-all" />
+              className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none transition-all" />
           </Section>
 
           {/* DETALLE DE VENTA */}
@@ -749,9 +749,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function InputField({ label, value, onChange, type = 'text' }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
   return (
     <div>
-      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">{label}</label>
+      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">{label}</label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)}
-        className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all" />
+        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all" />
     </div>
   );
 }
