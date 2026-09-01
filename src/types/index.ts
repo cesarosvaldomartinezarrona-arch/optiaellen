@@ -15,6 +15,12 @@ export interface Patient {
   occupation: string;
   registrationDate: string;
   biography?: string;
+  diagnostico?: string;
+  observaciones?: string;
+  baseMica?: string;
+  armazon?: string;
+  refractionOD?: { esfera: string; cilindro: string; eje: string; prisma: string; adicion: string };
+  refractionOI?: { esfera: string; cilindro: string; eje: string; prisma: string; adicion: string };
 }
 
 export interface Prescription {

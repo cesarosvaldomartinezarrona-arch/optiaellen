@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Search, Plus, FileText, Phone, Calendar, X, ChevronDown, ChevronUp, User, MapPin, Briefcase, ClipboardList, Eye, Mail, MessageCircle, History, TrendingUp, Stethoscope, Clock } from 'lucide-react';
+import { Search, Plus, FileText, Phone, Calendar, X, ChevronDown, ChevronUp, User, ClipboardList, Eye, Mail, MessageCircle, History, TrendingUp, Stethoscope, Clock } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import type { Patient, Prescription } from '../types';
 
@@ -8,6 +8,9 @@ const emptyPatient = {
   name: '', age: '', dateOfBirth: '', address: '', phone: '', email: '',
   reasonForVisit: '', discomforts: '', hasIllness: '', otherInfo: '',
   usesGlasses: false, howFeelsWithGlasses: '', occupation: '', biography: '',
+  diagnostico: '', observaciones: '', baseMica: '', armazon: '',
+  refractionOD: { esfera: '', cilindro: '', eje: '', prisma: '', adicion: '' },
+  refractionOI: { esfera: '', cilindro: '', eje: '', prisma: '', adicion: '' },
 };
 
 export default function Clientes() {
@@ -328,91 +331,80 @@ export default function Clientes() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg w-full max-w-2xl shadow-2xl border border-slate-200/80 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 sm:p-8 border-b border-slate-100 sticky top-0 bg-white z-10">
+          <div className="bg-white rounded-lg w-full max-w-3xl shadow-2xl border border-slate-200/80 max-h-[92vh] overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
               <div>
-                <h2 className="text-xl font-bold text-slate-900 tracking-tight">Nuevo Paciente</h2>
-                <p className="text-xs text-slate-400 mt-1">Complete la información del paciente</p>
+                <h2 className="text-lg font-bold text-slate-900">Nuevo Paciente</h2>
+                <p className="text-[11px] text-slate-400 mt-0.5">Complete la información del paciente</p>
               </div>
-              <button onClick={() => setShowModal(false)} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors"><X className="w-4 h-4 text-slate-500" /></button>
+              <button onClick={() => setShowModal(false)} className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center"><X className="w-4 h-4 text-slate-500" /></button>
             </div>
-            <div className="p-6 sm:p-8 space-y-6">
-              <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm"><User className="w-4 h-4 text-white" /></div>
-                  <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Datos Personales</h3><div className="flex-1 h-px bg-slate-100 ml-2" />
+
+            <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+              {/* DATOS PERSONALES */}
+              <SectionForm icon={<User className="w-4 h-4 text-white" />} title="Datos Personales">
+                <InputF label="Nombre *" value={newPatient.name} onChange={v => setNewPatient({ ...newPatient, name: v })} placeholder="Nombre completo" />
+                <div className="grid grid-cols-2 gap-4">
+                  <InputF label="Edad *" type="number" value={newPatient.age} onChange={v => setNewPatient({ ...newPatient, age: v })} placeholder="30" />
+                  <InputF label="Fecha de Nacimiento" type="date" value={newPatient.dateOfBirth} onChange={v => setNewPatient({ ...newPatient, dateOfBirth: v })} />
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Nombre completo *</label>
-                  <input type="text" value={newPatient.name} onChange={e => setNewPatient({ ...newPatient, name: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: María González" />
+                <InputF label="Domicilio" value={newPatient.address} onChange={v => setNewPatient({ ...newPatient, address: v })} placeholder="Calle, número, colonia..." />
+                <div className="grid grid-cols-2 gap-4">
+                  <InputF label="Teléfono *" type="tel" value={newPatient.phone} onChange={v => setNewPatient({ ...newPatient, phone: v })} placeholder="55 1234 5678" />
+                  <InputF label="Ocupación" value={newPatient.occupation} onChange={v => setNewPatient({ ...newPatient, occupation: v })} placeholder="Ej: Contadora, Maestro..." />
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              </SectionForm>
+
+              {/* DETALLE DE CONSULTA */}
+              <SectionForm icon={<ClipboardList className="w-4 h-4 text-white" />} title="Detalle de Consulta">
+                <InputF label="Motivo de revisión" value={newPatient.reasonForVisit} onChange={v => setNewPatient({ ...newPatient, reasonForVisit: v })} placeholder="Ej: Dolor de cabeza..." />
+                <InputF label="Molestias" value={newPatient.discomforts} onChange={v => setNewPatient({ ...newPatient, discomforts: v })} placeholder="Ej: Visión borrosa..." />
+                <InputF label="Padece alguna enfermedad" value={newPatient.hasIllness} onChange={v => setNewPatient({ ...newPatient, hasIllness: v })} placeholder="Ej: Diabetes, Ninguna..." />
+                <InputF label="Otros" value={newPatient.otherInfo} onChange={v => setNewPatient({ ...newPatient, otherInfo: v })} placeholder="Información adicional..." />
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Edad *</label>
-                    <input type="number" value={newPatient.age} onChange={e => setNewPatient({ ...newPatient, age: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" placeholder="30" />
+                    <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Utiliza lentes</label>
+                    <div className="flex gap-3">
+                      <button type="button" onClick={() => setNewPatient({ ...newPatient, usesGlasses: true })}
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-all ${newPatient.usesGlasses ? 'bg-[#7c3aed] text-white border-[#7c3aed]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}`}>Sí</button>
+                      <button type="button" onClick={() => setNewPatient({ ...newPatient, usesGlasses: false })}
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-all ${!newPatient.usesGlasses ? 'bg-[#7c3aed] text-white border-[#7c3aed]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}`}>No</button>
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Fecha de nacimiento</label>
-                    <input type="date" value={newPatient.dateOfBirth} onChange={e => setNewPatient({ ...newPatient, dateOfBirth: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
-                  </div>
+                  <InputF label="Cómo se siente con sus lentes" value={newPatient.howFeelsWithGlasses} onChange={v => setNewPatient({ ...newPatient, howFeelsWithGlasses: v })} placeholder="Ej: Bien, Mareos..." />
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Biografía breve</label>
-                  <textarea value={newPatient.biography} onChange={e => setNewPatient({ ...newPatient, biography: e.target.value })} rows={2} placeholder="Antecedentes, historial relevante..." className="w-full px-4 py-3 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-400" />
+              </SectionForm>
+
+              {/* REFRACCIÓN */}
+              <SectionForm icon={<Eye className="w-4 h-4 text-white" />} title="Refracción">
+                <div className="grid grid-cols-2 gap-4">
+                  <RefractionGroup label="OD (Ojo Derecho)" data={newPatient.refractionOD} onChange={d => setNewPatient({ ...newPatient, refractionOD: d })} />
+                  <RefractionGroup label="OI (Ojo Izquierdo)" data={newPatient.refractionOI} onChange={d => setNewPatient({ ...newPatient, refractionOI: d })} />
                 </div>
-              </div>
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 pt-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm"><MapPin className="w-4 h-4 text-white" /></div>
-                  <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Contacto y Ubicación</h3><div className="flex-1 h-px bg-slate-100 ml-2" />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Teléfono *</label>
-                    <input type="tel" value={newPatient.phone} onChange={e => setNewPatient({ ...newPatient, phone: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="55 1234 5678" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Correo *</label>
-                    <input type="email" value={newPatient.email} onChange={e => setNewPatient({ ...newPatient, email: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="correo@email.com" />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Domicilio</label>
-                  <input type="text" value={newPatient.address} onChange={e => setNewPatient({ ...newPatient, address: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Calle, número, colonia..." />
-                </div>
-              </div>
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 pt-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm"><Briefcase className="w-4 h-4 text-white" /></div>
-                  <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Información Profesional</h3><div className="flex-1 h-px bg-slate-100 ml-2" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Oficio</label>
-                  <input type="text" value={newPatient.occupation} onChange={e => setNewPatient({ ...newPatient, occupation: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Contadora, Maestro..." />
-                </div>
-              </div>
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 pt-2">
-                  <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm"><ClipboardList className="w-4 h-4 text-white" /></div>
-                  <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">Detalle de Consulta</h3><div className="flex-1 h-px bg-slate-100 ml-2" />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Motivo de revisión</label>
-                  <input type="text" value={newPatient.reasonForVisit} onChange={e => setNewPatient({ ...newPatient, reasonForVisit: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Dolor de cabeza..." />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Molestias</label>
-                  <input type="text" value={newPatient.discomforts} onChange={e => setNewPatient({ ...newPatient, discomforts: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Visión borrosa..." />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Padece alguna enfermedad</label>
-                  <input type="text" value={newPatient.hasIllness} onChange={e => setNewPatient({ ...newPatient, hasIllness: e.target.value })} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Diabetes, Ninguna..." />
-                </div>
-              </div>
+              </SectionForm>
+
+              {/* DIAGNÓSTICO Y OBSERVACIONES */}
+              <SectionForm icon={<Stethoscope className="w-4 h-4 text-white" />} title="Diagnóstico y Observaciones">
+                <InputF label="Diagnóstico" value={newPatient.diagnostico ?? ''} onChange={v => setNewPatient({ ...newPatient, diagnostico: v })} placeholder="Diagnóstico del paciente..." />
+                <InputF label="Observaciones" value={newPatient.observaciones ?? ''} onChange={v => setNewPatient({ ...newPatient, observaciones: v })} placeholder="Notas adicionales..." />
+              </SectionForm>
+
+              {/* BASE / MICA Y ARMAZÓN */}
+              <SectionForm icon={<Eye className="w-4 h-4 text-white" />} title="Base / Mica y Armazón">
+                <InputF label="Base / Mica" value={newPatient.baseMica ?? ''} onChange={v => setNewPatient({ ...newPatient, baseMica: v })} placeholder="Ej: Monofocal Essilor + Antirreflejante Crizal" />
+                <InputF label="Armazón" value={newPatient.armazon ?? ''} onChange={v => setNewPatient({ ...newPatient, armazon: v })} placeholder="Ej: Gerona GER 01 Dorado Verde" />
+              </SectionForm>
+
+              {/* BIOGRAFÍA */}
+              <SectionForm icon={<User className="w-4 h-4 text-white" />} title="Biografía">
+                <textarea value={newPatient.biography} onChange={e => setNewPatient({ ...newPatient, biography: e.target.value })} rows={3} placeholder="Antecedentes, historial relevante..."
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-400" />
+              </SectionForm>
             </div>
-            <div className="flex justify-end gap-3 p-6 sm:p-8 border-t border-slate-100 bg-slate-50/50 rounded-b-3xl">
-              <button onClick={() => setShowModal(false)} className="px-6 py-3 rounded-lg text-sm font-medium text-slate-500 hover:bg-white border border-transparent hover:border-slate-200">Cancelar</button>
-              <button onClick={handleAddPatient} className="px-8 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Guardar</button>
+
+            <div className="shrink-0 flex justify-end gap-3 px-6 py-4 border-t border-slate-100 bg-slate-50/50">
+              <button onClick={() => setShowModal(false)} className="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-white border border-transparent hover:border-slate-200">Cancelar</button>
+              <button onClick={handleAddPatient} className="px-7 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Guardar</button>
             </div>
           </div>
         </div>
@@ -486,6 +478,53 @@ function QuickExamModal({ patient, onClose }: { patient: Patient; onClose: () =>
             {saving ? 'Guardando...' : 'Guardar examen'}
           </button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function SectionForm({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm">{icon}</div>
+        <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">{title}</h3>
+        <div className="flex-1 h-px bg-slate-100 ml-2" />
+      </div>
+      <div className="space-y-4">{children}</div>
+    </div>
+  );
+}
+
+function InputF({ label, value, onChange, type = 'text', placeholder }: { label: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string }) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">{label}</label>
+      <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
+        className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+    </div>
+  );
+}
+
+function RefractionGroup({ label, data, onChange }: { label: string; data: { esfera: string; cilindro: string; eje: string; prisma: string; adicion: string }; onChange: (d: any) => void }) {
+  const fields = [
+    { key: 'esfera', ph: 'ESFERA' },
+    { key: 'cilindro', ph: 'CILINDRO' },
+    { key: 'eje', ph: 'EJE' },
+    { key: 'prisma', ph: 'PRISMA' },
+    { key: 'adicion', ph: 'ADICIÓN' },
+  ] as const;
+  return (
+    <div className="bg-slate-50 rounded-lg border border-slate-200 p-4">
+      <p className="text-xs font-bold text-[#7c3aed] uppercase tracking-wider mb-3">{label}</p>
+      <div className="grid grid-cols-2 gap-3">
+        {fields.map(f => (
+          <div key={f.key}>
+            <label className="block text-[10px] font-semibold text-slate-400 uppercase mb-1">{f.ph}</label>
+            <input type="text" value={data[f.key]} onChange={e => onChange({ ...data, [f.key]: e.target.value })} placeholder={f.ph}
+              className="w-full px-3 py-2 bg-white rounded-lg border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-300" />
+          </div>
+        ))}
       </div>
     </div>
   );
