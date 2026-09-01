@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef } from 'react';
-import { Printer, RotateCcw, Save, X, FileDown, Eye } from 'lucide-react';
+import { Printer, RotateCcw, Save, X, FileDown, Eye, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import SignaturePad from './SignaturePad';
@@ -120,7 +120,7 @@ interface TicketVentaProps {
 }
 
 export default function TicketVenta({ data: initialData, onClose }: TicketVentaProps) {
-  const { sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx, cedula: cedulaCtx, licenciatura: licenciaturaCtx } = useApp();
+  const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx, cedula: cedulaCtx, licenciatura: licenciaturaCtx } = useApp();
   const { user } = useAuth();
 
   // Generar folio automático
@@ -145,9 +145,49 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
   });
 
   const modalRef = useRef<HTMLDivElement>(null);
+  const [searchPatient, setSearchPatient] = useState('');
+
+  const filteredPatients = patients.filter(p =>
+    p.name.toLowerCase().includes(searchPatient.toLowerCase()) ||
+    p.phone.includes(searchPatient) ||
+    p.id.toLowerCase().includes(searchPatient.toLowerCase())
+  );
 
   const update = (field: string, value: string) => {
     setData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handlePatientSelect = (patientId: string) => {
+    const patient = patients.find(p => p.id === patientId);
+    if (!patient) return;
+    const patientRx = prescriptions
+      .filter(r => r.patientId === patientId)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+    let baseMica = '';
+    if (patientRx?.selectedLenses?.length) {
+      baseMica = patientRx.selectedLenses.map(l => `${l.name} ${l.brand} ${l.type}`).join(' + ');
+    }
+    let tratamientosStr = '';
+    if (patientRx?.treatments?.length) {
+      tratamientosStr = patientRx.treatments.map(t => t.name).join(', ');
+    }
+    const addrParts = (patient.address || '').split(',');
+    const coloniaFromAddr = addrParts.length > 1 ? addrParts[1]?.trim() : '';
+    setData(prev => ({
+      ...prev,
+      paciente: patient.name.toUpperCase(),
+      fechaNacimiento: patient.dateOfBirth || '',
+      calle: patient.address || '',
+      colonia: prev.colonia || coloniaFromAddr,
+      ocupacion: patient.occupation || '',
+      graduacion: patientRx ? {
+        od: { dnpL: patientRx.rightEye.dp || '', dnpC: '', alt: '', esfera: patientRx.rightEye.sph || '', cilindro: patientRx.rightEye.cyl || '', ejeAdd: patientRx.rightEye.axis ? `${patientRx.rightEye.axis}°` : '' },
+        oi: { dnpL: patientRx.leftEye.dp || '', dnpC: '', alt: '', esfera: patientRx.leftEye.sph || '', cilindro: patientRx.leftEye.cyl || '', ejeAdd: patientRx.leftEye.axis ? `${patientRx.leftEye.axis}°` : '' },
+      } : prev.graduacion,
+      descripcionProducto: baseMica || prev.descripcionProducto,
+      tratamientos: tratamientosStr || prev.tratamientos,
+    }));
+    setSearchPatient('');
   };
 
   const updateGrad = (ojo: 'od' | 'oi', field: string, value: string) => {
@@ -347,7 +387,30 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 
           {/* DATOS DEL PACIENTE */}
           <Section title="Datos del Paciente">
-            <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Buscar Paciente</label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input type="text" placeholder="Nombre, teléfono o ID..." value={searchPatient} onChange={e => setSearchPatient(e.target.value)}
+                  className="w-full pl-10 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
+              </div>
+              {searchPatient && (
+                <div className="mt-1 max-h-36 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-lg">
+                  {filteredPatients.length === 0 ? (
+                    <p className="px-3 py-2 text-xs text-slate-400">No se encontraron pacientes</p>
+                  ) : (
+                    filteredPatients.map(p => (
+                      <button key={p.id} onClick={() => handlePatientSelect(p.id)}
+                        className="w-full text-left px-3 py-2 hover:bg-purple-50 border-b border-slate-100 last:border-0 transition-colors">
+                        <p className="text-sm font-semibold text-slate-800">{p.name}</p>
+                        <p className="text-[10px] text-slate-400">{p.id} · {p.phone}</p>
+                      </button>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
               <InputField label="Paciente" value={data.paciente} onChange={v => update('paciente', v)} />
               <InputField label="Fecha de Nacimiento" value={data.fechaNacimiento} onChange={v => update('fechaNacimiento', v)} type="date" />
             </div>
