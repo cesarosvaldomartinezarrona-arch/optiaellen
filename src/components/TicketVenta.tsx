@@ -392,7 +392,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input type="text" placeholder="Nombre, teléfono o ID..." value={searchPatient} onChange={e => setSearchPatient(e.target.value)}
-                  className="w-full pl-10 pr-3 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
+                  className="w-full pl-10 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
               </div>
               {searchPatient && (
                 <div className="mt-1 max-h-36 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-lg">
@@ -432,7 +432,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
             <div className="mt-4">
               <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Armazón (Inventario)</label>
               <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
-                className="w-full px-3 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all">
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all">
                 <option value="">— Seleccionar armazón —</option>
                 {products.filter(p => p.category === 'Monturas').map(p => (
                   <option key={p.id} value={`${p.name} ${p.model} ${p.brand ?? ''}`.trim()}>
@@ -484,7 +484,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
           {/* OBSERVACIONES */}
           <Section title="Observaciones">
             <textarea value={data.observaciones} onChange={e => update('observaciones', e.target.value)} rows={2}
-              className="w-full px-3 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none transition-all" />
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none transition-all" />
           </Section>
 
           {/* DETALLE DE VENTA */}
@@ -717,7 +717,7 @@ function InputField({ label, value, onChange, type = 'text' }: { label: string; 
     <div>
       <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">{label}</label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)}
-        className="w-full px-3 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all" />
+        className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all" />
     </div>
   );
 }
