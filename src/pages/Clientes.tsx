@@ -342,7 +342,7 @@ export default function Clientes() {
 
             <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
               {/* DATOS PERSONALES */}
-              <SectionForm icon={<User className="w-4 h-4 text-white" />} title="Datos Personales">
+              <SectionForm icon={<User className="w-3.5 h-3.5 text-white" />} title="Datos Personales">
                 <InputF label="Nombre *" value={newPatient.name} onChange={v => setNewPatient({ ...newPatient, name: v })} placeholder="Nombre completo" />
                 <div className="grid grid-cols-2 gap-4">
                   <InputF label="Edad *" type="number" value={newPatient.age} onChange={v => setNewPatient({ ...newPatient, age: v })} placeholder="30" />
@@ -356,7 +356,7 @@ export default function Clientes() {
               </SectionForm>
 
               {/* DETALLE DE CONSULTA */}
-              <SectionForm icon={<ClipboardList className="w-4 h-4 text-white" />} title="Detalle de Consulta">
+              <SectionForm icon={<ClipboardList className="w-3.5 h-3.5 text-white" />} title="Detalle de Consulta">
                 <InputF label="Motivo de revisión" value={newPatient.reasonForVisit} onChange={v => setNewPatient({ ...newPatient, reasonForVisit: v })} placeholder="Ej: Dolor de cabeza..." />
                 <InputF label="Molestias" value={newPatient.discomforts} onChange={v => setNewPatient({ ...newPatient, discomforts: v })} placeholder="Ej: Visión borrosa..." />
                 <InputF label="Padece alguna enfermedad" value={newPatient.hasIllness} onChange={v => setNewPatient({ ...newPatient, hasIllness: v })} placeholder="Ej: Diabetes, Ninguna..." />
@@ -376,7 +376,7 @@ export default function Clientes() {
               </SectionForm>
 
               {/* REFRACCIÓN */}
-              <SectionForm icon={<Eye className="w-4 h-4 text-white" />} title="Refracción">
+              <SectionForm icon={<Eye className="w-3.5 h-3.5 text-white" />} title="Refracción">
                 <div className="grid grid-cols-2 gap-4">
                   <RefractionGroup label="OD (Ojo Derecho)" data={newPatient.refractionOD} onChange={d => setNewPatient({ ...newPatient, refractionOD: d })} />
                   <RefractionGroup label="OI (Ojo Izquierdo)" data={newPatient.refractionOI} onChange={d => setNewPatient({ ...newPatient, refractionOI: d })} />
@@ -384,19 +384,19 @@ export default function Clientes() {
               </SectionForm>
 
               {/* DIAGNÓSTICO Y OBSERVACIONES */}
-              <SectionForm icon={<Stethoscope className="w-4 h-4 text-white" />} title="Diagnóstico y Observaciones">
+              <SectionForm icon={<Stethoscope className="w-3.5 h-3.5 text-white" />} title="Diagnóstico y Observaciones">
                 <InputF label="Diagnóstico" value={newPatient.diagnostico ?? ''} onChange={v => setNewPatient({ ...newPatient, diagnostico: v })} placeholder="Diagnóstico del paciente..." />
                 <InputF label="Observaciones" value={newPatient.observaciones ?? ''} onChange={v => setNewPatient({ ...newPatient, observaciones: v })} placeholder="Notas adicionales..." />
               </SectionForm>
 
               {/* BASE / MICA Y ARMAZÓN */}
-              <SectionForm icon={<Eye className="w-4 h-4 text-white" />} title="Base / Mica y Armazón">
+              <SectionForm icon={<Eye className="w-3.5 h-3.5 text-white" />} title="Base / Mica y Armazón">
                 <InputF label="Base / Mica" value={newPatient.baseMica ?? ''} onChange={v => setNewPatient({ ...newPatient, baseMica: v })} placeholder="Ej: Monofocal Essilor + Antirreflejante Crizal" />
                 <InputF label="Armazón" value={newPatient.armazon ?? ''} onChange={v => setNewPatient({ ...newPatient, armazon: v })} placeholder="Ej: Gerona GER 01 Dorado Verde" />
               </SectionForm>
 
               {/* BIOGRAFÍA */}
-              <SectionForm icon={<User className="w-4 h-4 text-white" />} title="Biografía">
+              <SectionForm icon={<User className="w-3.5 h-3.5 text-white" />} title="Biografía">
                 <textarea value={newPatient.biography} onChange={e => setNewPatient({ ...newPatient, biography: e.target.value })} rows={3} placeholder="Antecedentes, historial relevante..."
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-400" />
               </SectionForm>
@@ -487,7 +487,7 @@ function SectionForm({ icon, title, children }: { icon: React.ReactNode; title: 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm">{icon}</div>
+        <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm">{icon}</div>
         <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">{title}</h3>
         <div className="flex-1 h-px bg-slate-100 ml-2" />
       </div>
