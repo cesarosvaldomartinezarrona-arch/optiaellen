@@ -12,6 +12,10 @@ interface AppContextType {
   setRegimenFiscal: React.Dispatch<React.SetStateAction<string>>;
   direccionSucursal: string;
   setDireccionSucursal: React.Dispatch<React.SetStateAction<string>>;
+  cedula: string;
+  setCedula: React.Dispatch<React.SetStateAction<string>>;
+  licenciatura: string;
+  setLicenciatura: React.Dispatch<React.SetStateAction<string>>;
   patients: Patient[];
   setPatients: React.Dispatch<React.SetStateAction<Patient[]>>;
   prescriptions: Prescription[];
@@ -44,6 +48,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [rfc, setRfc] = useState('');
   const [regimenFiscal, setRegimenFiscal] = useState('');
   const [direccionSucursal, setDireccionSucursal] = useState('');
+  const [cedula, setCedula] = useState('');
+  const [licenciatura, setLicenciatura] = useState('');
   const [patients, setPatients] = useState<Patient[]>(initialPatients);
   const [prescriptions, setPrescriptions] = useState<Prescription[]>(initialPrescriptions);
   const [products, setProducts] = useState<Product[]>(initialProducts);
@@ -84,6 +90,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       rfc, setRfc,
       regimenFiscal, setRegimenFiscal,
       direccionSucursal, setDireccionSucursal,
+      cedula, setCedula,
+      licenciatura, setLicenciatura,
       patients, setPatients,
       prescriptions, setPrescriptions,
       products, setProducts,

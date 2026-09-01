@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import type { UserRole } from '../types';
 
 export default function Configuracion() {
-  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal } = useApp();
+  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal, cedula, setCedula, licenciatura, setLicenciatura } = useApp();
   const { users, addUser, updateUser, deleteUser, user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('Perfil de Usuario');
   const [showSaved, setShowSaved] = useState(false);
@@ -24,6 +24,8 @@ export default function Configuracion() {
     rfc: rfc,
     regimenFiscal: regimenFiscal,
     direccionSucursal: direccionSucursal,
+    cedula: cedula,
+    licenciatura: licenciatura,
     address: 'Av. Principal 123, Centro, CDMX',
   });
 
@@ -41,6 +43,8 @@ export default function Configuracion() {
     setRfc(form.rfc);
     setRegimenFiscal(form.regimenFiscal);
     setDireccionSucursal(form.direccionSucursal);
+    setCedula(form.cedula);
+    setLicenciatura(form.licenciatura);
     setShowSaved(true);
     setTimeout(() => setShowSaved(false), 2500);
   };
@@ -163,6 +167,16 @@ export default function Configuracion() {
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Rol</label>
                   <input type="text" value={form.role} disabled
                     className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm text-slate-400 cursor-not-allowed" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Cédula</label>
+                  <input type="text" value={form.cedula} onChange={e => update('cedula', e.target.value)} placeholder="Ej: 12345678"
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Licenciatura en Optometría</label>
+                  <input type="text" value={form.licenciatura} onChange={e => update('licenciatura', e.target.value)} placeholder="Ej: UNAM"
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
                 </div>
               </div>
 
