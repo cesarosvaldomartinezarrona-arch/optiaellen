@@ -8,6 +8,10 @@ interface AppContextType {
   setOpticsName: React.Dispatch<React.SetStateAction<string>>;
   rfc: string;
   setRfc: React.Dispatch<React.SetStateAction<string>>;
+  regimenFiscal: string;
+  setRegimenFiscal: React.Dispatch<React.SetStateAction<string>>;
+  direccionSucursal: string;
+  setDireccionSucursal: React.Dispatch<React.SetStateAction<string>>;
   patients: Patient[];
   setPatients: React.Dispatch<React.SetStateAction<Patient[]>>;
   prescriptions: Prescription[];
@@ -38,6 +42,8 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [opticsName, setOpticsName] = useState('opticællen');
   const [rfc, setRfc] = useState('');
+  const [regimenFiscal, setRegimenFiscal] = useState('');
+  const [direccionSucursal, setDireccionSucursal] = useState('');
   const [patients, setPatients] = useState<Patient[]>(initialPatients);
   const [prescriptions, setPrescriptions] = useState<Prescription[]>(initialPrescriptions);
   const [products, setProducts] = useState<Product[]>(initialProducts);
@@ -76,6 +82,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     <AppContext.Provider value={{
       opticsName, setOpticsName,
       rfc, setRfc,
+      regimenFiscal, setRegimenFiscal,
+      direccionSucursal, setDireccionSucursal,
       patients, setPatients,
       prescriptions, setPrescriptions,
       products, setProducts,

@@ -1,20 +1,23 @@
 import { useState, useMemo } from 'react';
-import { Printer, RotateCcw, Save, X, User } from 'lucide-react';
+import { Printer, RotateCcw, Save, X, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 import SignaturePad from './SignaturePad';
 
 export interface TicketVentaData {
   recepcionista: string;
   folio: string;
   fechaVenta: string;
-  paciente: string;
-  fechaNacimiento: string;
-  colonia: string;
-  direccion: string;
   sucursal: string;
   rfc: string;
+  regimenFiscal: string;
+  direccionSucursal: string;
   optometrista: string;
-  trabajo: string;
+  paciente: string;
+  fechaNacimiento: string;
+  calle: string;
+  colonia: string;
+  ocupacion: string;
   descripcionProducto: string;
   tratamientos: string;
   armazon: string;
@@ -42,14 +45,16 @@ export const defaultData: TicketVentaData = {
   recepcionista: '',
   folio: '',
   fechaVenta: new Date().toISOString().split('T')[0],
-  paciente: '',
-  fechaNacimiento: '',
-  colonia: '',
-  direccion: '',
   sucursal: '',
   rfc: '',
+  regimenFiscal: '',
+  direccionSucursal: '',
   optometrista: '',
-  trabajo: '—',
+  paciente: '',
+  fechaNacimiento: '',
+  calle: '',
+  colonia: '',
+  ocupacion: '',
   descripcionProducto: '',
   tratamientos: '',
   armazon: '',
@@ -107,13 +112,12 @@ function formatDateLong(d: string): string {
 
 interface TicketVentaProps {
   data?: TicketVentaData;
-  opticsName?: string;
-  rfc?: string;
   onClose?: () => void;
 }
 
-export default function TicketVenta({ data: initialData, opticsName, rfc: rfcContext, onClose }: TicketVentaProps) {
-  const { patients, prescriptions, sales, products } = useApp();
+export default function TicketVenta({ data: initialData, onClose }: TicketVentaProps) {
+  const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx } = useApp();
+  const { user } = useAuth();
 
   // Generar folio automático
   const nextFolio = useMemo(() => {
@@ -126,10 +130,25 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
     return {
       ...defaultData,
       folio: nextFolio,
+      recepcionista: user?.name ?? '',
       sucursal: opticsName ?? '',
-      rfc: rfcContext ?? '',
+      rfc: rfcCtx ?? '',
+      regimenFiscal: regimenCtx ?? '',
+      direccionSucursal: dirSucCtx ?? '',
     };
   });
+
+  const [searchPatient, setSearchPatient] = useState('');
+
+  const filteredPatients = patients.filter(p =>
+    p.name.toLowerCase().includes(searchPatient.toLowerCase()) ||
+    p.phone.includes(searchPatient) ||
+    p.id.toLowerCase().includes(searchPatient.toLowerCase())
+  );
+
+  const update = (field: string, value: string) => {
+    setData(prev => ({ ...prev, [field]: value }));
+  };
 
   // Selector de paciente: auto-llena datos + último examen
   const handlePatientSelect = (patientId: string) => {
@@ -138,9 +157,9 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
         ...prev,
         paciente: '',
         fechaNacimiento: '',
+        calle: '',
         colonia: '',
-        direccion: '',
-        trabajo: '—',
+        ocupacion: '',
         graduacion: defaultData.graduacion,
         descripcionProducto: '',
         tratamientos: '',
@@ -150,33 +169,31 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
     const patient = patients.find(p => p.id === patientId);
     if (!patient) return;
 
-    // Buscar la receta más reciente del paciente
     const patientRx = prescriptions
       .filter(r => r.patientId === patientId)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
 
-    // Construir base/mica desde selectedLenses
     let baseMica = '';
     if (patientRx?.selectedLenses?.length) {
-      baseMica = patientRx.selectedLenses
-        .map(l => `${l.name} ${l.brand} ${l.type}`)
-        .join(' + ');
+      baseMica = patientRx.selectedLenses.map(l => `${l.name} ${l.brand} ${l.type}`).join(' + ');
     }
 
-    // Construir tratamientos
     let tratamientosStr = '';
     if (patientRx?.treatments?.length) {
-      tratamientosStr = patientRx.treatments
-        .map(t => t.name)
-        .join(', ');
+      tratamientosStr = patientRx.treatments.map(t => t.name).join(', ');
     }
+
+    // Try to parse colonia from address
+    const addrParts = (patient.address || '').split(',');
+    const coloniaFromAddr = addrParts.length > 1 ? addrParts[1]?.trim() : '';
 
     setData(prev => ({
       ...prev,
       paciente: patient.name.toUpperCase(),
       fechaNacimiento: patient.dateOfBirth || '',
-      direccion: patient.address || '',
-      trabajo: patient.occupation || '—',
+      calle: patient.address || '',
+      colonia: prev.colonia || coloniaFromAddr,
+      ocupacion: patient.occupation || '',
       graduacion: patientRx ? {
         od: {
           dnpL: patientRx.rightEye.dp || '',
@@ -198,10 +215,6 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
       descripcionProducto: baseMica || prev.descripcionProducto,
       tratamientos: tratamientosStr || prev.tratamientos,
     }));
-  };
-
-  const update = (field: string, value: string) => {
-    setData(prev => ({ ...prev, [field]: value }));
   };
 
   const updateGrad = (ojo: 'od' | 'oi', field: string, value: string) => {
@@ -302,43 +315,57 @@ export default function TicketVenta({ data: initialData, opticsName, rfc: rfcCon
 
           {/* DATOS DE VENTA */}
           <Section title="Datos de Venta">
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <InputField label="Recepcionista" value={data.recepcionista} onChange={v => update('recepcionista', v)} />
               <InputField label="Folio de Venta" value={data.folio} onChange={v => update('folio', v)} />
               <InputField label="Fecha de Venta" value={data.fechaVenta} onChange={v => update('fechaVenta', v)} type="date" />
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+              <InputField label="Sucursal" value={data.sucursal} onChange={v => update('sucursal', v)} />
+              <InputField label="RFC" value={data.rfc} onChange={v => update('rfc', v)} />
+              <InputField label="Régimen Fiscal" value={data.regimenFiscal} onChange={v => update('regimenFiscal', v)} />
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <InputField label="Optometrista" value={data.optometrista} onChange={v => update('optometrista', v)} />
+              <InputField label="Dirección Sucursal" value={data.direccionSucursal} onChange={v => update('direccionSucursal', v)} />
             </div>
           </Section>
 
           {/* DATOS DEL PACIENTE */}
           <Section title="Datos del Paciente">
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Seleccionar Paciente</label>
+              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Buscar Paciente</label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                <select onChange={e => handlePatientSelect(e.target.value)} defaultValue=""
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] appearance-none transition-all">
-                  <option value="">— Seleccionar paciente registrado —</option>
-                  {patients.map(p => (
-                    <option key={p.id} value={p.id}>{p.name} ({p.id})</option>
-                  ))}
-                </select>
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input type="text" placeholder="Nombre, teléfono o ID del paciente..." value={searchPatient} onChange={e => setSearchPatient(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
               </div>
+              {searchPatient && (
+                <div className="mt-2 max-h-40 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-lg">
+                  {filteredPatients.length === 0 ? (
+                    <p className="px-4 py-3 text-xs text-slate-400">No se encontraron pacientes</p>
+                  ) : (
+                    filteredPatients.map(p => (
+                      <button key={p.id} onClick={() => { handlePatientSelect(p.id); setSearchPatient(''); }}
+                        className="w-full text-left px-4 py-2.5 hover:bg-purple-50 border-b border-slate-100 last:border-0 transition-colors">
+                        <p className="text-sm font-semibold text-slate-800">{p.name}</p>
+                        <p className="text-[10px] text-slate-400">{p.id} · {p.phone} · {p.occupation || '—'}</p>
+                      </button>
+                    ))
+                  )}
+                </div>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
               <InputField label="Paciente" value={data.paciente} onChange={v => update('paciente', v)} />
               <InputField label="Fecha de Nacimiento" value={data.fechaNacimiento} onChange={v => update('fechaNacimiento', v)} type="date" />
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
+              <InputField label="Calle" value={data.calle} onChange={v => update('calle', v)} />
               <InputField label="Colonia" value={data.colonia} onChange={v => update('colonia', v)} />
-              <InputField label="Dirección" value={data.direccion} onChange={v => update('direccion', v)} />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <InputField label="Sucursal" value={data.sucursal} onChange={v => update('sucursal', v)} />
-              <InputField label="RFC" value={data.rfc} onChange={v => update('rfc', v)} />
-            </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              <InputField label="Optometrista" value={data.optometrista} onChange={v => update('optometrista', v)} />
-              <InputField label="Trabajo" value={data.trabajo} onChange={v => update('trabajo', v)} />
+            <div className="mt-4">
+              <InputField label="Ocupación" value={data.ocupacion} onChange={v => update('ocupacion', v)} />
             </div>
           </Section>
 

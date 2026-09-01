@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import type { UserRole } from '../types';
 
 export default function Configuracion() {
-  const { opticsName, setOpticsName, rfc, setRfc } = useApp();
+  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal } = useApp();
   const { users, addUser, updateUser, deleteUser, user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('Perfil de Usuario');
   const [showSaved, setShowSaved] = useState(false);
@@ -22,6 +22,8 @@ export default function Configuracion() {
     role: 'Administrador General',
     optica: opticsName,
     rfc: rfc,
+    regimenFiscal: regimenFiscal,
+    direccionSucursal: direccionSucursal,
     address: 'Av. Principal 123, Centro, CDMX',
   });
 
@@ -37,6 +39,8 @@ export default function Configuracion() {
   const handleSave = () => {
     setOpticsName(form.optica);
     setRfc(form.rfc);
+    setRegimenFiscal(form.regimenFiscal);
+    setDireccionSucursal(form.direccionSucursal);
     setShowSaved(true);
     setTimeout(() => setShowSaved(false), 2500);
   };
@@ -175,8 +179,21 @@ export default function Configuracion() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Régimen Fiscal</label>
+                  <input type="text" value={form.regimenFiscal} onChange={e => update('regimenFiscal', e.target.value)} placeholder="612 - Persona Física con Actividades Empresariales"
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección de Sucursal</label>
+                  <input type="text" value={form.direccionSucursal} onChange={e => update('direccionSucursal', e.target.value)} placeholder="Dolores Hidalgo, GTO."
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                </div>
+              </div>
+
               <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección</label>
+                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección Fiscal</label>
                 <input type="text" value={form.address} onChange={e => update('address', e.target.value)}
                   className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
               </div>

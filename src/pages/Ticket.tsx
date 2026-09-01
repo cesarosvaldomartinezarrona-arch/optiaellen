@@ -34,14 +34,16 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
     recepcionista: defaultData.recepcionista,
     folio: sale.id.replace("V", "SD-2025-"),
     fechaVenta: new Date(sale.createdAt).toISOString().split("T")[0],
-    paciente: sale.patientName.toUpperCase(),
-    fechaNacimiento: defaultData.fechaNacimiento,
-    colonia: defaultData.colonia,
-    direccion: defaultData.direccion,
     sucursal: opticsName,
     rfc: defaultData.rfc,
+    regimenFiscal: defaultData.regimenFiscal,
+    direccionSucursal: defaultData.direccionSucursal,
     optometrista: defaultData.optometrista,
-    trabajo: defaultData.trabajo,
+    paciente: sale.patientName.toUpperCase(),
+    fechaNacimiento: defaultData.fechaNacimiento,
+    calle: defaultData.calle,
+    colonia: defaultData.colonia,
+    ocupacion: defaultData.ocupacion,
     descripcionProducto: sale.items.map(it => `${it.product.name} ${it.product.model}`).join(", "),
     tratamientos: defaultData.tratamientos,
     armazon: defaultData.armazon,
@@ -64,7 +66,7 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
 }
 
 export default function TicketPage() {
-  const { sales, opticsName, rfc } = useApp();
+  const { sales, opticsName } = useApp();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const saleParam = searchParams.get("sale");
@@ -152,8 +154,6 @@ export default function TicketPage() {
       {showModal && (
         <TicketVenta
           data={ticketData}
-          opticsName={opticsName}
-          rfc={rfc}
           onClose={handleClose}
         />
       )}
