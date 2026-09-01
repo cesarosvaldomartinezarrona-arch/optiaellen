@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Printer, RotateCcw, Save, Search } from 'lucide-react';
+import { Printer, RotateCcw, Save, Search, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import SignaturePad from './SignaturePad';
@@ -115,7 +115,7 @@ interface TicketVentaProps {
   onClose?: () => void;
 }
 
-export default function TicketVenta({ data: initialData, onClose: _onClose }: TicketVentaProps) {
+export default function TicketVenta({ data: initialData, onClose }: TicketVentaProps) {
   const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx } = useApp();
   const { user } = useAuth();
 
@@ -283,9 +283,16 @@ export default function TicketVenta({ data: initialData, onClose: _onClose }: Ti
                 <p className="text-slate-400 text-[11px]">Ver bien es vivir mejor</p>
               </div>
             </div>
-            <div className="text-right">
-              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">TICKET DE VENTA</h1>
-              <span className="inline-block mt-1 px-3 py-1 bg-[#7c3aed] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">TICKET DE VENTA</h1>
+                <span className="inline-block mt-1 px-3 py-1 bg-[#7c3aed] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
+              </div>
+              {onClose && (
+                <button onClick={onClose} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition-colors text-slate-400">
+                  <X className="w-5 h-5" />
+                </button>
+              )}
             </div>
           </div>
           <div className="bg-white px-6 py-2.5 flex items-center gap-6 border-b border-slate-100 text-xs text-slate-600">
