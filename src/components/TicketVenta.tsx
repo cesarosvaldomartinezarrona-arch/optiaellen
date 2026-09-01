@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Printer, RotateCcw, Save, Search, X } from 'lucide-react';
+import { useState, useMemo, useRef } from 'react';
+import { Printer, RotateCcw, Save, Search, X, FileDown, Eye } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import SignaturePad from './SignaturePad';
@@ -145,6 +145,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
   });
 
   const [searchPatient, setSearchPatient] = useState('');
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const filteredPatients = patients.filter(p =>
     p.name.toLowerCase().includes(searchPatient.toLowerCase()) ||
@@ -271,12 +272,67 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 
   const handlePrint = () => window.print();
 
+  const generatePdf = async (): Promise<Blob | null> => {
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const { jsPDF } = await import('jspdf');
+      const content = modalRef.current?.querySelector('.overflow-y-auto') as HTMLElement;
+      if (!content) return null;
+      const prevOverflow = content.style.overflow;
+      const prevMaxHeight = content.style.maxHeight;
+      content.style.overflow = 'visible';
+      content.style.maxHeight = 'none';
+      const canvas = await html2canvas(content, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+      content.style.overflow = prevOverflow;
+      content.style.maxHeight = prevMaxHeight;
+      const imgW = 215.9;
+      const imgH = (canvas.height * imgW) / canvas.width;
+      const pdf = new jsPDF('p', 'mm', 'letter');
+      const imgData = canvas.toDataURL('image/png');
+      let y = 0;
+      const pageH = 279.4;
+      while (y < imgH) {
+        if (y > 0) pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, -y, imgW, imgH);
+        y += pageH;
+      }
+      return pdf.output('blob');
+    } catch (e) {
+      console.error('Error generando PDF:', e);
+      return null;
+    }
+  };
+
+  const [generatingPdf, setGeneratingPdf] = useState(false);
+
+  const handleDownloadPdf = async () => {
+    setGeneratingPdf(true);
+    const blob = await generatePdf();
+    setGeneratingPdf(false);
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Ticket-${data.folio || 'venta'}.pdf`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleViewPdf = async () => {
+    setGeneratingPdf(true);
+    const blob = await generatePdf();
+    setGeneratingPdf(false);
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  };
+
   const handleReset = () => {
     setData({ ...defaultData });
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[60] p-3 sm:p-4">
+    <div ref={modalRef} className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[60] p-3 sm:p-4">
       <div className="bg-white rounded-lg w-full max-w-5xl shadow-2xl border border-slate-200 max-h-[92vh] overflow-hidden flex flex-col print:shadow-none print:rounded-none print:max-w-full print:border-none">
 
         {/* Header sticky */}
@@ -634,16 +690,24 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
         {/* Footer sticky */}
         <div className="shrink-0 border-t border-slate-200 bg-white px-5 py-3 flex items-center justify-between no-print">
           <button onClick={handleReset}
-            className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
+            className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
             <RotateCcw className="w-4 h-4" /> Reiniciar
           </button>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button onClick={handlePrint}
-              className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
+              className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
               <Printer className="w-4 h-4" /> Imprimir
             </button>
+            <button onClick={handleViewPdf} disabled={generatingPdf}
+              className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50">
+              <Eye className="w-4 h-4" /> {generatingPdf ? 'Generando...' : 'Ver PDF'}
+            </button>
+            <button onClick={handleDownloadPdf} disabled={generatingPdf}
+              className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50">
+              <FileDown className="w-4 h-4" /> {generatingPdf ? 'Generando...' : 'Descargar PDF'}
+            </button>
             <button
-              className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] rounded-lg text-sm font-bold text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all">
+              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] rounded-lg text-sm font-bold text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all">
               <Save className="w-4 h-4" /> Guardar Ticket
             </button>
           </div>
