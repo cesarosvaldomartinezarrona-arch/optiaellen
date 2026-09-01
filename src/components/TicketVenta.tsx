@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Printer, RotateCcw, Save, X, Search } from 'lucide-react';
+import { Printer, RotateCcw, Save, Search } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import SignaturePad from './SignaturePad';
@@ -115,7 +115,7 @@ interface TicketVentaProps {
   onClose?: () => void;
 }
 
-export default function TicketVenta({ data: initialData, onClose }: TicketVentaProps) {
+export default function TicketVenta({ data: initialData, onClose: _onClose }: TicketVentaProps) {
   const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx } = useApp();
   const { user } = useAuth();
 
@@ -274,40 +274,47 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
       <div className="bg-white rounded-lg w-full max-w-5xl shadow-2xl border border-slate-200 max-h-[92vh] overflow-hidden flex flex-col print:shadow-none print:rounded-none print:max-w-full print:border-none">
 
         {/* Header sticky */}
-        <div className="bg-gradient-to-r from-[#3a0d6d] via-[#5b1a9e] to-[#7c3aed] px-6 py-4 flex items-center justify-between shrink-0 no-print">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-lg shrink-0">
-              <span className="text-[#4a148c] font-extrabold text-sm">SD</span>
+        <div className="shrink-0 no-print">
+          <div className="bg-white px-6 py-4 flex items-center justify-between border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="OptiÆllen" className="w-14 h-14 object-contain" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+              <div>
+                <h2 className="text-xl font-extrabold text-[#7c3aed] tracking-tight">{opticsName ?? 'OptiÆllen'}</h2>
+                <p className="text-slate-400 text-[11px]">Ver bien es vivir mejor</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-white text-lg font-extrabold">Ticket de Venta</h2>
-              <p className="text-white/50 text-[10px] mt-0.5">{opticsName ?? 'Salud Digna'} — Formulario de registro con firma digital</p>
+            <div className="text-right">
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">TICKET DE VENTA</h1>
+              <span className="inline-block mt-1 px-3 py-1 bg-[#7c3aed] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="px-4 py-1.5 rounded-full border border-white/30 text-white text-[9px] font-bold tracking-widest uppercase hidden sm:block">
-              Nota de Venta
-            </span>
-            {onClose && (
-              <button onClick={onClose} className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors ml-2">
-                <X className="w-5 h-5 text-white" />
-              </button>
-            )}
+          <div className="bg-white px-6 py-2.5 flex items-center gap-6 border-b border-slate-100 text-xs text-slate-600">
+            <span><strong>Recepcionista:</strong> {data.recepcionista || '—'}</span>
+            <span><strong>Dirección:</strong> {data.direccionSucursal || '—'}</span>
           </div>
+          <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]" />
         </div>
 
         {/* Header para impresión */}
-        <div className="hidden print:block bg-gradient-to-r from-[#3a0d6d] via-[#5b1a9e] to-[#7c3aed] px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-white flex items-center justify-center shrink-0">
-              <span className="text-[#4a148c] font-extrabold text-sm">SD</span>
+        <div className="hidden print:block shrink-0">
+          <div className="px-6 py-4 flex items-center justify-between border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="OptiÆllen" className="w-14 h-14 object-contain" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+              <div>
+                <h2 className="text-xl font-extrabold text-[#7c3aed] tracking-tight">{opticsName ?? 'OptiÆllen'}</h2>
+                <p className="text-slate-400 text-[11px]">Ver bien es vivir mejor</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-white text-lg font-extrabold">Ticket de Venta</h2>
-              <p className="text-white/50 text-[10px]">{opticsName ?? 'Salud Digna'} — Formulario de registro con firma digital</p>
+            <div className="text-right">
+              <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">TICKET DE VENTA</h1>
+              <span className="inline-block mt-1 px-3 py-1 bg-[#7c3aed] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
             </div>
           </div>
-          <span className="px-4 py-1.5 rounded-full border border-white/30 text-white text-[9px] font-bold tracking-widest uppercase">Nota de Venta</span>
+          <div className="px-6 py-2.5 flex items-center gap-6 border-b border-slate-100 text-xs text-slate-600">
+            <span><strong>Recepcionista:</strong> {data.recepcionista || '—'}</span>
+            <span><strong>Dirección:</strong> {data.direccionSucursal || '—'}</span>
+          </div>
+          <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]" />
         </div>
 
         {/* Content scrollable */}
