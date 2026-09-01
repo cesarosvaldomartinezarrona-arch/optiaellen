@@ -12,6 +12,8 @@ export interface TicketVentaData {
   rfc: string;
   regimenFiscal: string;
   direccionSucursal: string;
+  cedula: string;
+  licenciatura: string;
   optometrista: string;
   paciente: string;
   fechaNacimiento: string;
@@ -49,6 +51,8 @@ export const defaultData: TicketVentaData = {
   rfc: '',
   regimenFiscal: '',
   direccionSucursal: '',
+  cedula: '',
+  licenciatura: '',
   optometrista: '',
   paciente: '',
   fechaNacimiento: '',
@@ -116,7 +120,7 @@ interface TicketVentaProps {
 }
 
 export default function TicketVenta({ data: initialData, onClose }: TicketVentaProps) {
-  const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx } = useApp();
+  const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx, cedula: cedulaCtx, licenciatura: licenciaturaCtx } = useApp();
   const { user } = useAuth();
 
   // Generar folio automático
@@ -135,6 +139,8 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
       rfc: rfcCtx ?? '',
       regimenFiscal: regimenCtx ?? '',
       direccionSucursal: dirSucCtx ?? '',
+      cedula: cedulaCtx ?? '',
+      licenciatura: licenciaturaCtx ?? '',
     };
   });
 
@@ -299,6 +305,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
             <span><strong>Recepcionista:</strong> {data.recepcionista || '—'}</span>
             <span><strong>Dirección:</strong> {data.direccionSucursal || '—'}</span>
           </div>
+          <div className="bg-white px-6 py-2 flex items-center gap-6 border-b border-slate-100 text-xs text-slate-600">
+            <span><strong>Cédula:</strong> {data.cedula || '—'}</span>
+            <span><strong>Licenciado en Optometría:</strong> {data.licenciatura || '—'}</span>
+          </div>
           <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]" />
         </div>
 
@@ -321,6 +331,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
             <span><strong>Recepcionista:</strong> {data.recepcionista || '—'}</span>
             <span><strong>Dirección:</strong> {data.direccionSucursal || '—'}</span>
           </div>
+          <div className="px-6 py-2 flex items-center gap-6 border-b border-slate-100 text-xs text-slate-600">
+            <span><strong>Cédula:</strong> {data.cedula || '—'}</span>
+            <span><strong>Licenciado en Optometría:</strong> {data.licenciatura || '—'}</span>
+          </div>
           <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]" />
         </div>
 
@@ -342,6 +356,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
             <div className="grid grid-cols-2 gap-4 mt-4">
               <InputField label="Optometrista" value={data.optometrista} onChange={v => update('optometrista', v)} />
               <InputField label="Dirección Sucursal" value={data.direccionSucursal} onChange={v => update('direccionSucursal', v)} />
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <InputField label="Cédula" value={data.cedula} onChange={v => update('cedula', v)} />
+              <InputField label="Licenciado en Optometría" value={data.licenciatura} onChange={v => update('licenciatura', v)} />
             </div>
           </Section>
 

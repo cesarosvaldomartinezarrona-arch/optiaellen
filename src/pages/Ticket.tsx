@@ -38,6 +38,8 @@ function saleToTicketData(sale: Sale, opticsName: string): TicketVentaData {
     rfc: defaultData.rfc,
     regimenFiscal: defaultData.regimenFiscal,
     direccionSucursal: defaultData.direccionSucursal,
+    cedula: defaultData.cedula,
+    licenciatura: defaultData.licenciatura,
     optometrista: defaultData.optometrista,
     paciente: sale.patientName.toUpperCase(),
     fechaNacimiento: defaultData.fechaNacimiento,
