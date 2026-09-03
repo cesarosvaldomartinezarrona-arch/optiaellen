@@ -13,6 +13,7 @@ interface NavItem {
   label: string;
   badgeKey?: 'lab';
   permission?: string;
+  highlight?: boolean;
 }
 
 const navSections: { label: string; items: NavItem[] }[] = [
@@ -21,7 +22,7 @@ const navSections: { label: string; items: NavItem[] }[] = [
     items: [
       { to: '/', icon: LayoutDashboard, label: 'Dashboard', permission: 'panel' },
       { to: '/clientes', icon: Users, label: 'Clientes', permission: 'clientes' },
-      { to: '/ticket', icon: FileText, label: 'Ticket de Venta', permission: 'ventas' },
+      { to: '/ticket', icon: FileText, label: 'Ticket de Venta', permission: 'ventas', highlight: true },
       { to: '/recetas', icon: FileText, label: 'Recetas', permission: 'recetas' },
     ],
   },
@@ -62,13 +63,8 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose, collapsed
     <div className="flex flex-col h-full overflow-hidden">
       {/* Logo — limpio, centrado */}
       <div className="flex flex-col items-center pt-7 pb-6 px-4 shrink-0 relative">
-        <div className="w-12 h-12 rounded-lg bg-[var(--accent)] flex items-center justify-center shadow-[0_4px_20px_rgba(124,58,237,0.3)] shrink-0">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 12C1 12 5.5 5.5 12 5.5C18.5 5.5 23 12 23 12C23 12 18.5 18.5 12 18.5C5.5 18.5 1 12 1 12Z" fill="white" />
-            <ellipse cx="12" cy="12" rx="5.2" ry="5.2" fill="var(--accent)" />
-            <circle cx="12" cy="12" r="2.3" fill="#0f0a1f" />
-            <circle cx="13.5" cy="10.7" r="0.8" fill="white" opacity="0.95" />
-          </svg>
+        <div className="w-14 h-14 rounded-lg flex items-center justify-center shrink-0">
+          <img src="/logo.png" alt="OptiAEllen" className="w-14 h-14 object-contain" />
         </div>
         {!collapsed && (
           <div className="text-center mt-3 min-w-0 w-full">
@@ -111,13 +107,17 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose, collapsed
                       to={item.to}
                       onClick={isMobile ? onMobileClose : undefined}
                       title={collapsed ? item.label : undefined}
-                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-colors min-w-0 ${
+                      className={`flex items-center gap-3 px-3 rounded-lg font-medium transition-colors min-w-0 ${
+                        item.highlight && !isActive
+                          ? 'py-3 text-[14px] bg-[var(--accent)]/10 text-white border border-[var(--accent)]/25'
+                          : 'py-2.5 text-[13px]'
+                      } ${
                         isActive
                           ? 'bg-[var(--accent)] text-white shadow-[0_2px_10px_rgba(124,58,237,0.35)]'
-                          : 'text-[#9ca3b8] hover:text-white hover:bg-white/[0.06]'
+                          : !item.highlight ? 'text-[#9ca3b8] hover:text-white hover:bg-white/[0.06]' : ''
                       }`}
                     >
-                      <Icon className={`w-[18px] h-[18px] shrink-0 ${isActive ? 'text-white' : 'text-[#9ca3b8]'}`} strokeWidth={isActive ? 2.2 : 1.8} />
+                      <Icon className={`${item.highlight && !isActive ? 'w-5 h-5' : 'w-[18px] h-[18px]'} shrink-0 ${isActive ? 'text-white' : 'text-[#9ca3b8]'}`} strokeWidth={isActive ? 2.2 : 1.8} />
                       {!collapsed && <span className="truncate flex-1 min-w-0 text-left">{item.label}</span>}
                       {!collapsed && badge > 0 && (
                         <span className="ml-auto bg-[#ef4444] text-white text-[11px] font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5 shrink-0">
