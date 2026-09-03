@@ -115,13 +115,13 @@ export default function Layout() {
               </div>
               <div className="hidden lg:flex items-center flex-1 max-w-[320px] ml-6 shrink-0">
                 <div className="relative flex w-full">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   <input
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Buscar..."
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-transparent text-sm placeholder:text-slate-400 focus:outline-none focus:border-[var(--accent)]/20 focus:ring-2 focus:ring-[var(--accent)]/10 transition-all"
-                    style={{ backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)' }}
+                    className="w-full py-2.5 rounded-lg border border-transparent text-sm placeholder:text-slate-400 focus:outline-none focus:border-[var(--accent)]/20 focus:ring-2 focus:ring-[var(--accent)]/10 transition-all"
+                    style={{ backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)', paddingLeft: '40px', paddingRight: '16px' }}
                   />
                 </div>
               </div>
