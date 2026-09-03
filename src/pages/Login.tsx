@@ -51,9 +51,9 @@ export default function Login() {
           <form onSubmit={handleSubmit}>
             {/* Section: Credenciales */}
             <div className="mb-8">
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
-                  <Lock className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-7 h-7 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center shrink-0">
+                  <Lock className="w-4 h-4 text-[var(--accent)]" />
                 </div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Credenciales</span>
               </div>
