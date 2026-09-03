@@ -162,9 +162,10 @@ export default function Inventario() {
       <div className="bg-white rounded-lg border border-slate-200/80 p-4 sm:p-6 shadow-sm">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="relative flex flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
             <input type="text" placeholder="Buscar productos..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
+              className="w-full py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400"
+              style={{ paddingLeft: '40px', paddingRight: '16px' }} />
           </div>
           <div className="flex gap-3 overflow-x-auto pb-1 lg:p-[2px]">
             {['Todos', 'Monturas', 'Lentes', 'Cristales', 'Accesorios'].map((cat, i) => {

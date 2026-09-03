@@ -33,9 +33,10 @@ export default function Ventas() {
       <div className="flex gap-4 sm:gap-6 min-h-[calc(100vh-180px)]">
         <div className="flex-1 space-y-3 sm:space-y-4">
           <div className="relative flex">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
             <input type="text" placeholder="Buscar productos..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-all shadow-sm" />
+              className="w-full py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-all shadow-sm"
+              style={{ paddingLeft: '40px', paddingRight: '16px' }} />
           </div>
 
           <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
