@@ -1,7 +1,9 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Patient, Prescription, Product, Sale, LabOrder, Expense, DeliveryOrder, PendingPayment, CartItem } from '../types';
 import { patients as initialPatients, prescriptions as initialPrescriptions, products as initialProducts, sales as initialSales, labOrders as initialLabOrders, expenses as initialExpenses, deliveryOrders as initialDeliveryOrders, pendingPayments as initialPendingPayments } from '../data/mockData';
+
+export type ThemeColor = '#7c3aed' | '#2563eb' | '#059669' | '#dc2626' | '#d97706';
 
 interface AppContextType {
   opticsName: string;
@@ -20,6 +22,10 @@ interface AppContextType {
   setTelefonoOptica: React.Dispatch<React.SetStateAction<string>>;
   direccionFiscal: string;
   setDireccionFiscal: React.Dispatch<React.SetStateAction<string>>;
+  themeColor: ThemeColor;
+  setThemeColor: React.Dispatch<React.SetStateAction<ThemeColor>>;
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
   patients: Patient[];
   setPatients: React.Dispatch<React.SetStateAction<Patient[]>>;
   prescriptions: Prescription[];
@@ -56,6 +62,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [licenciatura, setLicenciatura] = useState('UNAM');
   const [telefonoOptica, setTelefonoOptica] = useState('+52 55 1234 5678');
   const [direccionFiscal, setDireccionFiscal] = useState('');
+  const [themeColor, setThemeColor] = useState<ThemeColor>(() => (localStorage.getItem('themeColor') as ThemeColor) || '#7c3aed');
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [patients, setPatients] = useState<Patient[]>(initialPatients);
   const [prescriptions, setPrescriptions] = useState<Prescription[]>(initialPrescriptions);
   const [products, setProducts] = useState<Product[]>(initialProducts);
@@ -90,6 +98,27 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const clearCart = () => setCart([]);
   const cartTotal = () => cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
+  useEffect(() => {
+    localStorage.setItem('themeColor', themeColor);
+    const r = parseInt(themeColor.slice(1, 3), 16);
+    const g = parseInt(themeColor.slice(3, 5), 16);
+    const b = parseInt(themeColor.slice(5, 7), 16);
+    document.documentElement.style.setProperty('--accent', themeColor);
+    document.documentElement.style.setProperty('--accent-rgb', `${r} ${g} ${b}`);
+    document.documentElement.style.setProperty('--accent-light', `rgba(${r}, ${g}, ${b}, 0.1)`);
+    document.documentElement.style.setProperty('--accent-hover', `rgba(${r}, ${g}, ${b}, 0.9)`);
+    document.documentElement.style.setProperty('--accent-dark', `rgba(${r}, ${g}, ${b}, 0.8)`);
+  }, [themeColor]);
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', String(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
   return (
     <AppContext.Provider value={{
       opticsName, setOpticsName,
@@ -100,6 +129,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       licenciatura, setLicenciatura,
       telefonoOptica, setTelefonoOptica,
       direccionFiscal, setDireccionFiscal,
+      themeColor, setThemeColor,
+      darkMode, setDarkMode,
       patients, setPatients,
       prescriptions, setPrescriptions,
       products, setProducts,

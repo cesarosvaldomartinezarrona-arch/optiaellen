@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import type { UserRole } from '../types';
 
 export default function Configuracion() {
-  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal, cedula, setCedula, licenciatura, setLicenciatura, telefonoOptica, setTelefonoOptica, direccionFiscal, setDireccionFiscal } = useApp();
+  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal, cedula, setCedula, licenciatura, setLicenciatura, telefonoOptica, setTelefonoOptica, direccionFiscal, setDireccionFiscal, themeColor, setThemeColor, darkMode, setDarkMode } = useApp();
   const { users, addUser, updateUser, deleteUser, user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('Perfil de Usuario');
   const [showSaved, setShowSaved] = useState(false);
@@ -92,8 +92,8 @@ export default function Configuracion() {
   return (
     <div className="space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Configuración</h1>
-        <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Ajustes generales del sistema</p>
+        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight" style={{ color: 'var(--text-primary)' }}>Configuración</h1>
+        <p className="text-xs sm:text-sm mt-1.5" style={{ color: 'var(--text-secondary)' }}>Ajustes generales del sistema</p>
       </div>
 
       {/* Mobile tab selector */}
@@ -304,17 +304,35 @@ export default function Configuracion() {
               <div>
                 <p className="text-sm font-bold text-slate-800 mb-4">Tema de color</p>
                 <div className="flex gap-4">
-                  {['#7c3aed', '#2563eb', '#059669', '#dc2626', '#d97706'].map(color => (
-                    <button key={color} className="w-11 h-11 rounded-lg border-2 border-slate-200 hover:border-slate-400 transition-colors shadow-sm"
-                      style={{ background: color }} />
+                  {([
+                    { color: '#7c3aed', name: 'Púrpura' },
+                    { color: '#2563eb', name: 'Azul' },
+                    { color: '#059669', name: 'Verde' },
+                    { color: '#dc2626', name: 'Rojo' },
+                    { color: '#d97706', name: 'Naranja' },
+                  ] as const).map(({ color, name }) => (
+                    <button key={color} onClick={() => setThemeColor(color)}
+                      className={`w-11 h-11 rounded-lg border-2 transition-all shadow-sm flex items-center justify-center ${
+                        themeColor === color ? 'border-slate-800 scale-110 ring-2 ring-offset-2' : 'border-slate-200 hover:border-slate-400'
+                      }`}
+                      style={{ background: color, ...(themeColor === color ? { ringColor: color } : {}) }}
+                      title={name}>
+                      {themeColor === color && <Check className="w-5 h-5 text-white" />}
+                    </button>
                   ))}
                 </div>
               </div>
               <div>
                 <p className="text-sm font-bold text-slate-800 mb-4">Modo oscuro</p>
                 <div className="flex gap-4">
-                  <button className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-[#7c3aed] text-white shadow-md">Claro</button>
-                  <button className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors border border-slate-200">Oscuro</button>
+                  <button onClick={() => setDarkMode(false)}
+                    className={`px-6 py-3.5 rounded-lg text-sm font-semibold transition-all ${
+                      !darkMode ? 'bg-[var(--accent,#7c3aed)] text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 border border-slate-200'
+                    }`}>Claro</button>
+                  <button onClick={() => setDarkMode(true)}
+                    className={`px-6 py-3.5 rounded-lg text-sm font-semibold transition-all ${
+                      darkMode ? 'bg-[var(--accent,#7c3aed)] text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 border border-slate-200'
+                    }`}>Oscuro</button>
                 </div>
               </div>
             </div>

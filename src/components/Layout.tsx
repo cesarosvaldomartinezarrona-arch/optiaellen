@@ -79,7 +79,7 @@ export default function Layout() {
 
   return (
     <SidebarContext.Provider value={{ mobileOpen, setMobileOpen, collapsed, setCollapsed }}>
-      <div className="min-h-screen bg-[#f1f0ff]">
+      <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-secondary)' }}>
         {isMobile && mobileOpen && (
           <div className="fixed inset-0 bg-[#0f0a1f]/60 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
         )}
@@ -87,7 +87,7 @@ export default function Layout() {
         <Sidebar isMobile={isMobile} mobileOpen={mobileOpen} onMobileClose={() => setMobileOpen(false)} collapsed={collapsed} setCollapsed={setCollapsed} />
 
         <div className="transition-all duration-200 ease-out" style={marginStyle}>
-          <header className="h-[64px] bg-white border-b border-slate-200 flex items-center justify-between gap-4 px-4 sm:px-6 lg:px-6 sticky top-0 z-30">
+          <header className="h-[64px] border-b flex items-center justify-between gap-4 px-4 sm:px-6 lg:px-6 sticky top-0 z-30" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
             <div className="flex items-center gap-3 min-w-0 flex-1">
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
@@ -101,16 +101,16 @@ export default function Layout() {
                 </span>
               </button>
               <div className="hidden lg:block shrink-0">
-                <h1 className="text-[15px] font-bold text-slate-900 leading-none tracking-tight whitespace-nowrap">Dashboard</h1>
-                <p className="text-xs text-slate-500 font-medium whitespace-nowrap">Resumen general del negocio</p>
+                <h1 className="text-[15px] font-bold leading-none tracking-tight whitespace-nowrap" style={{ color: 'var(--text-primary)' }}>Dashboard</h1>
+                <p className="text-xs font-medium whitespace-nowrap" style={{ color: 'var(--text-secondary)' }}>Resumen general del negocio</p>
               </div>
               <div className="lg:hidden flex items-center gap-2.5 min-w-0">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow shrink-0">
                   <span className="text-white text-xs font-bold">{user?.name?.charAt(0) || 'A'}</span>
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-slate-900 leading-none truncate">{user?.name?.split(' ')[0] || 'Admin'}</p>
-                  <p className="text-xs text-slate-500 font-medium truncate">opticællen</p>
+                  <p className="text-sm font-bold leading-none truncate" style={{ color: 'var(--text-primary)' }}>{user?.name?.split(' ')[0] || 'Admin'}</p>
+                  <p className="text-xs font-medium truncate" style={{ color: 'var(--text-secondary)' }}>opticællen</p>
                 </div>
               </div>
               <div className="hidden lg:flex items-center flex-1 max-w-[320px] ml-6 shrink-0">
@@ -120,23 +120,24 @@ export default function Layout() {
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Buscar..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-[#f1f0ff] rounded-lg border border-transparent text-sm placeholder:text-slate-400 focus:outline-none focus:bg-white focus:border-[#7c3aed]/20 focus:ring-2 focus:ring-[#7c3aed]/10 transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-transparent text-sm placeholder:text-slate-400 focus:outline-none focus:border-[var(--accent)]/20 focus:ring-2 focus:ring-[var(--accent)]/10 transition-all"
+                    style={{ backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)' }}
                   />
                 </div>
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-              <button className="lg:hidden w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50">
-                <Search className="w-4 h-4 text-slate-600" />
+              <button className="lg:hidden w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-slate-50" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
+                <Search className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
               </button>
-              <button className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 relative">
-                <Bell className="w-4 h-4 text-slate-600" />
-                <span className="absolute top-2 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
+              <button className="w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-slate-50 relative" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
+                <Bell className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
+                <span className="absolute top-2 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2" style={{ borderColor: 'var(--bg-primary)' }} />
               </button>
-              <button className="hidden sm:flex w-10 h-10 rounded-lg bg-white border border-slate-200 items-center justify-center hover:bg-slate-50">
-                <Maximize2 className="w-4 h-4 text-slate-600" />
+              <button className="hidden sm:flex w-10 h-10 rounded-lg border items-center justify-center hover:bg-slate-50" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
+                <Maximize2 className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
               </button>
-              <div className="hidden sm:flex items-center gap-3 pl-3 ml-1 border-l border-slate-200">
+              <div className="hidden sm:flex items-center gap-3 pl-3 ml-1 border-l" style={{ borderColor: 'var(--border-color)' }}>
                 <div className="relative">
                   <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow ring-2 ring-purple-100">
                     <span className="text-white text-xs font-bold">{user?.name?.split(' ').map(n=>n[0]).slice(0,2).join('') || 'AR'}</span>
@@ -144,8 +145,8 @@ export default function Layout() {
                   <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white" />
                 </div>
                 <div className="hidden lg:block min-w-0">
-                  <p className="text-sm font-semibold text-slate-800 leading-none truncate max-w-[140px]">{user?.name || 'Admin Ruiz'}</p>
-                  <p className="text-[11px] text-slate-500 capitalize truncate">{user?.role === 'admin' ? 'Administrador' : user?.role}</p>
+                  <p className="text-sm font-semibold leading-none truncate max-w-[140px]" style={{ color: 'var(--text-primary)' }}>{user?.name || 'Admin Ruiz'}</p>
+                  <p className="text-[11px] capitalize truncate" style={{ color: 'var(--text-secondary)' }}>{user?.role === 'admin' ? 'Administrador' : user?.role}</p>
                 </div>
               </div>
             </div>
