@@ -27,9 +27,9 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#6b3fa0] via-[#7c4db8] to-[#a78bfa] flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-[440px]">
-        <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8 sm:p-10">
+        <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8 sm:p-10 flex flex-col min-h-[520px]">
           {/* Logo */}
-          <div className="flex flex-col items-center mb-8">
+          <div className="flex flex-col items-center mb-6">
             <div className="mb-4">
               <img src={`${import.meta.env.BASE_URL}logo.png`} alt="OptiÆllen" className="w-40 h-auto drop-shadow-lg" />
             </div>
@@ -38,7 +38,7 @@ export default function Login() {
 
           {/* Title */}
           <h1 className="text-[26px] font-extrabold text-slate-900 text-center mb-2">Iniciar Sesión</h1>
-          <p className="text-sm text-slate-400 text-center mb-8">Ingresa tus credenciales para acceder</p>
+          <p className="text-sm text-slate-400 text-center mb-6">Ingresa tus credenciales para acceder</p>
 
           {/* Error */}
           {error && (
@@ -48,10 +48,10 @@ export default function Login() {
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="flex flex-col flex-1">
             {/* Section: Credenciales */}
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-5">
+            <div className="mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 <div className="w-7 h-7 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center shrink-0">
                   <Lock className="w-4 h-4 text-[var(--accent)]" />
                 </div>
@@ -97,10 +97,10 @@ export default function Login() {
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-slate-100 mb-6" />
+            <div className="h-px bg-slate-100 mb-5" />
 
             {/* Remember + Forgot */}
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-6">
               <label className="flex items-center gap-2.5 cursor-pointer select-none">
                 <div className="relative">
                   <input
@@ -124,22 +124,22 @@ export default function Login() {
               </button>
             </div>
 
+            {/* Spacer pushes button to bottom */}
+            <div className="flex-1" />
+
             {/* Submit */}
-            <div className="flex justify-center mt-20">
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-[var(--accent)] hover:bg-[#6b21a8] disabled:opacity-50 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] text-[15px] flex items-center justify-center gap-3"
-              >
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-[var(--accent)] hover:bg-[#6b21a8] disabled:opacity-50 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] text-[15px] flex items-center justify-center gap-3"
+            >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>Entrar <ArrowRight className="w-4 h-4" /></>
               )}
-              </button>
-            </div>
+            </button>
           </form>
-
         </div>
 
         {/* Footer */}
