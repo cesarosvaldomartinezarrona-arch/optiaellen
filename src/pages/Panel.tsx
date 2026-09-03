@@ -90,7 +90,7 @@ export default function Panel() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8">
         <div className="xl:col-span-2 bg-white rounded-lg border border-slate-200/70 shadow-sm p-6">
           <h3 className="text-sm font-bold text-slate-900 mb-5">Ventas Ultimos 7 Dias</h3>
           <ResponsiveContainer width="100%" height={300}>
