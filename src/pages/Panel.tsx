@@ -137,7 +137,7 @@ export default function Panel() {
       </div>
 
       {/* Actividad Reciente */}
-      <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden mt-10">
         <div className="px-6 py-4 border-b border-slate-200">
           <h3 className="text-sm font-bold text-slate-900">Actividad Reciente</h3>
         </div>
