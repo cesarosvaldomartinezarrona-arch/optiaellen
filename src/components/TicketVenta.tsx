@@ -322,6 +322,78 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
     window.open(url, '_blank');
   };
 
+  const handlePrintThermal = () => {
+    const w = window.open('', '_blank', 'width=400,height=800');
+    if (!w) return;
+    const det = data.detalle.filter(d => d.descripcion);
+    const totalCalc = data.totales.total;
+    w.document.write(`<!DOCTYPE html><html><head><title>Ticket ${data.folio}</title>
+<style>
+  @page { size: 80mm auto; margin: 2mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Courier New', monospace; font-size: 11px; width: 76mm; color: #000; }
+  .center { text-align: center; }
+  .bold { font-weight: bold; }
+  .line { border-top: 1px dashed #000; margin: 3px 0; }
+  .line2 { border-top: 2px solid #000; margin: 3px 0; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { padding: 1px 0; font-size: 10px; }
+  .right { text-align: right; }
+  .small { font-size: 9px; }
+</style></head><body>
+<div class="center bold" style="font-size:14px">${data.sucursal || 'OPTICA'}</div>
+<div class="center small">${data.direccionSucursal || ''}</div>
+<div class="center small">Tel: ${data.telefonoOptica || ''}</div>
+<div class="center small">RFC: ${data.rfc || ''}</div>
+<div class="line2"></div>
+<div class="center bold" style="font-size:12px">TICKET DE VENTA</div>
+<div class="line"></div>
+<table><tr><td class="small">Folio:</td><td class="right bold">${data.folio || '—'}</td></tr>
+<tr><td class="small">Fecha:</td><td class="right">${data.fechaVenta || '—'}</td></tr>
+<tr><td class="small">Recepcionista:</td><td class="right">${data.recepcionista || '—'}</td></tr></table>
+<div class="line"></div>
+<div class="bold small">DATOS DEL CLIENTE</div>
+<table><tr><td class="small">Nombre:</td><td class="right">${data.paciente || '—'}</td></tr>
+<tr><td class="small">Telefono:</td><td class="right">${data.telefonoCliente || '—'}</td></tr>
+${data.rfcCliente ? `<tr><td class="small">RFC:</td><td class="right">${data.rfcCliente}</td></tr>` : ''}</table>
+<div class="line"></div>
+<div class="bold small">GRADUACION</div>
+<table>
+<tr><td class="small bold">OD:</td><td class="small right">ESF ${data.graduacion.od.esfera || '—'} | CIL ${data.graduacion.od.cilindro || '—'} | EJE ${data.graduacion.od.eje || '—'} | ADD ${data.graduacion.od.adicion || '—'}</td></tr>
+<tr><td class="small bold">OI:</td><td class="small right">ESF ${data.graduacion.oi.esfera || '—'} | CIL ${data.graduacion.oi.cilindro || '—'} | EJE ${data.graduacion.oi.eje || '—'} | ADD ${data.graduacion.oi.adicion || '—'}</td></tr>
+</table>
+${data.tipoLente || data.materialLente ? `<div class="small">Lente: ${data.tipoLente || ''} ${data.materialLente || ''}</div>` : ''}
+${data.tratamientos ? `<div class="small">Tratamientos: ${data.tratamientos}</div>` : ''}
+${data.armazon ? `<div class="small">Armazon: ${data.armazon}</div>` : ''}
+<div class="line"></div>
+<div class="bold small">DETALLE</div>
+<table>${det.map(d => `<tr><td class="small">${d.descripcion} ${d.cantidad > 1 ? 'x' + d.cantidad : ''}</td><td class="right small">$${d.precioFinal.toLocaleString()}</td></tr>`).join('')}</table>
+<div class="line2"></div>
+<table>
+<tr><td class="bold">SUBTOTAL</td><td class="right bold">$${data.totales.subtotal.toLocaleString()}</td></tr>
+${data.totales.descuento > 0 ? `<tr><td class="small">DESCUENTO</td><td class="right small">-$${data.totales.descuento.toLocaleString()}</td></tr>` : ''}
+<tr><td class="small">IVA (16%)</td><td class="right small">$${data.totales.iva.toLocaleString()}</td></tr>
+<tr><td class="bold" style="font-size:13px">TOTAL</td><td class="right bold" style="font-size:13px">$${totalCalc.toLocaleString()}</td></tr>
+</table>
+${data.anticipo > 0 ? `<div class="line"></div><table>
+<tr><td class="small">ANTICIPO</td><td class="right small">$${data.anticipo.toLocaleString()}</td></tr>
+<tr><td class="bold">SALDO</td><td class="right bold">$${data.saldoPendiente.toLocaleString()}</td></tr></table>` : ''}
+<div class="line"></div>
+<table><tr><td class="small">Pago:</td><td class="right small">${data.pago.formaPago}</td></tr>
+<tr><td class="small">Estatus:</td><td class="right small">${data.pago.estatus}</td></tr></table>
+<div class="line"></div>
+${data.garantiaMicas ? `<div class="small">Garantia micas: ${data.garantiaMicas}</div>` : ''}
+${data.garantiaArmazon ? `<div class="small">Garantia armazon: ${data.garantiaArmazon}</div>` : ''}
+${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}</div>` : ''}
+<div class="line"></div>
+<div class="center small">!Gracias por su compra!</div>
+<div class="center small">${data.sucursal || ''}</div>
+<div class="line2"></div>
+</body></html>`);
+    w.document.close();
+    setTimeout(() => { w.print(); w.close(); }, 300);
+  };
+
   const handleReset = () => {
     setData({ ...defaultData });
   };
@@ -748,6 +820,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
             <button onClick={handleDownloadPdf} disabled={generatingPdf}
               className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50">
               <FileDown className="w-4 h-4" /> {generatingPdf ? 'Generando...' : 'Descargar PDF'}
+            </button>
+            <button onClick={handlePrintThermal}
+              className="flex items-center gap-2 px-4 py-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-sm font-bold text-emerald-700 hover:bg-emerald-100 transition-all">
+              <Printer className="w-4 h-4" /> Térmica
             </button>
             <button
               className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
