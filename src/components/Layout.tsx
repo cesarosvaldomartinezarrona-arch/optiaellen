@@ -113,7 +113,7 @@ export default function Layout() {
                   <p className="text-xs font-medium truncate" style={{ color: 'var(--text-secondary)' }}>opticællen</p>
                 </div>
               </div>
-              <div className="hidden lg:flex items-center flex-1 max-w-[320px] ml-6 shrink-0">
+              <div className="hidden lg:flex items-center flex-1 max-w-[320px] ml-8 shrink-0">
                 <div className="relative flex w-full">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                   <input
@@ -121,7 +121,7 @@ export default function Layout() {
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Buscar..."
                     className="w-full py-2.5 rounded-lg border border-transparent text-sm placeholder:text-slate-400 focus:outline-none focus:border-[var(--accent)]/20 focus:ring-2 focus:ring-[var(--accent)]/10 transition-all"
-                    style={{ backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)', paddingLeft: '40px', paddingRight: '16px' }}
+                    style={{ backgroundColor: 'var(--bg-input)', color: 'var(--text-primary)', paddingLeft: '44px', paddingRight: '16px' }}
                   />
                 </div>
               </div>
