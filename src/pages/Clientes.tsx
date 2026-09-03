@@ -106,18 +106,15 @@ export default function Clientes() {
           const totalRecetas = rxs.length;
           return (
             <div key={patient.id} className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-              <div className="p-4 sm:p-5">
+              <div className="p-3 sm:p-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-[rgba(var(--accent-rgb),0.15)] to-[#a855f7]/10 flex items-center justify-center shrink-0 border border-purple-100/50">
-                    <span className="text-sm font-bold text-[var(--accent)]">{patient.name.split(' ').map(n => n[0]).slice(0, 2).join('')}</span>
-                  </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-sm font-bold text-slate-900 truncate">{patient.name}</p>
-                      <span className="text-[11px] text-slate-500 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200">{patient.id}</span>
+                      <p className="text-base font-extrabold text-slate-900 truncate">{patient.name}</p>
+                      <span className="text-xs text-slate-500 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200">{patient.id}</span>
                       <span className="text-xs bg-purple-50 text-[var(--accent)] border border-purple-100 px-2.5 py-0.5 rounded-full font-medium">{patient.occupation || '—'}</span>
-                      <span className="text-[11px] text-slate-400">{patient.age} años</span>
-                      <span className="text-[11px] text-slate-400">{totalRecetas} receta{totalRecetas !== 1 ? 's' : ''}</span>
+                      <span className="text-xs text-slate-400">{patient.age} años</span>
+                      <span className="text-xs text-slate-400">{totalRecetas} receta{totalRecetas !== 1 ? 's' : ''}</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-slate-500">
                       <span className="flex items-center gap-1"><Phone className="w-3 h-3" />{patient.phone}</span>
