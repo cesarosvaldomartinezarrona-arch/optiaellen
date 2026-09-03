@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#6b3fa0] via-[#7c4db8] to-[#a78bfa] flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-[440px]">
-        <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8 sm:p-10" style={{ display: 'flex', flexDirection: 'column', minHeight: '460px' }}>
+        <div className="bg-white rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.15)] p-8 sm:p-10" style={{ display: 'flex', flexDirection: 'column', minHeight: '520px' }}>
           {/* Logo */}
           <div className="flex flex-col items-center mb-6">
             <div className="mb-4">
