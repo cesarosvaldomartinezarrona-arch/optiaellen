@@ -12,24 +12,34 @@ export interface TicketVentaData {
   rfc: string;
   regimenFiscal: string;
   direccionSucursal: string;
+  telefonoOptica: string;
+  redesSociales: string;
   cedula: string;
   licenciatura: string;
   optometrista: string;
   paciente: string;
+  telefonoCliente: string;
+  emailCliente: string;
+  rfcCliente: string;
   fechaNacimiento: string;
   calle: string;
   colonia: string;
   ocupacion: string;
+  tipoLente: string;
+  materialLente: string;
   descripcionProducto: string;
   tratamientos: string;
   armazon: string;
+  colorArmazon: string;
   graduacion: {
-    od: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; ejeAdd: string };
-    oi: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; ejeAdd: string };
+    od: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; eje: string; adicion: string; prisma: string };
+    oi: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; eje: string; adicion: string; prisma: string };
   };
   observaciones: string;
-  detalle: { descripcion: string; precioUnitario: number; descuento: number; iva: number; importe: number; precioFinal: number }[];
+  detalle: { descripcion: string; cantidad: number; precioUnitario: number; descuento: number; iva: number; importe: number; precioFinal: number }[];
   totales: { subtotal: number; descuento: number; iva: number; total: number };
+  anticipo: number;
+  saldoPendiente: number;
   pago: {
     estatus: string;
     formaPago: string;
@@ -40,7 +50,13 @@ export interface TicketVentaData {
   };
   son: string;
   fechaRecoge: string;
-  horaRecoge: string;
+  fechaEntrega: string;
+  condicionesEntrega: string;
+  garantiaMicas: string;
+  garantiaArmazon: string;
+  coberturaGarantia: string;
+  condicionesCambio: string;
+  politicaCancelacion: string;
 }
 
 export const defaultData: TicketVentaData = {
@@ -51,28 +67,44 @@ export const defaultData: TicketVentaData = {
   rfc: '',
   regimenFiscal: '',
   direccionSucursal: '',
+  telefonoOptica: '',
+  redesSociales: '',
   cedula: '',
   licenciatura: '',
   optometrista: '',
   paciente: '',
+  telefonoCliente: '',
+  emailCliente: '',
+  rfcCliente: '',
   fechaNacimiento: '',
   calle: '',
   colonia: '',
   ocupacion: '',
+  tipoLente: '',
+  materialLente: '',
   descripcionProducto: '',
   tratamientos: '',
   armazon: '',
+  colorArmazon: '',
   graduacion: {
-    od: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', ejeAdd: '' },
-    oi: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', ejeAdd: '' },
+    od: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', eje: '', adicion: '', prisma: '' },
+    oi: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', eje: '', adicion: '', prisma: '' },
   },
   observaciones: 'Sin observaciones',
-  detalle: [{ descripcion: '', precioUnitario: 0, descuento: 0, iva: 0, importe: 0, precioFinal: 0 }],
+  detalle: [{ descripcion: '', cantidad: 1, precioUnitario: 0, descuento: 0, iva: 0, importe: 0, precioFinal: 0 }],
   totales: { subtotal: 0, descuento: 0, iva: 0, total: 0 },
+  anticipo: 0,
+  saldoPendiente: 0,
   pago: { estatus: 'Adeudo', formaPago: '—', exento: 'Sin exento', pagoTotalEmpresa: 0, pagoCliente: 0, universidad: '' },
   son: '',
   fechaRecoge: '',
-  horaRecoge: '',
+  fechaEntrega: '',
+  condicionesEntrega: '',
+  garantiaMicas: '8 meses',
+  garantiaArmazon: '6 meses',
+  coberturaGarantia: '',
+  condicionesCambio: '',
+  politicaCancelacion: '',
 };
 
 function numberToWords(n: number): string {
@@ -105,13 +137,6 @@ function numberToWords(n: number): string {
   result += ' PESOS';
   result += ' ' + String(decPart).padStart(2, '0') + '/100 M.N.';
   return result;
-}
-
-function formatDateLong(d: string): string {
-  if (!d) return '';
-  const date = new Date(d + 'T00:00:00');
-  const months = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
-  return `${date.getDate()}-${months[date.getMonth()]}-${date.getFullYear()}`;
 }
 
 interface TicketVentaProps {
@@ -176,13 +201,15 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
     setData(prev => ({
       ...prev,
       paciente: patient.name.toUpperCase(),
+      telefonoCliente: patient.phone || '',
+      emailCliente: patient.email || '',
       fechaNacimiento: patient.dateOfBirth || '',
       calle: patient.address || '',
       colonia: prev.colonia || coloniaFromAddr,
       ocupacion: patient.occupation || '',
       graduacion: patientRx ? {
-        od: { dnpL: patientRx.rightEye.dp || '', dnpC: '', alt: '', esfera: patientRx.rightEye.sph || '', cilindro: patientRx.rightEye.cyl || '', ejeAdd: patientRx.rightEye.axis ? `${patientRx.rightEye.axis}°` : '' },
-        oi: { dnpL: patientRx.leftEye.dp || '', dnpC: '', alt: '', esfera: patientRx.leftEye.sph || '', cilindro: patientRx.leftEye.cyl || '', ejeAdd: patientRx.leftEye.axis ? `${patientRx.leftEye.axis}°` : '' },
+        od: { dnpL: patientRx.rightEye.dp || '', dnpC: '', alt: '', esfera: patientRx.rightEye.sph || '', cilindro: patientRx.rightEye.cyl || '', eje: patientRx.rightEye.axis || '', adicion: patientRx.rightEye.add || '', prisma: patientRx.rightEye.prisma || '' },
+        oi: { dnpL: patientRx.leftEye.dp || '', dnpC: '', alt: '', esfera: patientRx.leftEye.sph || '', cilindro: patientRx.leftEye.cyl || '', eje: patientRx.leftEye.axis || '', adicion: patientRx.leftEye.add || '', prisma: patientRx.leftEye.prisma || '' },
       } : prev.graduacion,
       descripcionProducto: baseMica || prev.descripcionProducto,
       tratamientos: tratamientosStr || prev.tratamientos,
@@ -205,17 +232,19 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
     setData(prev => {
       const detalle = [...prev.detalle];
       detalle[idx] = { ...detalle[idx], [field]: value };
-      const subtotal = detalle.reduce((s, d) => s + (d.precioUnitario * (1 - d.descuento / 100)), 0);
-      const descuentoTotal = detalle.reduce((s, d) => s + d.precioUnitario * (d.descuento / 100), 0);
+      const subtotal = detalle.reduce((s, d) => s + (d.precioUnitario * d.cantidad * (1 - d.descuento / 100)), 0);
+      const descuentoTotal = detalle.reduce((s, d) => s + d.precioUnitario * d.cantidad * (d.descuento / 100), 0);
       const ivaTotal = detalle.reduce((s, d) => {
-        const base = d.precioUnitario * (1 - d.descuento / 100);
+        const base = d.precioUnitario * d.cantidad * (1 - d.descuento / 100);
         return s + base * 0.16;
       }, 0);
       const total = subtotal + ivaTotal;
+      const anticipo = prev.anticipo;
       return {
         ...prev,
         detalle,
         totales: { subtotal: Math.round(subtotal * 100) / 100, descuento: Math.round(descuentoTotal * 100) / 100, iva: Math.round(ivaTotal * 100) / 100, total: Math.round(total * 100) / 100 },
+        saldoPendiente: Math.round((total - anticipo) * 100) / 100,
         pago: { ...prev.pago, pagoCliente: Math.round(total * 100) / 100 },
         son: numberToWords(Math.round(total * 100) / 100),
       };
@@ -225,7 +254,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
   const addDetalle = () => {
     setData(prev => ({
       ...prev,
-      detalle: [...prev.detalle, { descripcion: '', precioUnitario: 0, descuento: 0, iva: 0, importe: 0, precioFinal: 0 }],
+      detalle: [...prev.detalle, { descripcion: '', cantidad: 1, precioUnitario: 0, descuento: 0, iva: 0, importe: 0, precioFinal: 0 }],
     }));
   };
 
@@ -364,23 +393,27 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
         <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-7">
 
           {/* DATOS DE VENTA */}
-          <Section title="Datos de Venta">
+          <Section title="Datos de la Óptica">
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-              <InputField label="Recepcionista" value={data.recepcionista} onChange={v => update('recepcionista', v)} />
+              <InputField label="Nombre Comercial" value={data.sucursal} onChange={v => update('sucursal', v)} />
               <InputField label="Folio de Venta" value={data.folio} onChange={v => update('folio', v)} />
-              <InputField label="Fecha de Venta" value={data.fechaVenta} onChange={v => update('fechaVenta', v)} type="date" />
+              <InputField label="Fecha y Hora" value={data.fechaVenta} onChange={v => update('fechaVenta', v)} type="date" />
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-6">
-              <InputField label="Sucursal" value={data.sucursal} onChange={v => update('sucursal', v)} />
+              <InputField label="Razón Social" value={data.recepcionista} onChange={v => update('recepcionista', v)} />
               <InputField label="RFC" value={data.rfc} onChange={v => update('rfc', v)} />
               <InputField label="Régimen Fiscal" value={data.regimenFiscal} onChange={v => update('regimenFiscal', v)} />
             </div>
             <div className="grid grid-cols-2 gap-6 mt-6">
-              <InputField label="Optometrista" value={data.optometrista} onChange={v => update('optometrista', v)} />
-              <InputField label="Dirección Sucursal" value={data.direccionSucursal} onChange={v => update('direccionSucursal', v)} />
+              <InputField label="Domicilio Fiscal" value={data.direccionSucursal} onChange={v => update('direccionSucursal', v)} />
+              <InputField label="Teléfono / WhatsApp" value={data.telefonoOptica} onChange={v => update('telefonoOptica', v)} />
             </div>
             <div className="grid grid-cols-2 gap-6 mt-6">
-              <InputField label="Cédula" value={data.cedula} onChange={v => update('cedula', v)} />
+              <InputField label="Redes Sociales" value={data.redesSociales} onChange={v => update('redesSociales', v)} placeholder="@usuario, URL..." />
+              <InputField label="Optometrista" value={data.optometrista} onChange={v => update('optometrista', v)} />
+            </div>
+            <div className="grid grid-cols-2 gap-6 mt-6">
+              <InputField label="Cédula Profesional" value={data.cedula} onChange={v => update('cedula', v)} />
               <InputField label="Licenciado en Optometría" value={data.licenciatura} onChange={v => update('licenciatura', v)} />
             </div>
           </Section>
@@ -415,64 +448,78 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               <InputField label="Fecha de Nacimiento" value={data.fechaNacimiento} onChange={v => update('fechaNacimiento', v)} type="date" />
             </div>
             <div className="grid grid-cols-2 gap-6 mt-6">
+              <InputField label="Teléfono" value={data.telefonoCliente} onChange={v => update('telefonoCliente', v)} />
+              <InputField label="Correo Electrónico" value={data.emailCliente} onChange={v => update('emailCliente', v)} placeholder="Opcional" />
+            </div>
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <InputField label="Calle" value={data.calle} onChange={v => update('calle', v)} />
               <InputField label="Colonia" value={data.colonia} onChange={v => update('colonia', v)} />
             </div>
-            <div className="mt-6">
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <InputField label="Ocupación" value={data.ocupacion} onChange={v => update('ocupacion', v)} />
+              <InputField label="RFC Cliente (facturación)" value={data.rfcCliente} onChange={v => update('rfcCliente', v)} placeholder="Solo si factura" />
             </div>
           </Section>
 
           {/* BASE / MICA */}
-          <Section title="Base / Mica">
-            <InputField label="Descripción (Lente)" value={data.descripcionProducto} onChange={v => update('descripcionProducto', v)} />
-            <div className="mt-6">
-              <InputField label="Tratamientos" value={data.tratamientos} onChange={v => update('tratamientos', v)} />
+          <Section title="Lente y Armazón">
+            <div className="grid grid-cols-2 gap-6">
+              <InputField label="Tipo de Lente" value={data.tipoLente} onChange={v => update('tipoLente', v)} placeholder="Monofocal, Bifocal, Progresivo..." />
+              <InputField label="Material / Índice" value={data.materialLente} onChange={v => update('materialLente', v)} placeholder="1.50, 1.60, 1.67, 1.74..." />
             </div>
             <div className="mt-6">
-              <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Armazón (Inventario)</label>
-              <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
-                <option value="">— Seleccionar armazón —</option>
-                {products.filter(p => p.category === 'Monturas').map(p => (
-                  <option key={p.id} value={`${p.name} ${p.model} ${p.brand ?? ''}`.trim()}>
-                    {p.name} {p.model} {p.brand ? `(${p.brand})` : ''} — ${p.price.toLocaleString()}
-                  </option>
-                ))}
-              </select>
+              <InputField label="Descripción (Lente)" value={data.descripcionProducto} onChange={v => update('descripcionProducto', v)} />
+            </div>
+            <div className="mt-6">
+              <InputField label="Tratamientos" value={data.tratamientos} onChange={v => update('tratamientos', v)} placeholder="Antirreflejante, Fotocromático, Filtro UV..." />
+            </div>
+            <div className="grid grid-cols-2 gap-6 mt-6">
+              <div>
+                <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Armazón (Inventario)</label>
+                <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
+                  className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                  <option value="">— Seleccionar armazón —</option>
+                  {products.filter(p => p.category === 'Monturas').map(p => (
+                    <option key={p.id} value={`${p.name} ${p.model} ${p.brand ?? ''}`.trim()}>
+                      {p.name} {p.model} {p.brand ? `(${p.brand})` : ''} — ${p.price.toLocaleString()}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <InputField label="Color / Talla Armazón" value={data.colorArmazon} onChange={v => update('colorArmazon', v)} />
             </div>
           </Section>
 
           {/* ESPECIFICACIONES */}
-          <Section title="Especificaciones">
+          <Section title="Graduación">
             <div className="overflow-hidden rounded border border-slate-200">
               <table className="w-full text-sm">
                 <thead>
                   <tr>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={6}>Ojo Derecho</th>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={6}>Ojo Izquierdo</th>
+                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Derecho (OD)</th>
+                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Izquierdo (OI)</th>
                   </tr>
                   <tr className="bg-slate-50">
-                    {['DNP (L)', 'DNP (C)', 'ALT', 'Esfera', 'Cilindro', 'Eje / ADD'].map(h => (
-                      <th key={`h-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-xs uppercase">{h}</th>
+                    {['DP', 'ALT', 'Esfera', 'Cilindro', 'Eje', 'Adición', 'Prisma', 'DNP(C)'].map(h => (
+                      <th key={`h-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-[10px] uppercase">{h}</th>
                     ))}
-                    {['DNP (L)', 'DNP (C)', 'ALT', 'Esfera', 'Cilindro', 'Eje / ADD'].map(h => (
-                      <th key={`i-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-xs uppercase">{h}</th>
+                    {['DP', 'ALT', 'Esfera', 'Cilindro', 'Eje', 'Adición', 'Prisma', 'DNP(C)'].map(h => (
+                      <th key={`i-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-[10px] uppercase">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-t border-slate-100">
-                    {(['dnpL', 'dnpC', 'alt', 'esfera', 'cilindro', 'ejeAdd'] as const).map(f => (
+                    {(['dnpL', 'alt', 'esfera', 'cilindro', 'eje', 'adicion', 'prisma', 'dnpC'] as const).map(f => (
                       <td key={`od-${f}`} className="px-1.5 py-1.5">
                         <input type="text" value={data.graduacion.od[f]} onChange={e => updateGrad('od', f, e.target.value)}
-                          className="w-full text-center py-2.5 px-2 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
+                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
                       </td>
                     ))}
-                    {(['dnpL', 'dnpC', 'alt', 'esfera', 'cilindro', 'ejeAdd'] as const).map(f => (
+                    {(['dnpL', 'alt', 'esfera', 'cilindro', 'eje', 'adicion', 'prisma', 'dnpC'] as const).map(f => (
                       <td key={`oi-${f}`} className="px-1.5 py-1.5">
                         <input type="text" value={data.graduacion.oi[f]} onChange={e => updateGrad('oi', f, e.target.value)}
-                          className="w-full text-center py-2.5 px-2 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
+                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
                       </td>
                     ))}
                   </tr>
@@ -494,6 +541,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
                 <thead>
                   <tr className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]">
                     <th className="px-4 py-2.5 text-left font-bold text-white text-[10px] uppercase tracking-wider">Descripción</th>
+                    <th className="px-3 py-2.5 text-center font-bold text-white text-[10px] uppercase tracking-wider">Cant.</th>
                     <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">P. Unitario</th>
                     <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">Descuento</th>
                     <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">IVA</th>
@@ -504,7 +552,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
                 </thead>
                 <tbody>
                   {data.detalle.map((d, i) => {
-                    const base = d.precioUnitario * (1 - d.descuento / 100);
+                    const base = d.precioUnitario * d.cantidad * (1 - d.descuento / 100);
                     const iva = Math.round(base * 0.16 * 100) / 100;
                     const final_ = Math.round((base + iva) * 100) / 100;
                     return (
@@ -512,6 +560,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
                         <td className="px-2 py-1.5">
                           <input type="text" value={d.descripcion} onChange={e => updateDetalle(i, 'descripcion', e.target.value)}
                             className="w-full py-1 px-2 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
+                        </td>
+                        <td className="px-2 py-1.5">
+                          <input type="number" value={d.cantidad || ''} onChange={e => updateDetalle(i, 'cantidad', parseInt(e.target.value) || 1)} min={1}
+                            className="w-full py-1 px-2 text-center bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
                         </td>
                         <td className="px-2 py-1.5">
                           <input type="number" value={d.precioUnitario || ''} onChange={e => updateDetalle(i, 'precioUnitario', parseFloat(e.target.value) || 0)}
@@ -562,6 +614,15 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
                   <span className="font-bold text-sm">Total</span>
                   <span className="font-extrabold text-lg">${data.totales.total.toLocaleString()}</span>
                 </div>
+                <div className="h-px bg-slate-200" />
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-500">Anticipo</span>
+                  <span className="font-bold text-emerald-600">${data.anticipo.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-500">Saldo Pendiente</span>
+                  <span className="font-bold text-amber-600">${data.saldoPendiente.toLocaleString()}</span>
+                </div>
               </div>
             </div>
           </Section>
@@ -578,18 +639,18 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               </div>
               <InputField label="Forma de Pago" value={data.pago.formaPago} onChange={v => updatePago('formaPago', v)} />
             </div>
-            <div className="grid grid-cols-2 gap-6 mt-6">
-              <InputField label="Exento" value={data.pago.exento} onChange={v => updatePago('exento', v)} />
-              <InputField label="Pago Total Empresa" value={`$${data.pago.pagoTotalEmpresa.toLocaleString()}`} onChange={() => {}} />
-            </div>
-            <div className="grid grid-cols-2 gap-6 mt-6">
+            <div className="grid grid-cols-3 gap-6 mt-6">
+              <InputField label="Anticipo" value={data.anticipo ? `$${data.anticipo}` : ''} onChange={v => {
+                const val = parseFloat(v.replace(/[$,]/g, '')) || 0;
+                setData(prev => ({ ...prev, anticipo: val, saldoPendiente: Math.round((prev.totales.total - val) * 100) / 100 }));
+              }} placeholder="$0.00" />
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Pago Cliente</label>
-                <div className="px-4 py-2.5 bg-purple-50 border border-purple-200 rounded-lg text-sm font-bold text-[#7c3aed]">
-                  ${data.pago.pagoCliente.toLocaleString()}
+                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Saldo Pendiente</label>
+                <div className="px-4 py-2.5 bg-amber-50 border border-amber-200 rounded-lg text-sm font-bold text-amber-700">
+                  ${data.saldoPendiente.toLocaleString()}
                 </div>
               </div>
-              <InputField label="Universidad" value={data.pago.universidad} onChange={v => updatePago('universidad', v)} />
+              <InputField label="Exento" value={data.pago.exento} onChange={v => updatePago('exento', v)} />
             </div>
           </Section>
 
@@ -599,12 +660,28 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               <span className="text-xs text-slate-500">Son: </span>
               <span className="text-xs font-semibold text-slate-700 italic">{data.son || 'UN MIL DOSCIENTOS OCHENTA Y CINCO PESOS 00/100 M.N.'}</span>
             </div>
-            <div className="px-4 py-2.5 bg-purple-50 border border-purple-200 rounded-lg text-center">
-              <p className="text-sm text-slate-600">
-                Su lente solicitado podrá recogerlo a partir del día <strong className="text-[#7c3aed]">{data.fechaRecoge ? formatDateLong(data.fechaRecoge) : '24-MAY-2026'}</strong>, después de las <strong className="text-[#7c3aed]">{data.horaRecoge || '09:40'}</strong> hrs.
-              </p>
-            </div>
           </div>
+
+          {/* ENTREGA Y GARANTÍA */}
+          <Section title="Entrega y Garantía">
+            <div className="grid grid-cols-2 gap-6">
+              <InputField label="Fecha Estimada de Entrega" value={data.fechaEntrega} onChange={v => update('fechaEntrega', v)} type="date" />
+              <InputField label="Condiciones de Entrega" value={data.condicionesEntrega} onChange={v => update('condicionesEntrega', v)} />
+            </div>
+            <div className="grid grid-cols-2 gap-6 mt-6">
+              <InputField label="Garantía de Micas" value={data.garantiaMicas} onChange={v => update('garantiaMicas', v)} placeholder="Ej: 8 meses" />
+              <InputField label="Garantía de Armazón" value={data.garantiaArmazon} onChange={v => update('garantiaArmazon', v)} placeholder="Ej: 6 meses" />
+            </div>
+            <div className="mt-6">
+              <InputField label="Qué cubre y qué no cubre la garantía" value={data.coberturaGarantia} onChange={v => update('coberturaGarantia', v)} />
+            </div>
+            <div className="mt-6">
+              <InputField label="Condiciones para Cambios / Adaptación" value={data.condicionesCambio} onChange={v => update('condicionesCambio', v)} />
+            </div>
+            <div className="mt-6">
+              <InputField label="Política de Cancelación o Devolución" value={data.politicaCancelacion} onChange={v => update('politicaCancelacion', v)} />
+            </div>
+          </Section>
 
           {/* FIRMAS DIVIDER */}
           <div className="flex items-center gap-6 py-1">
@@ -716,11 +793,11 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function InputField({ label, value, onChange, type = 'text' }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
+function InputField({ label, value, onChange, type = 'text', placeholder = '' }: { label: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string }) {
   return (
     <div>
       <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">{label}</label>
-      <input type={type} value={value} onChange={e => onChange(e.target.value)}
+      <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
         className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
     </div>
   );
