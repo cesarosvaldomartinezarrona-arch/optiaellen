@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef } from 'react';
-import { Printer, RotateCcw, Save, X, FileDown, Eye, Search } from 'lucide-react';
+import { Printer, RotateCcw, Save, X, FileDown, Eye, Search, Edit2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import SignaturePad from './SignaturePad';
@@ -671,6 +671,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
             <button onClick={handleDownloadPdf} disabled={generatingPdf}
               className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50">
               <FileDown className="w-4 h-4" /> {generatingPdf ? 'Generando...' : 'Descargar PDF'}
+            </button>
+            <button
+              className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
+              <Edit2 className="w-4 h-4" /> Editar Datos
             </button>
             <button
               className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] rounded-lg text-sm font-bold text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all">
