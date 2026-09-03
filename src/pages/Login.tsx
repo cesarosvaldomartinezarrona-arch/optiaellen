@@ -124,21 +124,20 @@ export default function Login() {
               </button>
             </div>
 
-            {/* Spacer pushes button to bottom */}
-            <div className="flex-1" />
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[var(--accent)] hover:bg-[#6b21a8] disabled:opacity-50 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] text-[15px] flex items-center justify-center gap-3"
-            >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>Entrar <ArrowRight className="w-4 h-4" /></>
-              )}
-            </button>
+            {/* Centered spacer */}
+            <div className="flex-1 flex items-center justify-center">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-[var(--accent)] hover:bg-[#6b21a8] disabled:opacity-50 text-white font-bold py-4 rounded-lg transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] text-[15px] flex items-center justify-center gap-3"
+              >
+                {loading ? (
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <>Entrar <ArrowRight className="w-4 h-4" /></>
+                )}
+              </button>
+            </div>
           </form>
         </div>
 
