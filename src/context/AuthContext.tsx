@@ -29,6 +29,15 @@ const COMPRADOR_PERMISSIONS = [
   'ventas', 'cobrar', 'entregar', 'inventario',
 ];
 
+const OPTOMETRISTA_PERMISSIONS = [
+  'panel', 'clientes', 'recetas', 'laboratorio',
+];
+
+const GERENTE_PERMISSIONS = [
+  'panel', 'clientes', 'recetas', 'ventas', 'cobrar', 'entregar',
+  'laboratorio', 'gastos', 'inventario',
+];
+
 const OPTOMETRISTA_GERENTE_PERMISSIONS = [
   'panel', 'clientes', 'recetas', 'ventas', 'cobrar', 'entregar',
   'laboratorio', 'gastos', 'inventario',
@@ -36,6 +45,8 @@ const OPTOMETRISTA_GERENTE_PERMISSIONS = [
 
 function getPermissions(role: UserRole): string[] {
   if (role === 'admin') return ADMIN_PERMISSIONS;
+  if (role === 'optometrista') return OPTOMETRISTA_PERMISSIONS;
+  if (role === 'gerente') return GERENTE_PERMISSIONS;
   if (role === 'optometrista_gerente') return OPTOMETRISTA_GERENTE_PERMISSIONS;
   return COMPRADOR_PERMISSIONS;
 }
