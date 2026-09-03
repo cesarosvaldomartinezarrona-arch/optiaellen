@@ -255,8 +255,8 @@ export default function Configuracion() {
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${u.role === 'admin' ? 'bg-purple-100 text-purple-700 border border-purple-200' : u.role === 'optometrista_gerente' || u.role === 'gerente' ? 'bg-amber-100 text-amber-700 border border-amber-200' : u.role === 'optometrista' ? 'bg-teal-100 text-teal-700 border border-teal-200' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
-                        {u.role === 'admin' ? 'Administrador' : u.role === 'gerente' ? 'Gerente' : u.role === 'optometrista' ? 'Optometrista' : u.role === 'optometrista_gerente' ? 'Optometrista Gerente' : 'Vendedor'}
+                      <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${u.role === 'admin' ? 'bg-purple-100 text-purple-700 border border-purple-200' : u.role === 'gerente' ? 'bg-amber-100 text-amber-700 border border-amber-200' : u.role === 'optometrista' ? 'bg-teal-100 text-teal-700 border border-teal-200' : 'bg-blue-100 text-blue-700 border border-blue-200'}`}>
+                        {u.role === 'admin' ? 'Administrador' : u.role === 'gerente' ? 'Gerente' : u.role === 'optometrista' ? 'Optometrista' : 'Vendedor'}
                       </span>
                       {u.id !== currentUser?.id && (
                         <div className="flex items-center gap-1">
@@ -410,7 +410,6 @@ export default function Configuracion() {
                   <option value="admin">Administrador</option>
                   <option value="gerente">Gerente</option>
                   <option value="optometrista">Optometrista</option>
-                  <option value="optometrista_gerente">Optometrista Gerente</option>
                   <option value="comprador">Vendedor</option>
                 </select>
               </div>
