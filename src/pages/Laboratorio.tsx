@@ -40,7 +40,7 @@ export default function Laboratorio() {
           <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Seguimiento de órdenes de taller</p>
         </div>
         <button onClick={() => setShowModal(true)}
-          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-500/25">
+          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] hover:from-[var(--accent-dark)] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">
           <Plus className="w-4 h-4" /> Nueva Orden
         </button>
       </div>
@@ -51,14 +51,14 @@ export default function Laboratorio() {
             <div className="flex items-start justify-between mb-5 sm:mb-6">
               <div className="flex-1 min-w-0 mr-4">
                 <div className="flex items-center gap-3 sm:gap-4 mb-1.5 flex-wrap">
-                  <span className="text-xs sm:text-sm font-bold text-[#7c3aed]">{order.id}</span>
+                  <span className="text-xs sm:text-sm font-bold text-[var(--accent)]">{order.id}</span>
                   <span className={`px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-bold ${order.phase === 6 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}`}>{order.status}</span>
                 </div>
                 <h3 className="text-sm sm:text-base font-bold text-slate-900 mt-1">{order.patientName}</h3>
               </div>
               {order.phase < 6 && (
                 <button onClick={() => handleAdvance(order.id)}
-                  className="flex items-center gap-1.5 sm:gap-2 bg-purple-50 hover:bg-purple-100 text-[#7c3aed] px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors border border-purple-200 flex-shrink-0">
+                  className="flex items-center gap-1.5 sm:gap-2 bg-purple-50 hover:bg-purple-100 text-[var(--accent)] px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-colors border border-purple-200 flex-shrink-0">
                   Avanzar <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               )}
@@ -78,13 +78,13 @@ export default function Laboratorio() {
                 return (
                   <div key={phase.name} className="flex-1 min-w-[60px] sm:min-w-[64px] flex flex-col items-center">
                     <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-2 transition-all border-2 ${
-                      isCompleted ? 'bg-[#7c3aed] text-white border-[#7c3aed] shadow-md shadow-purple-500/30' :
-                      isCurrent ? `${phase.color} ring-2 sm:ring-4 ring-purple-100` :
+                      isCompleted ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-md shadow-[rgba(var(--accent-rgb),0.30)]' :
+                      isCurrent ? `${phase.color} ring-2 sm:ring-4 ring-[var(--accent-light)]` :
                       'bg-white text-slate-300 border-slate-200'
                     }`}>
                       <PhaseIcon className="w-5 h-5 sm:w-5 sm:h-5" />
                     </div>
-                    <p className={`text-center text-[9px] sm:text-[10px] font-bold tracking-wide ${isCurrent ? 'text-[#7c3aed]' : isCompleted ? 'text-slate-700' : 'text-slate-400'}`}>{phase.name}</p>
+                    <p className={`text-center text-[9px] sm:text-[10px] font-bold tracking-wide ${isCurrent ? 'text-[var(--accent)]' : isCompleted ? 'text-slate-700' : 'text-slate-400'}`}>{phase.name}</p>
                   </div>
                 );
               })}
@@ -104,7 +104,7 @@ export default function Laboratorio() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Paciente *</label>
                 <select value={newOrder.patientId} onChange={e => setNewOrder({ ...newOrder, patientId: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
                   <option value="">Seleccionar paciente</option>
                   {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                 </select>
@@ -112,17 +112,17 @@ export default function Laboratorio() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Productos / Trabajo *</label>
                 <input type="text" value={newOrder.products} onChange={e => setNewOrder({ ...newOrder, products: e.target.value })}
-                  placeholder="Ej: Montura X + Cristal Progresivo" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  placeholder="Ej: Montura X + Cristal Progresivo" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Operador</label>
                 <input type="text" value={newOrder.operator} onChange={e => setNewOrder({ ...newOrder, operator: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
               </div>
             </div>
             <div className="flex justify-end gap-4 p-6 sm:p-8 border-t border-slate-100">
               <button onClick={() => setShowModal(false)} className="px-6 py-3.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors">Cancelar</button>
-              <button onClick={handleAddOrder} className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Crear Orden</button>
+              <button onClick={handleAddOrder} className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">Crear Orden</button>
             </div>
           </div>
         </div>

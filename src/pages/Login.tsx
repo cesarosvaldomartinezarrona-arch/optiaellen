@@ -52,8 +52,8 @@ export default function Login() {
             {/* Section: Credenciales */}
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 rounded-lg bg-[#7c3aed]/10 flex items-center justify-center">
-                  <Lock className="w-3.5 h-3.5 text-[#7c3aed]" />
+                <div className="w-6 h-6 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
+                  <Lock className="w-3.5 h-3.5 text-[var(--accent)]" />
                 </div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Credenciales</span>
               </div>
@@ -68,7 +68,7 @@ export default function Login() {
                       type="text"
                       value={username}
                       onChange={e => setUsername(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
+                      className="w-full pl-12 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all"
                       placeholder="tu@correo.com"
                       required
                     />
@@ -83,7 +83,7 @@ export default function Login() {
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={e => setPassword(e.target.value)}
-                      className="w-full pl-4 pr-12 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all"
+                      className="w-full pl-4 pr-12 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all"
                       placeholder="••••••••"
                       required
                     />
@@ -112,7 +112,7 @@ export default function Login() {
                     onChange={e => setRemember(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-5 h-5 border-2 border-slate-300 rounded-lg peer-checked:border-[#7c3aed] peer-checked:bg-[#7c3aed] transition-all flex items-center justify-center">
+                  <div className="w-5 h-5 border-2 border-slate-300 rounded-lg peer-checked:border-[var(--accent)] peer-checked:bg-[var(--accent)] transition-all flex items-center justify-center">
                     {remember && (
                       <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -122,7 +122,7 @@ export default function Login() {
                 </div>
                 <span className="text-sm text-slate-600">Recordarme</span>
               </label>
-              <button type="button" className="text-sm text-[#7c3aed] hover:text-[#6b21a8] font-semibold transition-colors">
+              <button type="button" className="text-sm text-[var(--accent)] hover:text-[#6b21a8] font-semibold transition-colors">
                 ¿Olvidaste tu contraseña?
               </button>
             </div>
@@ -131,7 +131,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#7c3aed] hover:bg-[#6b21a8] disabled:opacity-50 text-white font-bold py-4 mt-20 rounded-lg transition-all shadow-lg shadow-purple-500/25 text-[15px] flex items-center justify-center gap-3"
+              className="w-full bg-[var(--accent)] hover:bg-[#6b21a8] disabled:opacity-50 text-white font-bold py-4 mt-20 rounded-lg transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] text-[15px] flex items-center justify-center gap-3"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

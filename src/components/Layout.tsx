@@ -29,7 +29,7 @@ function MobileBottomNav({ onMenuOpen }: { onMenuOpen: () => void }) {
               to={item.to}
               className={`relative flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all min-w-[64px] ${active ? 'text-white' : 'text-white/50'}`}
             >
-              {active && <div className="absolute inset-0 bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] rounded-lg shadow-lg shadow-purple-500/20" />}
+              {active && <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] rounded-lg shadow-lg shadow-[rgba(var(--accent-rgb),0.20)]" />}
               <Icon className={`relative w-5 h-5 ${active ? 'text-white' : 'text-white/60'}`} strokeWidth={active ? 2.5 : 2} />
               <span className={`relative text-[11px] font-semibold tracking-wide ${active ? 'text-white' : 'text-white/60'}`}>{item.label}</span>
             </NavLink>
@@ -105,7 +105,7 @@ export default function Layout() {
                 <p className="text-xs font-medium whitespace-nowrap" style={{ color: 'var(--text-secondary)' }}>Resumen general del negocio</p>
               </div>
               <div className="lg:hidden flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] flex items-center justify-center shadow shrink-0">
                   <span className="text-white text-xs font-bold">{user?.name?.charAt(0) || 'A'}</span>
                 </div>
                 <div className="min-w-0">
@@ -139,7 +139,7 @@ export default function Layout() {
               </button>
               <div className="hidden sm:flex items-center gap-3 pl-3 ml-1 border-l" style={{ borderColor: 'var(--border-color)' }}>
                 <div className="relative">
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow ring-2 ring-purple-100">
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] flex items-center justify-center shadow ring-2 ring-[var(--accent-light)]">
                     <span className="text-white text-xs font-bold">{user?.name?.split(' ').map(n=>n[0]).slice(0,2).join('') || 'AR'}</span>
                   </div>
                   <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white" />

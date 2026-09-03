@@ -183,7 +183,7 @@ export default function Cobrar() {
             </div>
           ) : pendingPayments.map(p => (
             <div key={p.id} onClick={() => { setSelectedPayment(p.id); setPaymentData({ method: 'Efectivo', cashAmount: '', cardReference: '', partialAmount: '' }); }}
-              className={`bg-white rounded-lg border-2 p-4 cursor-pointer transition-all hover:shadow-md ${selectedPayment === p.id ? 'border-[#7c3aed] shadow-lg shadow-purple-500/10' : 'border-slate-200 hover:border-slate-300'}`}>
+              className={`bg-white rounded-lg border-2 p-4 cursor-pointer transition-all hover:shadow-md ${selectedPayment === p.id ? 'border-[var(--accent)] shadow-lg shadow-[rgba(var(--accent-rgb),0.10)]' : 'border-slate-200 hover:border-slate-300'}`}>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-bold text-slate-800">{p.patientName}</span>
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${statusColor(p.status)}`}>{p.status}</span>
@@ -204,7 +204,7 @@ export default function Cobrar() {
             <div className="bg-white rounded-lg border border-slate-200/80 shadow-sm p-6 space-y-6">
               <div className="border-b border-slate-100 pb-4">
                 <h3 className="text-lg font-bold text-slate-900">Procesar Pago — {selected.patientName}</h3>
-                <p className="text-sm text-slate-500 mt-1">Monto a cobrar: <span className="font-bold text-[#7c3aed] text-base">${selected.pending.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span></p>
+                <p className="text-sm text-slate-500 mt-1">Monto a cobrar: <span className="font-bold text-[var(--accent)] text-base">${selected.pending.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</span></p>
               </div>
 
               <div>
@@ -214,7 +214,7 @@ export default function Cobrar() {
                     const Icon = m.icon;
                     return (
                       <button key={m.id} onClick={() => setPaymentData({ ...paymentData, method: m.id as PaymentMethod })}
-                        className={`flex flex-col items-center gap-2 p-4 rounded-lg border-2 transition-all ${paymentData.method === m.id ? 'border-[#7c3aed] bg-purple-50 shadow-md' : 'border-slate-200 hover:border-slate-300'}`}>
+                        className={`flex flex-col items-center gap-2 p-4 rounded-lg border-2 transition-all ${paymentData.method === m.id ? 'border-[var(--accent)] bg-purple-50 shadow-md' : 'border-slate-200 hover:border-slate-300'}`}>
                         <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${m.color} flex items-center justify-center shadow-md`}>
                           <Icon className="w-5 h-5 text-white" />
                         </div>
@@ -230,7 +230,7 @@ export default function Cobrar() {
                   <div>
                     <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Efectivo Recibido</label>
                     <input type="number" value={paymentData.cashAmount} onChange={e => setPaymentData({ ...paymentData, cashAmount: e.target.value })}
-                      placeholder="0.00" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                      placeholder="0.00" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                   </div>
                   <div className="flex justify-between items-center p-4 bg-white rounded-lg border border-slate-200">
                     <span className="text-sm text-slate-500 font-medium">Cambio / Vuelto:</span>
@@ -243,7 +243,7 @@ export default function Cobrar() {
                 <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
                   <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Referencia / Número de Voucher</label>
                   <input type="text" value={paymentData.cardReference} onChange={e => setPaymentData({ ...paymentData, cardReference: e.target.value })}
-                    placeholder="Ingrese referencia del voucher" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    placeholder="Ingrese referencia del voucher" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                 </div>
               )}
 
@@ -251,7 +251,7 @@ export default function Cobrar() {
                 <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
                   <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Número de Transferencia / Folio</label>
                   <input type="text" value={paymentData.cardReference} onChange={e => setPaymentData({ ...paymentData, cardReference: e.target.value })}
-                    placeholder="Ingrese folio de transferencia" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    placeholder="Ingrese folio de transferencia" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                 </div>
               )}
 
@@ -260,7 +260,7 @@ export default function Cobrar() {
                   <div>
                     <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Monto del Anticipo</label>
                     <input type="number" value={paymentData.partialAmount} onChange={e => setPaymentData({ ...paymentData, partialAmount: e.target.value })}
-                      placeholder="0.00" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                      placeholder="0.00" className="w-full px-4 py-3 bg-white rounded-lg border border-slate-200 text-xl font-bold focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-500">Saldo restante:</span>
@@ -270,7 +270,7 @@ export default function Cobrar() {
               )}
 
               <button onClick={handleProcessPayment} disabled={processingId === selected.id}
-                className="w-full bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white py-3.5 rounded-lg font-bold text-sm shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:translate-y-0 flex items-center justify-center gap-2">
+                className="w-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white py-3.5 rounded-lg font-bold text-sm shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] hover:shadow-[rgba(var(--accent-rgb),0.40)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:translate-y-0 flex items-center justify-center gap-2">
                 {processingId === selected.id ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <>Procesar Pago <ArrowRight className="w-4 h-4" /></>}
               </button>
             </div>
@@ -295,7 +295,7 @@ export default function Cobrar() {
                 <Printer className="w-4 h-4" /> Imprimir Ticket
               </button>
               <button onClick={() => { setShowSuccess(false); navigate(`/ticket?sale=${lastPaidSaleId}`); }}
-                className="flex-1 flex items-center justify-center gap-2 bg-[#7c3aed] hover:bg-[#6d28d9] text-white py-3 rounded-lg text-sm font-bold transition-all shadow-md shadow-purple-500/25">
+                className="flex-1 flex items-center justify-center gap-2 bg-[var(--accent)] hover:bg-[var(--accent-dark)] text-white py-3 rounded-lg text-sm font-bold transition-all shadow-md shadow-[rgba(var(--accent-rgb),0.25)]">
                 <FileText className="w-4 h-4" /> Nota de Venta
               </button>
             </div>

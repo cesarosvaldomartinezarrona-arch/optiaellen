@@ -114,7 +114,7 @@ export default function TicketPage() {
       <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
         <div>
           <h1 className="text-lg font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
-            <FileText className="w-5 h-5 text-[#7c3aed]" /> Nota de Venta
+            <FileText className="w-5 h-5 text-[var(--accent)]" /> Nota de Venta
           </h1>
           <p className="text-sm text-slate-500 mt-1">
             Formulario detallado para entregar al cliente · Selecciona una venta o llena manualmente
@@ -132,7 +132,7 @@ export default function TicketPage() {
                 setSearchParams({});
               }
             }}
-            className="flex-1 sm:w-64 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]"
+            className="flex-1 sm:w-64 px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]"
           >
             <option value="">— Llenar manualmente —</option>
             {sales.map((s) => (
@@ -143,7 +143,7 @@ export default function TicketPage() {
           </select>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-500/25 whitespace-nowrap"
+            className="flex items-center gap-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] hover:from-[var(--accent-dark)] hover:to-[#5b21b6] text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] whitespace-nowrap"
           >
             <FileText className="w-4 h-4" /> Abrir Formulario
           </button>
@@ -154,7 +154,7 @@ export default function TicketPage() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Última venta</p>
-          <p className="text-lg font-extrabold text-[#7c3aed] mt-1">{sales[0]?.id ?? '—'}</p>
+          <p className="text-lg font-extrabold text-[var(--accent)] mt-1">{sales[0]?.id ?? '—'}</p>
           <p className="text-xs text-slate-500 mt-0.5">{sales[0]?.patientName ?? 'Sin ventas'}</p>
         </div>
         <div className="bg-white rounded-xl border border-slate-200 p-5 text-center shadow-sm">

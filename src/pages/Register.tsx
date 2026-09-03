@@ -34,9 +34,9 @@ export default function Register() {
           <div className="flex flex-col items-center mb-8">
             <div className="w-16 h-16 rounded-lg bg-[#1a1a2e] flex items-center justify-center mb-3 shadow-lg">
               <svg width="32" height="32" viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M100 25 C30 25 5 85 5 85 C5 85 30 145 100 145 C170 145 195 85 195 85 C195 85 170 25 100 25Z" fill="#7c3aed" />
+                <path d="M100 25 C30 25 5 85 5 85 C5 85 30 145 100 145 C170 145 195 85 195 85 C195 85 170 25 100 25Z" fill="var(--accent)" />
                 <path d="M100 40 C45 40 25 85 25 85 C25 85 45 130 100 130 C155 130 175 85 175 85 C175 85 155 40 100 40Z" fill="white" />
-                <circle cx="100" cy="85" r="38" fill="#7c3aed" />
+                <circle cx="100" cy="85" r="38" fill="var(--accent)" />
                 <circle cx="100" cy="85" r="16" fill="#0f0720" />
                 <circle cx="107" cy="78" r="5" fill="white" opacity="0.9" />
               </svg>
@@ -53,8 +53,8 @@ export default function Register() {
             {/* Section: Datos Personales */}
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 rounded-lg bg-[#7c3aed]/10 flex items-center justify-center">
-                  <User className="w-3.5 h-3.5 text-[#7c3aed]" />
+                <div className="w-6 h-6 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
+                  <User className="w-3.5 h-3.5 text-[var(--accent)]" />
                 </div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Datos Personales</span>
               </div>
@@ -68,7 +68,7 @@ export default function Register() {
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                       <input type="text" value={form.firstName} onChange={e => update('firstName', e.target.value)}
                         placeholder="Juan"
-                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all" />
+                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all" />
                     </div>
                   </div>
                   <div>
@@ -77,7 +77,7 @@ export default function Register() {
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                       <input type="text" value={form.lastName} onChange={e => update('lastName', e.target.value)}
                         placeholder="García"
-                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all" />
+                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all" />
                     </div>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ export default function Register() {
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                     <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
                       placeholder="correo@empresa.com"
-                      className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all" />
+                      className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all" />
                   </div>
                 </div>
               </div>
@@ -101,8 +101,8 @@ export default function Register() {
             {/* Section: Contacto */}
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 rounded-lg bg-[#7c3aed]/10 flex items-center justify-center">
-                  <Phone className="w-3.5 h-3.5 text-[#7c3aed]" />
+                <div className="w-6 h-6 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
+                  <Phone className="w-3.5 h-3.5 text-[var(--accent)]" />
                 </div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Contacto</span>
               </div>
@@ -116,7 +116,7 @@ export default function Register() {
                       <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                       <input type="text" value={form.lada} onChange={e => update('lada', e.target.value)}
                         placeholder="52"
-                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all" />
+                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all" />
                     </div>
                   </div>
                   <div>
@@ -125,7 +125,7 @@ export default function Register() {
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                       <input type="tel" value={form.phone} onChange={e => update('phone', e.target.value)}
                         placeholder="1234567890"
-                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all" />
+                        className="w-full pl-11 pr-4 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all" />
                     </div>
                   </div>
                 </div>
@@ -138,8 +138,8 @@ export default function Register() {
             {/* Section: Plan y Ubicación */}
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 rounded-lg bg-[#7c3aed]/10 flex items-center justify-center">
-                  <Shield className="w-3.5 h-3.5 text-[#7c3aed]" />
+                <div className="w-6 h-6 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
+                  <Shield className="w-3.5 h-3.5 text-[var(--accent)]" />
                 </div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Plan y Ubicación</span>
               </div>
@@ -151,7 +151,7 @@ export default function Register() {
                   <div className="relative">
                     <Shield className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                     <select value={form.subscription} onChange={e => update('subscription', e.target.value)}
-                      className="w-full pl-11 pr-10 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all appearance-none cursor-pointer">
+                      className="w-full pl-11 pr-10 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all appearance-none cursor-pointer">
                       <option value="">Selecciona un plan</option>
                       <option value="basico">Básico — Gratis</option>
                       <option value="profesional">Profesional — $299/mes</option>
@@ -167,7 +167,7 @@ export default function Register() {
                   <div className="relative">
                     <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                     <select value={form.country} onChange={e => update('country', e.target.value)}
-                      className="w-full pl-11 pr-10 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all appearance-none cursor-pointer">
+                      className="w-full pl-11 pr-10 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all appearance-none cursor-pointer">
                       <option value="">Busca un país</option>
                       <option value="MX">México</option>
                       <option value="US">Estados Unidos</option>
@@ -188,8 +188,8 @@ export default function Register() {
             {/* Section: Seguridad */}
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-5">
-                <div className="w-6 h-6 rounded-lg bg-[#7c3aed]/10 flex items-center justify-center">
-                  <Lock className="w-3.5 h-3.5 text-[#7c3aed]" />
+                <div className="w-6 h-6 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
+                  <Lock className="w-3.5 h-3.5 text-[var(--accent)]" />
                 </div>
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Seguridad</span>
               </div>
@@ -203,7 +203,7 @@ export default function Register() {
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                       <input type={showPassword ? 'text' : 'password'} value={form.password} onChange={e => update('password', e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-11 pr-11 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all" />
+                        className="w-full pl-11 pr-11 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all" />
                       <button type="button" onClick={() => setShowPassword(!showPassword)}
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition-colors">
                         {showPassword ? <EyeOff className="w-[18px] h-[18px]" /> : <Eye className="w-[18px] h-[18px]" />}
@@ -216,7 +216,7 @@ export default function Register() {
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-slate-300" />
                       <input type={showConfirm ? 'text' : 'password'} value={form.confirmPassword} onChange={e => update('confirmPassword', e.target.value)}
                         placeholder="••••••••"
-                        className="w-full pl-11 pr-11 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] focus:bg-white transition-all" />
+                        className="w-full pl-11 pr-11 py-3.5 bg-[#f5f5f5] rounded-lg border border-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] focus:bg-white transition-all" />
                       <button type="button" onClick={() => setShowConfirm(!showConfirm)}
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition-colors">
                         {showConfirm ? <EyeOff className="w-[18px] h-[18px]" /> : <Eye className="w-[18px] h-[18px]" />}
@@ -255,7 +255,7 @@ export default function Register() {
           {/* Login link */}
           <p className="text-center text-sm text-slate-500 mt-8">
             ¿Ya tienes cuenta?{' '}
-            <Link to="/login" className="text-[#7c3aed] hover:text-[#6b21a8] font-semibold transition-colors">
+            <Link to="/login" className="text-[var(--accent)] hover:text-[#6b21a8] font-semibold transition-colors">
               Iniciar sesión
             </Link>
           </p>

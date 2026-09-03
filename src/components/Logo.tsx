@@ -24,7 +24,7 @@ export default function Logo({ size = 120, className = '' }: LogoProps) {
         {/* Eye shape - purple */}
         <path
           d="M100 25 C30 25 5 85 5 85 C5 85 30 145 100 145 C170 145 195 85 195 85 C195 85 170 25 100 25Z"
-          fill="#7c3aed"
+          fill="var(--accent)"
         />
         {/* Inner white */}
         <path
@@ -32,9 +32,9 @@ export default function Logo({ size = 120, className = '' }: LogoProps) {
           fill="white"
         />
         {/* Iris */}
-        <circle cx="100" cy="85" r="38" fill="#7c3aed" />
+        <circle cx="100" cy="85" r="38" fill="var(--accent)" />
         {/* Iris detail */}
-        <circle cx="100" cy="85" r="34" fill="none" stroke="#6d28d9" strokeWidth="1.5" />
+        <circle cx="100" cy="85" r="34" fill="none" stroke="var(--accent-dark)" strokeWidth="1.5" />
         <circle cx="100" cy="85" r="28" fill="none" stroke="#8b5cf6" strokeWidth="1" />
         {/* Iris radial lines */}
         {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((angle) => {

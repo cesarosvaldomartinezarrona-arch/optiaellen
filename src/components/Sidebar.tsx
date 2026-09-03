@@ -62,10 +62,10 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose, collapsed
     <div className="flex flex-col h-full overflow-hidden">
       {/* Logo — limpio, centrado */}
       <div className="flex flex-col items-center pt-7 pb-6 px-4 shrink-0 relative">
-        <div className="w-12 h-12 rounded-lg bg-[#7c3aed] flex items-center justify-center shadow-[0_4px_20px_rgba(124,58,237,0.3)] shrink-0">
+        <div className="w-12 h-12 rounded-lg bg-[var(--accent)] flex items-center justify-center shadow-[0_4px_20px_rgba(124,58,237,0.3)] shrink-0">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1 12C1 12 5.5 5.5 12 5.5C18.5 5.5 23 12 23 12C23 12 18.5 18.5 12 18.5C5.5 18.5 1 12 1 12Z" fill="white" />
-            <ellipse cx="12" cy="12" rx="5.2" ry="5.2" fill="#7c3aed" />
+            <ellipse cx="12" cy="12" rx="5.2" ry="5.2" fill="var(--accent)" />
             <circle cx="12" cy="12" r="2.3" fill="#0f0a1f" />
             <circle cx="13.5" cy="10.7" r="0.8" fill="white" opacity="0.95" />
           </svg>
@@ -113,7 +113,7 @@ export default function Sidebar({ isMobile, mobileOpen, onMobileClose, collapsed
                       title={collapsed ? item.label : undefined}
                       className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-colors min-w-0 ${
                         isActive
-                          ? 'bg-[#7c3aed] text-white shadow-[0_2px_10px_rgba(124,58,237,0.35)]'
+                          ? 'bg-[var(--accent)] text-white shadow-[0_2px_10px_rgba(124,58,237,0.35)]'
                           : 'text-[#9ca3b8] hover:text-white hover:bg-white/[0.06]'
                       }`}
                     >

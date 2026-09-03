@@ -35,9 +35,9 @@ function ProductForm({ form, setForm, onSave, onCancel, title }: {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Nombre *</label>
-                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Gafas Urban Chic" /></div>
+                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Gafas Urban Chic" /></div>
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Modelo</label>
-                <input type="text" value={form.model} onChange={e => update('model', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: UC-2024" /></div>
+                <input type="text" value={form.model} onChange={e => update('model', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: UC-2024" /></div>
             </div>
           </div>
           <div>
@@ -46,15 +46,15 @@ function ProductForm({ form, setForm, onSave, onCancel, title }: {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Categoría</label>
-                <select value={form.category} onChange={e => update('category', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                <select value={form.category} onChange={e => update('category', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
                   {(['Monturas', 'Lentes de Contacto', 'Cristales', 'Accesorios'] as ProductCategory[]).map(c => (<option key={c} value={c}>{c}</option>))}</select></div>
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Marca</label>
-                <input type="text" value={form.brand} onChange={e => update('brand', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Ray-Ban" /></div>
+                <input type="text" value={form.brand} onChange={e => update('brand', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Ray-Ban" /></div>
             </div>
             <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Tipo</label>
-              <input type="text" value={form.type} onChange={e => update('type', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Acetato, Metal, Diario..." /></div>
+              <input type="text" value={form.type} onChange={e => update('type', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Acetato, Metal, Diario..." /></div>
             <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Color de armazón / montura</label>
-              <input type="text" value={form.color} onChange={e => update('color', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Ej: Negro, Carey, Dorado..." /></div>
+              <input type="text" value={form.color} onChange={e => update('color', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Negro, Carey, Dorado..." /></div>
           </div>
           <div>
             <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
@@ -62,17 +62,17 @@ function ProductForm({ form, setForm, onSave, onCancel, title }: {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Costo Real</label>
-                <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
+                <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Precio de Venta *</label>
-                <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0.00" /></div>
+                <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
               <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Stock</label>
-                <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="0" /></div>
+                <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0" /></div>
             </div>
           </div>
         </div>
         <div className="flex justify-end gap-3 p-6 sm:p-8 border-t border-slate-100 bg-slate-50/50 rounded-b-3xl">
           <button onClick={onCancel} className="px-6 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200 transition-all">Cancelar</button>
-          <button onClick={onSave} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/30 transition-all">Guardar</button>
+          <button onClick={onSave} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] hover:shadow-[rgba(var(--accent-rgb),0.30)] transition-all">Guardar</button>
         </div>
       </div>
     </div>
@@ -139,7 +139,7 @@ export default function Inventario() {
           <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Control de productos y stock</p>
         </div>
         <button onClick={() => setShowAddModal(true)}
-          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-500/25">
+          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] hover:from-[var(--accent-dark)] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">
           <Plus className="w-4 h-4" /> Nuevo Producto
         </button>
       </div>
@@ -147,7 +147,7 @@ export default function Inventario() {
       <div className="grid grid-cols-3 gap-5 sm:gap-6">
         <div className="bg-white rounded-lg p-4 sm:p-6 border border-slate-200/80 shadow-sm">
           <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider lg:p-[2px]">Total</p>
-          <p className="text-xl sm:text-3xl font-extrabold text-[#7c3aed] mt-2 sm:mt-3">{totalProducts}</p>
+          <p className="text-xl sm:text-3xl font-extrabold text-[var(--accent)] mt-2 sm:mt-3">{totalProducts}</p>
         </div>
         <div className="bg-white rounded-lg p-4 sm:p-6 border border-slate-200/80 shadow-sm">
           <p className="text-[10px] sm:text-[11px] font-bold text-slate-400 uppercase tracking-wider lg:p-[2px]">Valor</p>
@@ -164,14 +164,14 @@ export default function Inventario() {
           <div className="relative flex flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
             <input type="text" placeholder="Buscar productos..." value={search} onChange={e => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+              className="w-full pl-10 pr-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
           </div>
           <div className="flex gap-3 overflow-x-auto pb-1 lg:p-[2px]">
             {['Todos', 'Monturas', 'Lentes', 'Cristales', 'Accesorios'].map((cat, i) => {
               const full = ['Todos', 'Monturas', 'Lentes de Contacto', 'Cristales', 'Accesorios'][i];
               return (
                 <button key={cat} onClick={() => setFilterCategory(full as any)}
-                  className={`px-4 py-2.5 lg:px-[18px] lg:py-[12px] lg:m-[2px] rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${filterCategory === full ? 'bg-[#7c3aed] text-white shadow-md' : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border border-slate-200'}`}>
+                  className={`px-4 py-2.5 lg:px-[18px] lg:py-[12px] lg:m-[2px] rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${filterCategory === full ? 'bg-[var(--accent)] text-white shadow-md' : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border border-slate-200'}`}>
                   <span className="lg:p-[2px]">{cat}</span>
                 </button>
               );
@@ -192,7 +192,7 @@ export default function Inventario() {
             <tbody className="divide-y divide-slate-100">
               {filtered.map(product => (
                 <tr key={product.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-6 py-4 text-sm font-bold text-[#7c3aed]">{product.id}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-[var(--accent)]">{product.id}</td>
                   <td className="px-6 py-4">
                     <div><span className="text-sm font-bold text-slate-800">{product.name}</span>
                     {product.brand && <span className="text-xs text-slate-400 ml-2">({product.brand})</span>}</div>
@@ -203,7 +203,7 @@ export default function Inventario() {
                   <td className="px-6 py-4"><span className={`text-sm font-bold ${product.stock < 10 ? 'text-red-600' : 'text-slate-800'}`}>{product.stock}</span></td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => startEdit(product.id)} className="w-9 h-9 rounded-lg bg-purple-50 text-[#7c3aed] hover:bg-purple-100 flex items-center justify-center transition-colors border border-purple-100"><Edit2 className="w-4 h-4" /></button>
+                      <button onClick={() => startEdit(product.id)} className="w-9 h-9 rounded-lg bg-purple-50 text-[var(--accent)] hover:bg-purple-100 flex items-center justify-center transition-colors border border-purple-100"><Edit2 className="w-4 h-4" /></button>
                       <button onClick={() => handleDelete(product.id)} className="w-9 h-9 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors border border-red-100"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   </td>
@@ -226,11 +226,11 @@ export default function Inventario() {
               <span className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-bold ml-3 ${categoryColors[product.category]}`}>{product.category}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-extrabold text-[#7c3aed]">${product.price.toLocaleString()}</span>
+              <span className="text-lg font-extrabold text-[var(--accent)]">${product.price.toLocaleString()}</span>
               <span className={`text-sm font-bold ${product.stock < 10 ? 'text-red-600' : 'text-slate-800'}`}>Stock: {product.stock}</span>
             </div>
             <div className="flex items-center gap-3 mt-4 pt-4 border-t border-slate-100">
-              <button onClick={() => startEdit(product.id)} className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-lg bg-purple-50 text-[#7c3aed] text-xs font-semibold hover:bg-purple-100 transition-colors"><Edit2 className="w-3.5 h-3.5" /> Editar</button>
+              <button onClick={() => startEdit(product.id)} className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-lg bg-purple-50 text-[var(--accent)] text-xs font-semibold hover:bg-purple-100 transition-colors"><Edit2 className="w-3.5 h-3.5" /> Editar</button>
               <button onClick={() => handleDelete(product.id)} className="flex-1 flex items-center justify-center gap-1.5 py-3 rounded-lg bg-red-50 text-red-500 text-xs font-semibold hover:bg-red-100 transition-colors"><Trash2 className="w-3.5 h-3.5" /> Eliminar</button>
             </div>
           </div>

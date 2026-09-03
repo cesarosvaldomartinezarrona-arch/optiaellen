@@ -410,14 +410,14 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
             <div className="flex items-center gap-3">
               <img src="/logo.png" alt="OptiÆllen" className="w-14 h-14 object-contain" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
               <div>
-                <h2 className="text-xl font-extrabold text-[#7c3aed] tracking-tight">{opticsName ?? 'OptiÆllen'}</h2>
+                <h2 className="text-xl font-extrabold text-[var(--accent)] tracking-tight">{opticsName ?? 'OptiÆllen'}</h2>
                 <p className="text-slate-400 text-[11px]">Ver bien es vivir mejor</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <div className="text-right">
                 <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">TICKET DE VENTA</h1>
-                <span className="inline-block mt-1 px-3 py-1 bg-[#7c3aed] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
+                <span className="inline-block mt-1 px-3 py-1 bg-[var(--accent)] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
               </div>
               {onClose && (
                 <button onClick={onClose} className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-red-50 hover:text-red-500 flex items-center justify-center transition-colors text-slate-400">
@@ -434,7 +434,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
             <span><strong>Cédula:</strong> {data.cedula || '—'}</span>
             <span><strong>Licenciado en Optometría:</strong> {data.licenciatura || '—'}</span>
           </div>
-          <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]" />
+          <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)]" />
         </div>
 
         {/* Header para impresión */}
@@ -443,13 +443,13 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
             <div className="flex items-center gap-3">
               <img src="/logo.png" alt="OptiÆllen" className="w-14 h-14 object-contain" onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
               <div>
-                <h2 className="text-xl font-extrabold text-[#7c3aed] tracking-tight">{opticsName ?? 'OptiÆllen'}</h2>
+                <h2 className="text-xl font-extrabold text-[var(--accent)] tracking-tight">{opticsName ?? 'OptiÆllen'}</h2>
                 <p className="text-slate-400 text-[11px]">Ver bien es vivir mejor</p>
               </div>
             </div>
             <div className="text-right">
               <h1 className="text-xl font-extrabold text-slate-900 tracking-tight">TICKET DE VENTA</h1>
-              <span className="inline-block mt-1 px-3 py-1 bg-[#7c3aed] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
+              <span className="inline-block mt-1 px-3 py-1 bg-[var(--accent)] text-white text-[9px] font-bold tracking-widest uppercase rounded">Copia Cliente</span>
             </div>
           </div>
           <div className="px-6 py-2.5 flex items-center gap-6 border-b border-slate-100 text-xs text-slate-600">
@@ -460,7 +460,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
             <span><strong>Cédula:</strong> {data.cedula || '—'}</span>
             <span><strong>Licenciado en Optometría:</strong> {data.licenciatura || '—'}</span>
           </div>
-          <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]" />
+          <div className="h-1 bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)]" />
         </div>
 
         {/* Content scrollable */}
@@ -499,7 +499,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
                 <input type="text" placeholder="Nombre, teléfono o ID del paciente..." value={searchPatient} onChange={e => setSearchPatient(e.target.value)}
-                  className="w-full pl-14 pr-4 py-3 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                  className="w-full pl-14 pr-4 py-3 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] placeholder:text-slate-400" />
               </div>
               {searchPatient && (
                 <div className="mt-1 max-h-36 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-lg">
@@ -551,7 +551,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
               <div>
                 <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">Armazón (Inventario)</label>
                 <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                  className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]">
                   <option value="">— Seleccionar armazón —</option>
                   {products.filter(p => p.category === 'Monturas').map(p => (
                     <option key={p.id} value={`${p.name} ${p.model} ${p.brand ?? ''}`.trim()}>
@@ -570,8 +570,8 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
               <table className="w-full text-sm">
                 <thead>
                   <tr>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Derecho (OD)</th>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Izquierdo (OI)</th>
+                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Derecho (OD)</th>
+                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Izquierdo (OI)</th>
                   </tr>
                   <tr className="bg-slate-50">
                     {['DP', 'ALT', 'Esfera', 'Cilindro', 'Eje', 'Adición', 'Prisma', 'DNP(C)'].map(h => (
@@ -587,13 +587,13 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
                     {(['dnpL', 'alt', 'esfera', 'cilindro', 'eje', 'adicion', 'prisma', 'dnpC'] as const).map(f => (
                       <td key={`od-${f}`} className="px-1.5 py-1.5">
                         <input type="text" value={data.graduacion.od[f]} onChange={e => updateGrad('od', f, e.target.value)}
-                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
+                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
                       </td>
                     ))}
                     {(['dnpL', 'alt', 'esfera', 'cilindro', 'eje', 'adicion', 'prisma', 'dnpC'] as const).map(f => (
                       <td key={`oi-${f}`} className="px-1.5 py-1.5">
                         <input type="text" value={data.graduacion.oi[f]} onChange={e => updateGrad('oi', f, e.target.value)}
-                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
+                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
                       </td>
                     ))}
                   </tr>
@@ -605,7 +605,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
           {/* OBSERVACIONES */}
           <Section title="Observaciones">
             <textarea value={data.observaciones} onChange={e => update('observaciones', e.target.value)} rows={2}
-              className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-400" />
+              className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] resize-none placeholder:text-slate-400" />
           </Section>
 
           {/* DETALLE DE VENTA */}
@@ -613,7 +613,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
             <div className="overflow-hidden rounded border border-slate-200">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]">
+                  <tr className="bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)]">
                     <th className="px-4 py-2.5 text-left font-bold text-white text-[10px] uppercase tracking-wider">Descripción</th>
                     <th className="px-3 py-2.5 text-center font-bold text-white text-[10px] uppercase tracking-wider">Cant.</th>
                     <th className="px-3 py-2.5 text-right font-bold text-white text-[10px] uppercase tracking-wider">P. Unitario</th>
@@ -633,19 +633,19 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
                       <tr key={i} className="border-t border-slate-100 hover:bg-slate-50/50">
                         <td className="px-2 py-1.5">
                           <input type="text" value={d.descripcion} onChange={e => updateDetalle(i, 'descripcion', e.target.value)}
-                            className="w-full py-1 px-2 bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
+                            className="w-full py-1 px-2 bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
                         </td>
                         <td className="px-2 py-1.5">
                           <input type="number" value={d.cantidad || ''} onChange={e => updateDetalle(i, 'cantidad', parseInt(e.target.value) || 1)} min={1}
-                            className="w-full py-1 px-2 text-center bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
+                            className="w-full py-1 px-2 text-center bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
                         </td>
                         <td className="px-2 py-1.5">
                           <input type="number" value={d.precioUnitario || ''} onChange={e => updateDetalle(i, 'precioUnitario', parseFloat(e.target.value) || 0)}
-                            className="w-full py-1 px-2 text-right bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
+                            className="w-full py-1 px-2 text-right bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
                         </td>
                         <td className="px-2 py-1.5">
                           <input type="number" value={d.descuento || ''} onChange={e => updateDetalle(i, 'descuento', parseFloat(e.target.value) || 0)}
-                            className="w-full py-1 px-2 text-right bg-transparent border border-transparent hover:border-slate-200 focus:border-[#7c3aed] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
+                            className="w-full py-1 px-2 text-right bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-xs text-slate-700 font-medium outline-none transition-all" />
                         </td>
                         <td className="px-3 py-2 text-right text-xs text-slate-600 font-medium">${iva.toLocaleString()}</td>
                         <td className="px-3 py-2 text-right text-xs text-slate-600 font-medium">${base.toLocaleString()}</td>
@@ -662,7 +662,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
               </table>
             </div>
             <button onClick={addDetalle}
-              className="mt-3 text-xs font-semibold text-[#7c3aed] hover:text-[#6d28d9] transition-colors">
+              className="mt-3 text-xs font-semibold text-[var(--accent)] hover:text-[var(--accent-dark)] transition-colors">
               + Agregar producto
             </button>
           </Section>
@@ -684,7 +684,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
                   <span className="font-bold text-slate-800">${data.totales.iva.toLocaleString()}</span>
                 </div>
                 <div className="h-px bg-slate-200" />
-                <div className="flex justify-between items-center bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] text-white px-4 py-2.5 rounded-lg">
+                <div className="flex justify-between items-center bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] text-white px-4 py-2.5 rounded-lg">
                   <span className="font-bold text-sm">Total</span>
                   <span className="font-extrabold text-lg">${data.totales.total.toLocaleString()}</span>
                 </div>
@@ -786,10 +786,10 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
           <div className="pt-4 space-y-3">
             <div className="bg-[#f8f7fc] border border-slate-200 rounded-xl p-4 space-y-2">
               <p className="text-[10px] text-slate-500 leading-relaxed">
-                <strong className="text-slate-600">Salud Digna A.C.</strong> con domicilio fiscal en calle Francisco Villa #113 Sur, Colonia Centro, C.P. 80000, Culiacán Sinaloa, México; utilizará sus datos personales aquí recabados con fines dirigidos a la prestación de los servicios que ofrece. Para mayor información acerca del tratamiento y de los derechos que puede hacer valer, puede acceder al aviso de privacidad en <a href="https://salud-digna.org/aviso-de-privacidad/" className="text-[#7c3aed] underline hover:text-[#6d28d9]" target="_blank" rel="noreferrer">https://salud-digna.org/aviso-de-privacidad/</a>
+                <strong className="text-slate-600">Salud Digna A.C.</strong> con domicilio fiscal en calle Francisco Villa #113 Sur, Colonia Centro, C.P. 80000, Culiacán Sinaloa, México; utilizará sus datos personales aquí recabados con fines dirigidos a la prestación de los servicios que ofrece. Para mayor información acerca del tratamiento y de los derechos que puede hacer valer, puede acceder al aviso de privacidad en <a href="https://salud-digna.org/aviso-de-privacidad/" className="text-[var(--accent)] underline hover:text-[var(--accent-dark)]" target="_blank" rel="noreferrer">https://salud-digna.org/aviso-de-privacidad/</a>
               </p>
               <p className="text-[10px] text-slate-500 leading-relaxed">
-                Términos y condiciones de promociones: Desde este momento, y por un plazo de 30 días siguientes a la que se haya realizado la venta de la presente oferta comercial, Salud Digna concede al comprador el beneficio de adquirir a mitad de precio un segundo modelo. Aplican restricciones. Visita la página <a href="https://lentes.salud-digna.org/terminos-y-condiciones/" className="text-[#7c3aed] underline hover:text-[#6d28d9]" target="_blank" rel="noreferrer">https://lentes.salud-digna.org/terminos-y-condiciones/</a>
+                Términos y condiciones de promociones: Desde este momento, y por un plazo de 30 días siguientes a la que se haya realizado la venta de la presente oferta comercial, Salud Digna concede al comprador el beneficio de adquirir a mitad de precio un segundo modelo. Aplican restricciones. Visita la página <a href="https://lentes.salud-digna.org/terminos-y-condiciones/" className="text-[var(--accent)] underline hover:text-[var(--accent-dark)]" target="_blank" rel="noreferrer">https://lentes.salud-digna.org/terminos-y-condiciones/</a>
               </p>
               <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200">
                 <div className="flex items-center gap-3 text-[10px] text-slate-400">
@@ -798,7 +798,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
                   <span>55 3956 6729</span>
                 </div>
                 <span className="text-[10px] text-slate-400">L-V 8:00 a.m. - 6:00 p.m. | S 9:00 a.m. - 2:00 p.m.</span>
-                <a href="https://www.salud-digna.org" className="text-[10px] text-[#7c3aed] font-semibold hover:underline" target="_blank" rel="noreferrer">www.salud-digna.org</a>
+                <a href="https://www.salud-digna.org" className="text-[10px] text-[var(--accent)] font-semibold hover:underline" target="_blank" rel="noreferrer">www.salud-digna.org</a>
               </div>
             </div>
           </div>
@@ -832,7 +832,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
               <Edit2 className="w-4 h-4" /> Editar Datos
             </button>
             <button
-              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed] rounded-lg text-sm font-bold text-white hover:shadow-lg hover:shadow-purple-500/25 transition-all">
+              className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] rounded-lg text-sm font-bold text-white hover:shadow-lg hover:shadow-[rgba(var(--accent-rgb),0.25)] transition-all">
               <Save className="w-4 h-4" /> Guardar Ticket
             </button>
           </div>
@@ -851,7 +851,7 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
           .bg-slate-50 { background: #f8f8f8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .bg-gradient-to-r { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .bg-\\[\\#4a148c\\] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-          .bg-\\[\\#7c3aed\\] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+          .bg-\\[var\\(--accent\\)\\] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           table { page-break-inside: avoid; }
         }
       `}</style>
@@ -863,7 +863,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   return (
     <div>
       <div className="flex items-center gap-3 mb-5">
-        <h3 className="text-[11px] font-bold text-[#7c3aed] uppercase tracking-widest whitespace-nowrap">{title}</h3>
+        <h3 className="text-[11px] font-bold text-[var(--accent)] uppercase tracking-widest whitespace-nowrap">{title}</h3>
         <div className="flex-1 h-px bg-slate-200" />
       </div>
       {children}
@@ -876,7 +876,7 @@ function InputField({ label, value, onChange, type = 'text', placeholder = '' }:
     <div>
       <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">{label}</label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-        className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+        className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] placeholder:text-slate-400" />
     </div>
   );
 }

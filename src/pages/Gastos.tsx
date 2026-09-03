@@ -31,7 +31,7 @@ export default function Gastos() {
 
   const stats = [
     { label: 'Total Gastos', value: `$${totalExpenses.toLocaleString('es-MX', { minimumFractionDigits: 2 })}`, icon: DollarSign, color: 'text-red-600', bg: 'bg-red-50' },
-    { label: 'Mayor Categoría', value: topCategory ? `${topCategory[0]} ($${topCategory[1].toLocaleString()})` : 'N/A', icon: TrendingUp, color: 'text-[#7c3aed]', bg: 'bg-purple-50' },
+    { label: 'Mayor Categoría', value: topCategory ? `${topCategory[0]} ($${topCategory[1].toLocaleString()})` : 'N/A', icon: TrendingUp, color: 'text-[var(--accent)]', bg: 'bg-purple-50' },
     { label: 'Transacciones', value: expenses.length, icon: Hash, color: 'text-emerald-600', bg: 'bg-emerald-50' },
   ];
 
@@ -43,7 +43,7 @@ export default function Gastos() {
           <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Control de gastos operativos</p>
         </div>
         <button onClick={() => setShowModal(true)}
-          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-500/25">
+          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] hover:from-[var(--accent-dark)] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">
           <Plus className="w-4 h-4" /> Nuevo Gasto
         </button>
       </div>
@@ -76,7 +76,7 @@ export default function Gastos() {
             <tbody className="divide-y divide-slate-100">
               {expenses.map(expense => (
                 <tr key={expense.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-6 py-4 text-sm font-bold text-[#7c3aed]">{expense.id}</td>
+                  <td className="px-6 py-4 text-sm font-bold text-[var(--accent)]">{expense.id}</td>
                   <td className="px-6 py-4 text-sm font-semibold text-slate-800">{expense.concept}</td>
                   <td className="px-6 py-4"><span className={`inline-flex px-2.5 py-1 rounded-full text-[11px] font-bold ${categoryColors[expense.category]}`}>{expense.category}</span></td>
                   <td className="px-6 py-4 text-sm font-bold text-slate-900">${expense.amount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}</td>
@@ -123,31 +123,31 @@ export default function Gastos() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Concepto *</label>
                 <input type="text" value={newExpense.concept} onChange={e => setNewExpense({ ...newExpense, concept: e.target.value })}
-                  placeholder="Descripción del gasto" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  placeholder="Descripción del gasto" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Categoría *</label>
                   <select value={newExpense.category} onChange={e => setNewExpense({ ...newExpense, category: e.target.value as ExpenseCategory })}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
                     {(['Renta', 'Servicios', 'Compras', 'Nómina', 'Insumos'] as ExpenseCategory[]).map(c => (<option key={c} value={c}>{c}</option>))}
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Monto *</label>
                   <input type="number" value={newExpense.amount} onChange={e => setNewExpense({ ...newExpense, amount: e.target.value })}
-                    placeholder="0.00" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    placeholder="0.00" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                 </div>
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Fecha</label>
                 <input type="date" value={newExpense.date} onChange={e => setNewExpense({ ...newExpense, date: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
               </div>
             </div>
             <div className="flex justify-end gap-4 p-6 sm:p-8 border-t border-slate-100">
               <button onClick={() => setShowModal(false)} className="px-6 py-3.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors">Cancelar</button>
-              <button onClick={handleAdd} className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Guardar</button>
+              <button onClick={handleAdd} className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">Guardar</button>
             </div>
           </div>
         </div>

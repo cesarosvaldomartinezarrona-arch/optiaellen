@@ -21,7 +21,7 @@ export default function Panel() {
   ];
 
   const categoryData = [
-    { name: 'Monturas', value: 42, color: '#7c3aed' },
+    { name: 'Monturas', value: 42, color: 'var(--accent)' },
     { name: 'Cristales', value: 28, color: '#f59e0b' },
     { name: 'Contacto', value: 18, color: '#10b981' },
     { name: 'Accesorios', value: 12, color: '#6b7280' },
@@ -33,12 +33,12 @@ export default function Panel() {
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
         {/* VENTAS DEL DIA */}
         <div className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden">
-          <div className="h-1 bg-[#7c3aed]" />
+          <div className="h-1 bg-[var(--accent)]" />
           <div className="p-5">
             <div className="flex items-start justify-between mb-3">
               <p className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">VENTAS DEL DIA</p>
               <div className="w-8 h-8 rounded-lg bg-[#ede9fe] flex items-center justify-center">
-                <DollarSign className="w-4 h-4 text-[#7c3aed]" strokeWidth={2} />
+                <DollarSign className="w-4 h-4 text-[var(--accent)]" strokeWidth={2} />
               </div>
             </div>
             <p className="text-2xl font-extrabold text-slate-900 leading-none tracking-tight">${(4280).toLocaleString()}</p>
@@ -97,8 +97,8 @@ export default function Panel() {
             <AreaChart data={last7Days} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
               <defs>
                 <linearGradient id="ventasFill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.14} />
-                  <stop offset="100%" stopColor="#7c3aed" stopOpacity={0.02} />
+                  <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.14} />
+                  <stop offset="100%" stopColor="var(--accent)" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
               <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#475569', fontSize: 12, fontWeight: 600 }} />
@@ -108,7 +108,7 @@ export default function Panel() {
                 contentStyle={{ borderRadius: 12, border: '1px solid #e5e7eb', fontSize: 12 }}
                 cursor={{ stroke: '#e5e7eb', strokeDasharray: '4 4' }}
               />
-              <Area type="monotone" dataKey="ventas" stroke="#7c3aed" strokeWidth={2.5} fill="url(#ventasFill)" dot={{ r: 3.5, fill: '#7c3aed', stroke: 'white', strokeWidth: 2 }} activeDot={{ r: 5 }} />
+              <Area type="monotone" dataKey="ventas" stroke="var(--accent)" strokeWidth={2.5} fill="url(#ventasFill)" dot={{ r: 3.5, fill: 'var(--accent)', stroke: 'white', strokeWidth: 2 }} activeDot={{ r: 5 }} />
             </AreaChart>
           </ResponsiveContainer>
         </div>

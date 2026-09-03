@@ -109,7 +109,7 @@ export default function Configuracion() {
               const Icon = item.icon;
               return (
                 <button key={item.label} onClick={() => { setActiveTab(item.label); setMobileTabOpen(false); }}
-                  className={`w-full flex items-center gap-3 px-5 py-3.5 text-sm font-semibold transition-all ${activeTab === item.label ? 'bg-purple-50 text-[#7c3aed]' : 'text-slate-500 hover:bg-slate-50'}`}>
+                  className={`w-full flex items-center gap-3 px-5 py-3.5 text-sm font-semibold transition-all ${activeTab === item.label ? 'bg-purple-50 text-[var(--accent)]' : 'text-slate-500 hover:bg-slate-50'}`}>
                   <Icon className="w-4 h-4" />{item.label}
                 </button>
               );
@@ -127,7 +127,7 @@ export default function Configuracion() {
             return (
               <button key={item.label} onClick={() => setActiveTab(item.label)}
                 className={`w-full flex items-center gap-3 px-5 py-3.5 rounded-lg text-sm font-semibold transition-all ${
-                  isActive ? 'bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25' : 'text-slate-500 hover:bg-white hover:text-slate-800 border border-transparent hover:border-slate-200'
+                  isActive ? 'bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]' : 'text-slate-500 hover:bg-white hover:text-slate-800 border border-transparent hover:border-slate-200'
                 }`}>
                 <Icon className="w-5 h-5" />{item.label}
               </button>
@@ -141,13 +141,13 @@ export default function Configuracion() {
           {activeTab === 'Perfil de Usuario' && (
             <div className="space-y-6 sm:space-y-8">
               <div className="flex items-center gap-5 sm:gap-6 mb-8 sm:mb-10">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-xl shadow-purple-500/30">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] flex items-center justify-center shadow-xl shadow-[rgba(var(--accent-rgb),0.30)]">
                   <span className="text-xl sm:text-2xl font-bold text-white">AD</span>
                 </div>
                 <div>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900">{form.name}</h3>
                   <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{form.email}</p>
-                  <button className="text-xs text-[#7c3aed] font-bold mt-2 hover:text-[#5b21b6] transition-colors">Cambiar foto</button>
+                  <button className="text-xs text-[var(--accent)] font-bold mt-2 hover:text-[#5b21b6] transition-colors">Cambiar foto</button>
                 </div>
               </div>
 
@@ -155,17 +155,17 @@ export default function Configuracion() {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre</label>
                   <input type="text" value={form.name} onChange={e => update('name', e.target.value)}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Email</label>
                   <input type="email" value={form.email} onChange={e => update('email', e.target.value)}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Teléfono</label>
                   <input type="tel" value={form.phone} onChange={e => update('phone', e.target.value)}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Rol</label>
@@ -175,12 +175,12 @@ export default function Configuracion() {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Cédula</label>
                   <input type="text" value={form.cedula} onChange={e => update('cedula', e.target.value)} placeholder="Ej: 12345678"
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Licenciado en Optometría</label>
                   <input type="text" value={form.licenciatura} onChange={e => update('licenciatura', e.target.value)} placeholder="Ej: UNAM"
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
                 </div>
               </div>
 
@@ -188,12 +188,12 @@ export default function Configuracion() {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre de la Óptica</label>
                   <input type="text" value={form.optica} onChange={e => update('optica', e.target.value)}
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">RFC</label>
                   <input type="text" value={form.rfc} onChange={e => update('rfc', e.target.value)} placeholder="SDI121109B14"
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
                 </div>
               </div>
 
@@ -201,12 +201,12 @@ export default function Configuracion() {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Régimen Fiscal</label>
                   <input type="text" value={form.regimenFiscal} onChange={e => update('regimenFiscal', e.target.value)} placeholder="612 - Persona Física con Actividades Empresariales"
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección de Sucursal</label>
                   <input type="text" value={form.direccionSucursal} onChange={e => update('direccionSucursal', e.target.value)} placeholder="Dolores Hidalgo, GTO."
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
                 </div>
               </div>
 
@@ -214,18 +214,18 @@ export default function Configuracion() {
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección Fiscal</label>
                   <input type="text" value={form.direccionFiscal} onChange={e => update('direccionFiscal', e.target.value)} placeholder="Av. Principal 123, Centro, CDMX"
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Teléfono Óptica</label>
                   <input type="tel" value={form.telefonoOptica} onChange={e => update('telefonoOptica', e.target.value)} placeholder="667 123 4567"
-                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" />
                 </div>
               </div>
 
               <div className="flex justify-end pt-6 sm:pt-8 border-t border-slate-100">
                 <button onClick={handleSave}
-                  className="px-7 sm:px-8 py-3.5 rounded-lg text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
+                  className="px-7 sm:px-8 py-3.5 rounded-lg text-sm font-bold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] flex items-center gap-2">
                   {showSaved ? <><Check className="w-4 h-4" /> Guardado</> : 'Guardar Cambios'}
                 </button>
               </div>
@@ -237,7 +237,7 @@ export default function Configuracion() {
               <div className="flex items-center justify-between">
                 <p className="text-sm text-slate-500">Gestiona los usuarios y roles del sistema</p>
                 <button onClick={openAddUser}
-                  className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-md flex items-center gap-2 hover:shadow-lg transition-all">
+                  className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-md flex items-center gap-2 hover:shadow-lg transition-all">
                   <Plus className="w-4 h-4" /> Nuevo Usuario
                 </button>
               </div>
@@ -246,7 +246,7 @@ export default function Configuracion() {
                 {users.map(u => (
                   <div key={u.id} className="flex items-center justify-between p-5 bg-slate-50 rounded-lg border border-slate-100 hover:border-slate-200 transition-all">
                     <div className="flex items-center gap-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center shadow-sm ${u.role === 'admin' ? 'bg-gradient-to-br from-[#7c3aed] to-[#6d28d9]' : 'bg-slate-200'}`}>
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center shadow-sm ${u.role === 'admin' ? 'bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)]' : 'bg-slate-200'}`}>
                         <span className="text-sm font-bold text-white">{u.name.charAt(0)}</span>
                       </div>
                       <div>
@@ -291,7 +291,7 @@ export default function Configuracion() {
                     <p className="text-sm font-bold text-slate-800">{item.label}</p>
                     <p className="text-xs text-slate-400 mt-1">{item.desc}</p>
                   </div>
-                  <button className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${item.on ? 'bg-[#7c3aed]' : 'bg-slate-300'}`}>
+                  <button className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${item.on ? 'bg-[var(--accent)]' : 'bg-slate-300'}`}>
                     <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${item.on ? 'translate-x-6' : 'translate-x-0.5'}`} />
                   </button>
                 </div>
@@ -343,21 +343,21 @@ export default function Configuracion() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Contraseña Actual</label>
                 <input type="password" placeholder="••••••••"
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nueva Contraseña</label>
                 <input type="password" placeholder="••••••••"
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Confirmar Contraseña</label>
                 <input type="password" placeholder="••••••••"
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
               </div>
               <div className="flex justify-end pt-6 border-t border-slate-100">
                 <button onClick={handleSave}
-                  className="px-7 sm:px-8 py-3.5 rounded-lg text-sm font-bold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 flex items-center gap-2">
+                  className="px-7 sm:px-8 py-3.5 rounded-lg text-sm font-bold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] flex items-center gap-2">
                   {showSaved ? <><Check className="w-4 h-4" /> Actualizada</> : 'Actualizar Contraseña'}
                 </button>
               </div>
@@ -369,7 +369,7 @@ export default function Configuracion() {
               <div className="p-6 sm:p-8 bg-slate-50 rounded-lg border border-slate-200">
                 <p className="text-sm font-bold text-slate-800 mb-1.5">Exportar Datos</p>
                 <p className="text-xs text-slate-400 mb-4 leading-relaxed">Descarga una copia de seguridad de todos los datos del sistema.</p>
-                <button className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-[#7c3aed] text-white shadow-md hover:shadow-lg transition-all">Exportar Backup</button>
+                <button className="px-6 py-3.5 rounded-lg text-sm font-semibold bg-[var(--accent)] text-white shadow-md hover:shadow-lg transition-all">Exportar Backup</button>
               </div>
               <div className="p-6 sm:p-8 bg-slate-50 rounded-lg border border-slate-200">
                 <p className="text-sm font-bold text-slate-800 mb-1.5">Limpiar Caché</p>
@@ -396,17 +396,17 @@ export default function Configuracion() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Nombre *</label>
                 <input type="text" value={userForm.name} onChange={e => setUserForm({ ...userForm, name: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Nombre completo" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Nombre completo" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Usuario *</label>
                 <input type="text" value={userForm.username} onChange={e => setUserForm({ ...userForm, username: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="Nombre de usuario" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Nombre de usuario" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Rol *</label>
                 <select value={userForm.role} onChange={e => setUserForm({ ...userForm, role: e.target.value as UserRole })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]">
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
                   <option value="admin">Administrador</option>
                   <option value="optometrista_gerente">Optometrista Gerente</option>
                   <option value="comprador">Vendedor</option>
@@ -417,12 +417,12 @@ export default function Configuracion() {
                   {editingUserId ? 'Nueva Contraseña (dejar vacío para mantener)' : 'Contraseña *'}
                 </label>
                 <input type="password" value={userForm.password} onChange={e => setUserForm({ ...userForm, password: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" placeholder="••••••••" />
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="••••••••" />
               </div>
             </div>
             <div className="flex justify-end gap-3 p-6 border-t border-slate-100 bg-slate-50/50 rounded-b-lg">
               <button onClick={() => setShowUserModal(false)} className="px-6 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200 transition-all">Cancelar</button>
-              <button onClick={handleSaveUser} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/30 transition-all">
+              <button onClick={handleSaveUser} className="px-7 py-3 rounded-lg text-sm font-semibold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] hover:shadow-[rgba(var(--accent-rgb),0.30)] transition-all">
                 {editingUserId ? 'Guardar Cambios' : 'Crear Usuario'}
               </button>
             </div>

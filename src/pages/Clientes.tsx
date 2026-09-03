@@ -83,7 +83,7 @@ export default function Clientes() {
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Clientes</h1>
           <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Gestión de pacientes — biografía, última visita, recetas y evolución</p>
         </div>
-        <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] hover:from-[#6d28d9] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/30 hover:-translate-y-0.5">
+        <button onClick={() => setShowModal(true)} className="flex items-center justify-center gap-2.5 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] hover:from-[var(--accent-dark)] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)] hover:shadow-[rgba(var(--accent-rgb),0.30)] hover:-translate-y-0.5">
           <Plus className="w-4 h-4" /> Nuevo Paciente
         </button>
       </div>
@@ -92,7 +92,7 @@ export default function Clientes() {
         <div className="relative flex">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
           <input type="text" placeholder="Buscar por nombre, teléfono, email u oficio..." value={search} onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
+            className="w-full pl-10 pr-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] transition-all placeholder:text-slate-400" />
         </div>
       </div>
 
@@ -107,14 +107,14 @@ export default function Clientes() {
             <div key={patient.id} className="bg-white rounded-lg border border-slate-200/70 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
               <div className="p-4 sm:p-5">
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-[#7c3aed]/15 to-[#a855f7]/10 flex items-center justify-center shrink-0 border border-purple-100/50">
-                    <span className="text-sm font-bold text-[#7c3aed]">{patient.name.split(' ').map(n => n[0]).slice(0, 2).join('')}</span>
+                  <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-[rgba(var(--accent-rgb),0.15)] to-[#a855f7]/10 flex items-center justify-center shrink-0 border border-purple-100/50">
+                    <span className="text-sm font-bold text-[var(--accent)]">{patient.name.split(' ').map(n => n[0]).slice(0, 2).join('')}</span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <p className="text-sm font-bold text-slate-900 truncate">{patient.name}</p>
                       <span className="text-[11px] text-slate-500 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-200">{patient.id}</span>
-                      <span className="text-xs bg-purple-50 text-[#7c3aed] border border-purple-100 px-2.5 py-0.5 rounded-full font-medium">{patient.occupation || '—'}</span>
+                      <span className="text-xs bg-purple-50 text-[var(--accent)] border border-purple-100 px-2.5 py-0.5 rounded-full font-medium">{patient.occupation || '—'}</span>
                       <span className="text-[11px] text-slate-400">{patient.age} años</span>
                       <span className="text-[11px] text-slate-400">{totalRecetas} receta{totalRecetas !== 1 ? 's' : ''}</span>
                     </div>
@@ -126,13 +126,13 @@ export default function Clientes() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <button onClick={() => setEditingPatient({ ...patient })} className="w-9 h-9 rounded-lg bg-purple-50 text-[#7c3aed] hover:bg-purple-100 border border-purple-200 flex items-center justify-center transition-colors" title="Editar paciente">
+                    <button onClick={() => setEditingPatient({ ...patient })} className="w-9 h-9 rounded-lg bg-purple-50 text-[var(--accent)] hover:bg-purple-100 border border-purple-200 flex items-center justify-center transition-colors" title="Editar paciente">
                       <Edit2 className="w-4 h-4" />
                     </button>
                     <button onClick={() => openBio(patient, 'bio')} className="w-9 h-9 rounded-lg bg-[#0f0a1f] text-white hover:bg-[#1a1033] flex items-center justify-center transition-colors" title="Biografía">
                       <User className="w-4 h-4" />
                     </button>
-                    <button onClick={() => openExam(patient)} className="w-9 h-9 rounded-lg bg-[#7c3aed] text-white hover:bg-[#6d28d9] flex items-center justify-center transition-colors" title="Nuevo Examen">
+                    <button onClick={() => openExam(patient)} className="w-9 h-9 rounded-lg bg-[var(--accent)] text-white hover:bg-[var(--accent-dark)] flex items-center justify-center transition-colors" title="Nuevo Examen">
                       <Eye className="w-4 h-4" />
                     </button>
                     <a href={`https://wa.me/${cleanPhone(patient.phone)}`} target="_blank" rel="noreferrer" className="w-9 h-9 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-200 flex items-center justify-center transition-colors" title="WhatsApp">
@@ -173,7 +173,7 @@ export default function Clientes() {
             <div className="bg-white px-6 sm:px-8 py-6 border-b border-slate-200 shrink-0">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex gap-4 min-w-0">
-                  <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center text-white font-bold shadow shrink-0">{bioPatient.name.split(' ').map(n => n[0]).slice(0, 2).join('')}</div>
+                  <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] flex items-center justify-center text-white font-bold shadow shrink-0">{bioPatient.name.split(' ').map(n => n[0]).slice(0, 2).join('')}</div>
                   <div className="min-w-0">
                     <h2 className="text-lg font-bold text-slate-900 truncate">{bioPatient.name}</h2>
                     <p className="text-xs text-slate-500">{bioPatient.occupation} • {bioPatient.age} años • {bioPatient.id}</p>
@@ -189,7 +189,7 @@ export default function Clientes() {
               <div className="flex flex-wrap gap-2 mt-5">
                 <a href={`mailto:${bioPatient.email}?subject=Seguimiento opticællen - ${bioPatient.name}`} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-slate-200 text-sm font-semibold text-slate-700 hover:bg-slate-50"><Mail className="w-4 h-4" /> Mandar correo</a>
                 <a href={`https://wa.me/${cleanPhone(bioPatient.phone)}?text=Hola ${bioPatient.name}, te escribe opticællen`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold"><MessageCircle className="w-4 h-4" /> WhatsApp</a>
-                <button onClick={() => openExam(bioPatient)} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-sm font-semibold"><Eye className="w-4 h-4" /> Nuevo examen (parámetros)</button>
+                <button onClick={() => openExam(bioPatient)} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent)] hover:bg-[var(--accent-dark)] text-white text-sm font-semibold"><Eye className="w-4 h-4" /> Nuevo examen (parámetros)</button>
               </div>
               <div className="flex gap-1 mt-6 bg-slate-100 p-1 rounded-lg w-fit">
                 {(['bio', 'recetas', 'evolucion'] as const).map(t => (
@@ -202,14 +202,14 @@ export default function Clientes() {
               {bioTab === 'bio' && (
                 <>
                   <div className="bg-white rounded-lg border border-slate-200 p-6">
-                    <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><User className="w-4 h-4 text-[#7c3aed]" /> Biografía del paciente</h3>
+                    <h3 className="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2"><User className="w-4 h-4 text-[var(--accent)]" /> Biografía del paciente</h3>
                     <p className="text-sm text-slate-700 leading-relaxed">{bioPatient.biography || 'Sin biografía.'}</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                       <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Fecha nacimiento</p><p className="text-sm font-semibold text-slate-800 mt-1">{bioPatient.dateOfBirth || '—'}</p></div>
                       <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Domicilio</p><p className="text-sm font-semibold text-slate-800 mt-1">{bioPatient.address || '—'}</p></div>
                       <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Ocupación</p><p className="text-sm font-semibold text-slate-800 mt-1">{bioPatient.occupation}</p></div>
                       <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Registro</p><p className="text-sm font-semibold text-slate-800 mt-1">{formatDate(bioPatient.registrationDate)} • {monthsSince(bioPatient.registrationDate)}</p></div>
-                      <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Última visita</p><p className="text-sm font-bold text-[#7c3aed] mt-1">{formatDate(getLastVisit(bioPatient.id, bioPatient.registrationDate))} • {monthsSince(getLastVisit(bioPatient.id, bioPatient.registrationDate))}</p></div>
+                      <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Última visita</p><p className="text-sm font-bold text-[var(--accent)] mt-1">{formatDate(getLastVisit(bioPatient.id, bioPatient.registrationDate))} • {monthsSince(getLastVisit(bioPatient.id, bioPatient.registrationDate))}</p></div>
                       <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Motivo / Molestias</p><p className="text-sm font-medium text-slate-700 mt-1">{bioPatient.reasonForVisit} — {bioPatient.discomforts}</p></div>
                       <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Enfermedades</p><p className="text-sm font-medium text-slate-700 mt-1">{bioPatient.hasIllness}</p></div>
                       <div className="bg-slate-50 rounded-lg p-4 border border-slate-100"><p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Lentes</p><p className="text-sm font-medium text-slate-700 mt-1">{bioPatient.usesGlasses ? `Sí — ${bioPatient.howFeelsWithGlasses}` : 'No usa'}</p></div>
@@ -225,8 +225,8 @@ export default function Clientes() {
               {bioTab === 'recetas' && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2"><Stethoscope className="w-4 h-4 text-[#7c3aed]" /> Recetas de {bioPatient.name}</h3>
-                    <button onClick={() => openExam(bioPatient)} className="text-xs font-semibold text-[#7c3aed] hover:text-[#6d28d9] flex items-center gap-1"><Plus className="w-3.5 h-3.5" /> Nuevo examen</button>
+                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2"><Stethoscope className="w-4 h-4 text-[var(--accent)]" /> Recetas de {bioPatient.name}</h3>
+                    <button onClick={() => openExam(bioPatient)} className="text-xs font-semibold text-[var(--accent)] hover:text-[var(--accent-dark)] flex items-center gap-1"><Plus className="w-3.5 h-3.5" /> Nuevo examen</button>
                   </div>
                   {getPatientPrescriptions(bioPatient.id).length === 0 ? (
                     <div className="bg-white rounded-lg border border-dashed border-slate-200 p-10 text-center"><FileText className="w-10 h-10 text-slate-300 mx-auto mb-3" /><p className="text-sm font-medium text-slate-500">Sin recetas registradas</p><p className="text-xs text-slate-400 mt-1">Registra el primer examen con los parámetros: Esfera, Cilindro, Eje, Prisma, Adición</p></div>
@@ -236,7 +236,7 @@ export default function Clientes() {
                         <div key={rx.id} className="bg-white rounded-lg border border-slate-200 p-5">
                           <div className="flex items-start justify-between gap-3">
                             <div>
-                              <p className="text-xs font-bold text-[#7c3aed]">{rx.id} • {rx.date} • {rx.doctor}</p>
+                              <p className="text-xs font-bold text-[var(--accent)]">{rx.id} • {rx.date} • {rx.doctor}</p>
                               <p className={`inline-flex mt-2 px-2.5 py-1 rounded-full text-xs font-bold border ${rx.status === 'Vigente' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : rx.status === 'Vencida' ? 'bg-slate-100 text-slate-600 border-slate-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>{rx.status}</p>
                             </div>
                             <span className="text-xs text-slate-400">{rx.recommendations}</span>
@@ -274,7 +274,7 @@ export default function Clientes() {
               {bioTab === 'evolucion' && (
                 <div className="space-y-6">
                   <div className="bg-white rounded-lg border border-slate-200 p-6">
-                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2"><TrendingUp className="w-4 h-4 text-[#7c3aed]" /> Variación de graduación anual — Esfera (SPH)</h3>
+                    <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2"><TrendingUp className="w-4 h-4 text-[var(--accent)]" /> Variación de graduación anual — Esfera (SPH)</h3>
                     <p className="text-xs text-slate-500 mt-1">Evolución de la miopía/hipermetropía por año. Valores más negativos = mayor miopía.</p>
                     {(() => {
                       const rxs = [...getPatientPrescriptions(bioPatient.id)].sort((a,b)=> new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -293,7 +293,7 @@ export default function Clientes() {
                               <YAxis tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} width={40} />
                               <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e2e8f0' }} />
                               <Legend />
-                              <Line type="monotone" dataKey="OD" stroke="#7c3aed" strokeWidth={3} dot={{ r: 4, fill: '#7c3aed' }} name="OD Esfera" />
+                              <Line type="monotone" dataKey="OD" stroke="var(--accent)" strokeWidth={3} dot={{ r: 4, fill: 'var(--accent)' }} name="OD Esfera" />
                               <Line type="monotone" dataKey="OI" stroke="#2563eb" strokeWidth={3} dot={{ r: 4, fill: '#2563eb' }} name="OI Esfera" />
                             </LineChart>
                           </ResponsiveContainer>
@@ -371,12 +371,12 @@ export default function Clientes() {
               </SectionForm>
               <SectionForm icon={<User className="w-3.5 h-3.5 text-white" />} title="Biografía">
                 <textarea value={editingPatient.biography} onChange={e => setEditingPatient({ ...editingPatient, biography: e.target.value })} rows={3} placeholder="Antecedentes, historial relevante..."
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-400" />
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] resize-none placeholder:text-slate-400" />
               </SectionForm>
             </div>
             <div className="shrink-0 flex justify-end gap-3 px-6 py-4 border-t border-slate-100 bg-slate-50/50">
               <button onClick={() => setEditingPatient(null)} className="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-white border border-transparent hover:border-slate-200">Cancelar</button>
-              <button onClick={handleEditPatient} className="px-7 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Guardar Cambios</button>
+              <button onClick={handleEditPatient} className="px-7 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">Guardar Cambios</button>
             </div>
           </div>
         </div>
@@ -424,9 +424,9 @@ export default function Clientes() {
                     <label className="block text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Utiliza lentes</label>
                     <div className="flex gap-3">
                       <button type="button" onClick={() => setNewPatient({ ...newPatient, usesGlasses: true })}
-                        className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-all ${newPatient.usesGlasses ? 'bg-[#7c3aed] text-white border-[#7c3aed]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}`}>Sí</button>
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-all ${newPatient.usesGlasses ? 'bg-[var(--accent)] text-white border-[var(--accent)]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}`}>Sí</button>
                       <button type="button" onClick={() => setNewPatient({ ...newPatient, usesGlasses: false })}
-                        className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-all ${!newPatient.usesGlasses ? 'bg-[#7c3aed] text-white border-[#7c3aed]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}`}>No</button>
+                        className={`flex-1 py-2.5 rounded-lg text-sm font-semibold border transition-all ${!newPatient.usesGlasses ? 'bg-[var(--accent)] text-white border-[var(--accent)]' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}`}>No</button>
                     </div>
                   </div>
                   <InputF label="Cómo se siente con sus lentes" value={newPatient.howFeelsWithGlasses} onChange={v => setNewPatient({ ...newPatient, howFeelsWithGlasses: v })} placeholder="Ej: Bien, Mareos..." />
@@ -456,13 +456,13 @@ export default function Clientes() {
               {/* BIOGRAFÍA */}
               <SectionForm icon={<User className="w-3.5 h-3.5 text-white" />} title="Biografía">
                 <textarea value={newPatient.biography} onChange={e => setNewPatient({ ...newPatient, biography: e.target.value })} rows={3} placeholder="Antecedentes, historial relevante..."
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-400" />
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] resize-none placeholder:text-slate-400" />
               </SectionForm>
             </div>
 
             <div className="shrink-0 flex justify-end gap-3 px-6 py-4 border-t border-slate-100 bg-slate-50/50">
               <button onClick={() => setShowModal(false)} className="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-white border border-transparent hover:border-slate-200">Cancelar</button>
-              <button onClick={handleAddPatient} className="px-7 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Guardar</button>
+              <button onClick={handleAddPatient} className="px-7 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">Guardar</button>
             </div>
           </div>
         </div>
@@ -501,11 +501,11 @@ function QuickExamModal({ patient, onClose }: { patient: Patient; onClose: () =>
     <div className="bg-[#fafaf8] rounded-lg border border-slate-200 p-5">
       <p className="text-sm font-bold text-[#1e3a6e] border-b border-slate-200 pb-2 mb-4">{label}</p>
       <div className="grid grid-cols-2 gap-3">
-        <div><label className="block text-xs font-bold text-slate-600 mb-1">Esfera (SPH)</label><input value={data.sph} onChange={e => setData({ ...data, sph: e.target.value })} placeholder="+0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" /></div>
-        <div><label className="block text-xs font-bold text-slate-600 mb-1">Cilindro (CYL)</label><input value={data.cyl} onChange={e => setData({ ...data, cyl: e.target.value })} placeholder="-0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" /></div>
-        <div><label className="block text-xs font-bold text-slate-600 mb-1">Eje (AXIS)</label><input value={data.axis} onChange={e => setData({ ...data, axis: e.target.value })} placeholder="0 - 180" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" /></div>
-        <div><label className="block text-xs font-bold text-slate-600 mb-1">Prisma</label><input value={data.prisma} onChange={e => setData({ ...data, prisma: e.target.value })} placeholder="0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" /></div>
-        <div className="col-span-2"><label className="block text-xs font-bold text-slate-600 mb-1">Adición (ADD)</label><input value={data.add} onChange={e => setData({ ...data, add: e.target.value })} placeholder="+0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" /></div>
+        <div><label className="block text-xs font-bold text-slate-600 mb-1">Esfera (SPH)</label><input value={data.sph} onChange={e => setData({ ...data, sph: e.target.value })} placeholder="+0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]" /></div>
+        <div><label className="block text-xs font-bold text-slate-600 mb-1">Cilindro (CYL)</label><input value={data.cyl} onChange={e => setData({ ...data, cyl: e.target.value })} placeholder="-0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]" /></div>
+        <div><label className="block text-xs font-bold text-slate-600 mb-1">Eje (AXIS)</label><input value={data.axis} onChange={e => setData({ ...data, axis: e.target.value })} placeholder="0 - 180" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]" /></div>
+        <div><label className="block text-xs font-bold text-slate-600 mb-1">Prisma</label><input value={data.prisma} onChange={e => setData({ ...data, prisma: e.target.value })} placeholder="0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]" /></div>
+        <div className="col-span-2"><label className="block text-xs font-bold text-slate-600 mb-1">Adición (ADD)</label><input value={data.add} onChange={e => setData({ ...data, add: e.target.value })} placeholder="+0.00" className="w-full px-3 py-2.5 bg-white rounded-lg border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]" /></div>
       </div>
     </div>
   );
@@ -515,14 +515,14 @@ function QuickExamModal({ patient, onClose }: { patient: Patient; onClose: () =>
       <div className="bg-white rounded-lg w-full max-w-3xl shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-slate-100 sticky top-0 bg-white z-10">
           <div>
-            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2"><Eye className="w-5 h-5 text-[#7c3aed]" /> Parámetros del examen — {patient.name}</h2>
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2"><Eye className="w-5 h-5 text-[var(--accent)]" /> Parámetros del examen — {patient.name}</h2>
             <p className="text-xs text-slate-500 mt-1">Refracción Final (OD / OI) — Esfera, Cilindro, Eje, Prisma, Adición</p>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center"><X className="w-4 h-4 text-slate-500" /></button>
         </div>
         <div className="p-6 space-y-5">
           <div className="bg-[#f1f0ff] border border-violet-200 rounded-lg p-4 flex gap-3">
-            <History className="w-5 h-5 text-[#7c3aed] shrink-0" />
+            <History className="w-5 h-5 text-[var(--accent)] shrink-0" />
             <p className="text-xs text-slate-600 leading-relaxed">Registra aquí los <b>parámetros del examen de la vista</b>. Quedarán guardados en la biografía del paciente, en sus recetas y en la evolución anual de graduación.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -532,7 +532,7 @@ function QuickExamModal({ patient, onClose }: { patient: Patient; onClose: () =>
         </div>
         <div className="flex justify-end gap-3 p-6 border-t border-slate-100 sticky bottom-0 bg-white">
           <button onClick={onClose} className="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-100">Cancelar</button>
-          <button onClick={handleSave} disabled={saving} className="px-6 py-2.5 rounded-lg text-sm font-semibold bg-[#7c3aed] hover:bg-[#6d28d9] text-white disabled:opacity-50 flex items-center gap-2">
+          <button onClick={handleSave} disabled={saving} className="px-6 py-2.5 rounded-lg text-sm font-semibold bg-[var(--accent)] hover:bg-[var(--accent-dark)] text-white disabled:opacity-50 flex items-center gap-2">
             {saving ? 'Guardando...' : 'Guardar examen'}
           </button>
         </div>
@@ -545,7 +545,7 @@ function SectionForm({ icon, title, children }: { icon: React.ReactNode; title: 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-3">
-        <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#7c3aed] to-[#6d28d9] flex items-center justify-center shadow-sm">{icon}</div>
+        <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] flex items-center justify-center shadow-sm">{icon}</div>
         <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest">{title}</h3>
         <div className="flex-1 h-px bg-slate-100 ml-2" />
       </div>
@@ -559,7 +559,7 @@ function InputF({ label, value, onChange, type = 'text', placeholder }: { label:
     <div>
       <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">{label}</label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-        className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+        className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] placeholder:text-slate-400" />
     </div>
   );
 }
@@ -574,13 +574,13 @@ function RefractionGroup({ label, data, onChange }: { label: string; data: { esf
   ] as const;
   return (
     <div className="bg-slate-50 rounded-lg border border-slate-200 p-4">
-      <p className="text-xs font-bold text-[#7c3aed] uppercase tracking-wider mb-3">{label}</p>
+      <p className="text-xs font-bold text-[var(--accent)] uppercase tracking-wider mb-3">{label}</p>
       <div className="grid grid-cols-2 gap-3">
         {fields.map(f => (
           <div key={f.key}>
             <label className="block text-[10px] font-semibold text-slate-400 uppercase mb-1">{f.ph}</label>
             <input type="text" value={data[f.key]} onChange={e => onChange({ ...data, [f.key]: e.target.value })} placeholder={f.ph}
-              className="w-full px-3 py-2 bg-white rounded-lg border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-300" />
+              className="w-full px-3 py-2 bg-white rounded-lg border border-slate-200 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] placeholder:text-slate-300" />
           </div>
         ))}
       </div>
