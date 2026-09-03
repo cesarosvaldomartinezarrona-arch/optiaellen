@@ -388,11 +388,11 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
           {/* DATOS DEL PACIENTE */}
           <Section title="Datos del Paciente">
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Buscar Paciente</label>
+              <label className="block text-[11px] font-semibold text-[#7c3aed] mb-1.5">Buscar Paciente</label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#7c3aed]/50 pointer-events-none" />
                 <input type="text" placeholder="Nombre, teléfono o ID..." value={searchPatient} onChange={e => setSearchPatient(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all placeholder:text-slate-400" />
+                  className="w-full pl-10 pr-3 py-2.5 bg-white border-2 border-[#7c3aed]/40 rounded-2xl text-sm text-slate-700 font-medium outline-none focus:border-[#7c3aed] focus:ring-0 transition-all placeholder:text-slate-400" />
               </div>
               {searchPatient && (
                 <div className="mt-1 max-h-36 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-lg">
@@ -430,9 +430,9 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               <InputField label="Tratamientos" value={data.tratamientos} onChange={v => update('tratamientos', v)} />
             </div>
             <div className="mt-4">
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Armazón (Inventario)</label>
+              <label className="block text-[11px] font-semibold text-[#7c3aed] mb-1.5">Armazón (Inventario)</label>
               <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all">
+                className="w-full px-3 py-2.5 bg-white border-2 border-[#7c3aed]/40 rounded-2xl text-sm text-slate-700 font-medium outline-none focus:border-[#7c3aed] focus:ring-0 transition-all">
                 <option value="">— Seleccionar armazón —</option>
                 {products.filter(p => p.category === 'Monturas').map(p => (
                   <option key={p.id} value={`${p.name} ${p.model} ${p.brand ?? ''}`.trim()}>
@@ -484,7 +484,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
           {/* OBSERVACIONES */}
           <Section title="Observaciones">
             <textarea value={data.observaciones} onChange={e => update('observaciones', e.target.value)} rows={2}
-              className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none transition-all" />
+              className="w-full px-4 py-2.5 bg-white border-2 border-[#7c3aed]/40 rounded-2xl text-sm text-slate-700 outline-none focus:border-[#7c3aed] focus:ring-0 resize-none transition-all" />
           </Section>
 
           {/* DETALLE DE VENTA */}
@@ -714,10 +714,12 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function InputField({ label, value, onChange, type = 'text' }: { label: string; value: string; onChange: (v: string) => void; type?: string }) {
   return (
-    <div>
-      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">{label}</label>
+    <div className="relative">
+      <div className="absolute -top-2.5 left-3 px-1 bg-white z-10">
+        <span className="text-[11px] font-semibold text-[#7c3aed]">{label}</span>
+      </div>
       <input type={type} value={value} onChange={e => onChange(e.target.value)}
-        className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] transition-all" />
+        className="w-full px-4 py-2.5 bg-white border-2 border-[#7c3aed]/40 rounded-2xl text-sm text-slate-700 font-medium outline-none focus:border-[#7c3aed] focus:ring-0 transition-all" />
     </div>
   );
 }
