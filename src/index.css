@@ -126,6 +126,12 @@ body {
 }
 .dark .placeholder\:text-slate-400::placeholder { color: var(--text-muted); }
 
+.auto-uppercase input,
+.auto-uppercase textarea,
+.auto-uppercase select {
+  text-transform: uppercase;
+}
+
 /* ============================================================
    AJUSTE GLOBAL DE RESPIRACIÓN — SOLO ESCRITORIO (>= 1024px)
    Suma ~4-8px de padding interior a tarjetas, botones, pestañas,

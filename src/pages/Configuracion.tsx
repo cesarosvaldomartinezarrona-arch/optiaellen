@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import type { UserRole } from '../types';
 
 export default function Configuracion() {
-  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal, cedula, setCedula, licenciatura, setLicenciatura, telefonoOptica, setTelefonoOptica, direccionFiscal, setDireccionFiscal, themeColor, setThemeColor, darkMode, setDarkMode } = useApp();
+  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal, cedula, setCedula, licenciatura, setLicenciatura, telefonoOptica, setTelefonoOptica, direccionFiscal, setDireccionFiscal, themeColor, setThemeColor, darkMode, setDarkMode, autoUppercase, setAutoUppercase } = useApp();
   const { users, addUser, updateUser, deleteUser, user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('Perfil de Usuario');
   const [showSaved, setShowSaved] = useState(false);
@@ -333,6 +333,19 @@ export default function Configuracion() {
                     className={`px-6 py-3.5 rounded-lg text-sm font-semibold transition-all ${
                       darkMode ? 'bg-[var(--accent,#7c3aed)] text-white shadow-md' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 border border-slate-200'
                     }`}>Oscuro</button>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-bold text-slate-800 mb-4">Formularios</p>
+                <div className="flex items-center justify-between p-5 bg-slate-50 rounded-lg border border-slate-100">
+                  <div>
+                    <p className="text-sm font-bold text-slate-800">Texto en mayúsculas automático</p>
+                    <p className="text-xs text-slate-400 mt-1">Convierte el texto escrito en los formularios a mayúsculas</p>
+                  </div>
+                  <button onClick={() => setAutoUppercase(!autoUppercase)}
+                    className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${autoUppercase ? 'bg-[var(--accent,#7c3aed)]' : 'bg-slate-300'}`}>
+                    <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${autoUppercase ? 'translate-x-6' : 'translate-x-0.5'}`} />
+                  </button>
                 </div>
               </div>
             </div>

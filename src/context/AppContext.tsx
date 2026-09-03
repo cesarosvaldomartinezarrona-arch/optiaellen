@@ -26,6 +26,8 @@ interface AppContextType {
   setThemeColor: React.Dispatch<React.SetStateAction<ThemeColor>>;
   darkMode: boolean;
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  autoUppercase: boolean;
+  setAutoUppercase: React.Dispatch<React.SetStateAction<boolean>>;
   patients: Patient[];
   setPatients: React.Dispatch<React.SetStateAction<Patient[]>>;
   prescriptions: Prescription[];
@@ -64,6 +66,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [direccionFiscal, setDireccionFiscal] = useState('');
   const [themeColor, setThemeColor] = useState<ThemeColor>(() => (localStorage.getItem('themeColor') as ThemeColor) || '#7c3aed');
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [autoUppercase, setAutoUppercase] = useState(() => localStorage.getItem('autoUppercase') === 'true');
   const [patients, setPatients] = useState<Patient[]>(initialPatients);
   const [prescriptions, setPrescriptions] = useState<Prescription[]>(initialPrescriptions);
   const [products, setProducts] = useState<Product[]>(initialProducts);
@@ -123,6 +126,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   }, [darkMode]);
 
+  useEffect(() => {
+    localStorage.setItem('autoUppercase', String(autoUppercase));
+    if (autoUppercase) {
+      document.documentElement.classList.add('auto-uppercase');
+    } else {
+      document.documentElement.classList.remove('auto-uppercase');
+    }
+  }, [autoUppercase]);
+
   return (
     <AppContext.Provider value={{
       opticsName, setOpticsName,
@@ -135,6 +147,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       direccionFiscal, setDireccionFiscal,
       themeColor, setThemeColor,
       darkMode, setDarkMode,
+      autoUppercase, setAutoUppercase,
       patients, setPatients,
       prescriptions, setPrescriptions,
       products, setProducts,
