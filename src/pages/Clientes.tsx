@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Search, Plus, FileText, Phone, Calendar, X, ChevronDown, ChevronUp, User, ClipboardList, Eye, Mail, MessageCircle, History, TrendingUp, Stethoscope, Clock } from 'lucide-react';
+import { Search, Plus, FileText, Phone, Calendar, X, ChevronDown, ChevronUp, User, ClipboardList, Eye, Mail, MessageCircle, History, TrendingUp, Stethoscope, Clock, Edit2 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 import type { Patient, Prescription } from '../types';
 
@@ -23,6 +23,7 @@ export default function Clientes() {
   const [bioTab, setBioTab] = useState<'bio' | 'recetas' | 'evolucion'>('bio');
   const [showExamModal, setShowExamModal] = useState(false);
   const [examForPatient, setExamForPatient] = useState<Patient | null>(null);
+  const [editingPatient, setEditingPatient] = useState<Patient | null>(null);
 
   const filtered = patients.filter(p =>
     p.name.toLowerCase().includes(search.toLowerCase()) || p.phone.includes(search) || p.email.toLowerCase().includes(search.toLowerCase()) || p.occupation.toLowerCase().includes(search.toLowerCase())
@@ -38,6 +39,12 @@ export default function Clientes() {
     setPatients([...patients, patient]);
     setNewPatient(emptyPatient);
     setShowModal(false);
+  };
+
+  const handleEditPatient = () => {
+    if (!editingPatient || !editingPatient.name || !editingPatient.phone) return;
+    setPatients(patients.map(p => p.id === editingPatient.id ? editingPatient : p));
+    setEditingPatient(null);
   };
 
   const getPatientPrescriptions = (patientId: string) => prescriptions.filter(r => r.patientId === patientId).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -119,6 +126,9 @@ export default function Clientes() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
+                    <button onClick={() => setEditingPatient({ ...patient })} className="w-9 h-9 rounded-lg bg-purple-50 text-[#7c3aed] hover:bg-purple-100 border border-purple-200 flex items-center justify-center transition-colors" title="Editar paciente">
+                      <Edit2 className="w-4 h-4" />
+                    </button>
                     <button onClick={() => openBio(patient, 'bio')} className="w-9 h-9 rounded-lg bg-[#0f0a1f] text-white hover:bg-[#1a1033] flex items-center justify-center transition-colors" title="Biografía">
                       <User className="w-4 h-4" />
                     </button>
@@ -319,6 +329,54 @@ export default function Clientes() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Editar paciente */}
+      {editingPatient && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg w-full max-w-3xl shadow-2xl border border-slate-200/80 max-h-[92vh] overflow-hidden flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900">Editar Paciente</h2>
+                <p className="text-[11px] text-slate-400 mt-0.5">Modifique la información del paciente</p>
+              </div>
+              <button onClick={() => setEditingPatient(null)} className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center"><X className="w-4 h-4 text-slate-500" /></button>
+            </div>
+            <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
+              <SectionForm icon={<User className="w-3.5 h-3.5 text-white" />} title="Datos Personales">
+                <InputF label="Nombre *" value={editingPatient.name} onChange={v => setEditingPatient({ ...editingPatient, name: v })} placeholder="Nombre completo" />
+                <div className="grid grid-cols-2 gap-4">
+                  <InputF label="Edad *" type="number" value={editingPatient.age} onChange={v => setEditingPatient({ ...editingPatient, age: v })} placeholder="30" />
+                  <InputF label="Fecha de Nacimiento" type="date" value={editingPatient.dateOfBirth} onChange={v => setEditingPatient({ ...editingPatient, dateOfBirth: v })} />
+                </div>
+                <InputF label="Domicilio" value={editingPatient.address} onChange={v => setEditingPatient({ ...editingPatient, address: v })} placeholder="Calle, número, colonia..." />
+                <div className="grid grid-cols-2 gap-4">
+                  <InputF label="Teléfono *" value={editingPatient.phone} onChange={v => setEditingPatient({ ...editingPatient, phone: v })} placeholder="55 1234 5678" />
+                  <InputF label="Ocupación" value={editingPatient.occupation} onChange={v => setEditingPatient({ ...editingPatient, occupation: v })} placeholder="Ej: Contadora, Maestro..." />
+                </div>
+                <InputF label="Email" value={editingPatient.email} onChange={v => setEditingPatient({ ...editingPatient, email: v })} placeholder="correo@ejemplo.com" />
+              </SectionForm>
+              <SectionForm icon={<ClipboardList className="w-3.5 h-3.5 text-white" />} title="Detalle de Consulta">
+                <InputF label="Motivo de Revisión" value={editingPatient.reasonForVisit} onChange={v => setEditingPatient({ ...editingPatient, reasonForVisit: v })} placeholder="Ej: Dolor de cabeza..." />
+                <InputF label="Molestias" value={editingPatient.discomforts} onChange={v => setEditingPatient({ ...editingPatient, discomforts: v })} placeholder="Ej: Visión borrosa..." />
+                <InputF label="Padece alguna Enfermedad" value={editingPatient.hasIllness} onChange={v => setEditingPatient({ ...editingPatient, hasIllness: v })} placeholder="Ej: Diabetes, Ninguna..." />
+                <InputF label="Otros" value={editingPatient.otherInfo} onChange={v => setEditingPatient({ ...editingPatient, otherInfo: v })} placeholder="Ej: Circuncisión..." />
+                <div className="grid grid-cols-2 gap-4">
+                  <InputF label="¿Usa lentes?" value={editingPatient.usesGlasses ? 'Sí' : 'No'} onChange={v => setEditingPatient({ ...editingPatient, usesGlasses: v.toLowerCase() === 'sí' || v.toLowerCase() === 'si' })} placeholder="Sí / No" />
+                  <InputF label="¿Cómo se siente con lentes?" value={editingPatient.howFeelsWithGlasses} onChange={v => setEditingPatient({ ...editingPatient, howFeelsWithGlasses: v })} placeholder="Ej: Cómodo, incómodo..." />
+                </div>
+              </SectionForm>
+              <SectionForm icon={<User className="w-3.5 h-3.5 text-white" />} title="Biografía">
+                <textarea value={editingPatient.biography} onChange={e => setEditingPatient({ ...editingPatient, biography: e.target.value })} rows={3} placeholder="Antecedentes, historial relevante..."
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] resize-none placeholder:text-slate-400" />
+              </SectionForm>
+            </div>
+            <div className="shrink-0 flex justify-end gap-3 px-6 py-4 border-t border-slate-100 bg-slate-50/50">
+              <button onClick={() => setEditingPatient(null)} className="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-white border border-transparent hover:border-slate-200">Cancelar</button>
+              <button onClick={handleEditPatient} className="px-7 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-[#7c3aed] to-[#6d28d9] text-white shadow-lg shadow-purple-500/25">Guardar Cambios</button>
             </div>
           </div>
         </div>
