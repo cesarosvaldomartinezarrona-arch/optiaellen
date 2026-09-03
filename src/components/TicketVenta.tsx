@@ -361,25 +361,25 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
         </div>
 
         {/* Content scrollable */}
-        <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
+        <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-7">
 
           {/* DATOS DE VENTA */}
           <Section title="Datos de Venta">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
               <InputField label="Recepcionista" value={data.recepcionista} onChange={v => update('recepcionista', v)} />
               <InputField label="Folio de Venta" value={data.folio} onChange={v => update('folio', v)} />
               <InputField label="Fecha de Venta" value={data.fechaVenta} onChange={v => update('fechaVenta', v)} type="date" />
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-6">
               <InputField label="Sucursal" value={data.sucursal} onChange={v => update('sucursal', v)} />
               <InputField label="RFC" value={data.rfc} onChange={v => update('rfc', v)} />
               <InputField label="Régimen Fiscal" value={data.regimenFiscal} onChange={v => update('regimenFiscal', v)} />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <InputField label="Optometrista" value={data.optometrista} onChange={v => update('optometrista', v)} />
               <InputField label="Dirección Sucursal" value={data.direccionSucursal} onChange={v => update('direccionSucursal', v)} />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <InputField label="Cédula" value={data.cedula} onChange={v => update('cedula', v)} />
               <InputField label="Licenciado en Optometría" value={data.licenciatura} onChange={v => update('licenciatura', v)} />
             </div>
@@ -410,15 +410,15 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
                 </div>
               )}
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <InputField label="Paciente" value={data.paciente} onChange={v => update('paciente', v)} />
               <InputField label="Fecha de Nacimiento" value={data.fechaNacimiento} onChange={v => update('fechaNacimiento', v)} type="date" />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <InputField label="Calle" value={data.calle} onChange={v => update('calle', v)} />
               <InputField label="Colonia" value={data.colonia} onChange={v => update('colonia', v)} />
             </div>
-            <div className="mt-4">
+            <div className="mt-6">
               <InputField label="Ocupación" value={data.ocupacion} onChange={v => update('ocupacion', v)} />
             </div>
           </Section>
@@ -426,10 +426,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
           {/* BASE / MICA */}
           <Section title="Base / Mica">
             <InputField label="Descripción (Lente)" value={data.descripcionProducto} onChange={v => update('descripcionProducto', v)} />
-            <div className="mt-4">
+            <div className="mt-6">
               <InputField label="Tratamientos" value={data.tratamientos} onChange={v => update('tratamientos', v)} />
             </div>
-            <div className="mt-4">
+            <div className="mt-6">
               <label className="block text-[11px] font-semibold text-[#7c3aed] mb-1.5">Armazón (Inventario)</label>
               <select value={data.armazon} onChange={e => update('armazon', e.target.value)}
                 className="w-full px-3 py-2.5 bg-white border-2 border-[#7c3aed]/40 rounded-2xl text-sm text-slate-700 font-medium outline-none focus:border-[#7c3aed] focus:ring-0 transition-all">
@@ -568,7 +568,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 
           {/* INFORMACIÓN DE PAGO */}
           <Section title="Información de Pago">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-6">
               <div>
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Estatus</label>
                 <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-50 border border-amber-200 rounded-lg">
@@ -578,11 +578,11 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               </div>
               <InputField label="Forma de Pago" value={data.pago.formaPago} onChange={v => updatePago('formaPago', v)} />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <InputField label="Exento" value={data.pago.exento} onChange={v => updatePago('exento', v)} />
               <InputField label="Pago Total Empresa" value={`$${data.pago.pagoTotalEmpresa.toLocaleString()}`} onChange={() => {}} />
             </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 gap-6 mt-6">
               <div>
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Pago Cliente</label>
                 <div className="px-4 py-2.5 bg-purple-50 border border-purple-200 rounded-lg text-sm font-bold text-[#7c3aed]">
@@ -607,7 +607,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
           </div>
 
           {/* FIRMAS DIVIDER */}
-          <div className="flex items-center gap-4 py-1">
+          <div className="flex items-center gap-6 py-1">
             <div className="flex-1 h-px border-t-2 border-dashed border-slate-300" />
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Firmas</span>
             <div className="flex-1 h-px border-t-2 border-dashed border-slate-300" />
