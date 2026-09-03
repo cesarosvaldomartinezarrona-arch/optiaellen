@@ -392,7 +392,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input type="text" placeholder="Nombre, teléfono o ID..." value={searchPatient} onChange={e => setSearchPatient(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                  className="w-full pl-12 pr-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm font-medium outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
               </div>
               {searchPatient && (
                 <div className="mt-1 max-h-36 overflow-y-auto border border-slate-200 rounded-lg bg-white shadow-lg">
