@@ -49,12 +49,12 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [opticsName, setOpticsName] = useState('opticællen');
-  const [rfc, setRfc] = useState('');
-  const [regimenFiscal, setRegimenFiscal] = useState('');
-  const [direccionSucursal, setDireccionSucursal] = useState('');
-  const [cedula, setCedula] = useState('');
-  const [licenciatura, setLicenciatura] = useState('');
-  const [telefonoOptica, setTelefonoOptica] = useState('');
+  const [rfc, setRfc] = useState('SDI121109B14');
+  const [regimenFiscal, setRegimenFiscal] = useState('612 - Persona Física con Actividades Empresariales');
+  const [direccionSucursal, setDireccionSucursal] = useState('Dolores Hidalgo, GTO.');
+  const [cedula, setCedula] = useState('12345678');
+  const [licenciatura, setLicenciatura] = useState('UNAM');
+  const [telefonoOptica, setTelefonoOptica] = useState('+52 55 1234 5678');
   const [direccionFiscal, setDireccionFiscal] = useState('');
   const [patients, setPatients] = useState<Patient[]>(initialPatients);
   const [prescriptions, setPrescriptions] = useState<Prescription[]>(initialPrescriptions);
