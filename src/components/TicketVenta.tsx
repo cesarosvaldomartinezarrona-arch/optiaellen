@@ -445,7 +445,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 
           {/* ESPECIFICACIONES */}
           <Section title="Especificaciones">
-            <div className="overflow-hidden rounded-lg border border-slate-200">
+            <div className="overflow-hidden rounded border border-slate-200">
               <table className="w-full text-sm">
                 <thead>
                   <tr>
@@ -489,8 +489,8 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 
           {/* DETALLE DE VENTA */}
           <Section title="Detalle de Venta">
-            <div className="overflow-hidden rounded-lg border border-slate-200">
-              <table className="w-full text-xs">
+            <div className="overflow-hidden rounded border border-slate-200">
+              <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-gradient-to-r from-[#5b1a9e] to-[#7c3aed]">
                     <th className="px-4 py-2.5 text-left font-bold text-white text-[10px] uppercase tracking-wider">Descripción</th>
@@ -702,8 +702,8 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div>
-      <div className="flex items-center gap-3 mb-3">
+    <div className="mb-2">
+      <div className="flex items-center gap-3 mb-5">
         <h3 className="text-[11px] font-bold text-[#7c3aed] uppercase tracking-widest whitespace-nowrap">{title}</h3>
         <div className="flex-1 h-px bg-slate-200" />
       </div>
