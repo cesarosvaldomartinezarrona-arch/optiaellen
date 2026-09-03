@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import type { UserRole } from '../types';
 
 export default function Configuracion() {
-  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal, cedula, setCedula, licenciatura, setLicenciatura } = useApp();
+  const { opticsName, setOpticsName, rfc, setRfc, regimenFiscal, setRegimenFiscal, direccionSucursal, setDireccionSucursal, cedula, setCedula, licenciatura, setLicenciatura, telefonoOptica, setTelefonoOptica, direccionFiscal, setDireccionFiscal } = useApp();
   const { users, addUser, updateUser, deleteUser, user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState('Perfil de Usuario');
   const [showSaved, setShowSaved] = useState(false);
@@ -26,6 +26,8 @@ export default function Configuracion() {
     direccionSucursal: direccionSucursal,
     cedula: cedula,
     licenciatura: licenciatura,
+    telefonoOptica: telefonoOptica,
+    direccionFiscal: direccionFiscal,
     address: 'Av. Principal 123, Centro, CDMX',
   });
 
@@ -45,6 +47,8 @@ export default function Configuracion() {
     setDireccionSucursal(form.direccionSucursal);
     setCedula(form.cedula);
     setLicenciatura(form.licenciatura);
+    setTelefonoOptica(form.telefonoOptica);
+    setDireccionFiscal(form.direccionFiscal);
     setShowSaved(true);
     setTimeout(() => setShowSaved(false), 2500);
   };
@@ -206,10 +210,17 @@ export default function Configuracion() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección Fiscal</label>
-                <input type="text" value={form.address} onChange={e => update('address', e.target.value)}
-                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed]" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Dirección Fiscal</label>
+                  <input type="text" value={form.direccionFiscal} onChange={e => update('direccionFiscal', e.target.value)} placeholder="Av. Principal 123, Centro, CDMX"
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Teléfono Óptica</label>
+                  <input type="tel" value={form.telefonoOptica} onChange={e => update('telefonoOptica', e.target.value)} placeholder="667 123 4567"
+                    className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#7c3aed] placeholder:text-slate-400" />
+                </div>
               </div>
 
               <div className="flex justify-end pt-6 sm:pt-8 border-t border-slate-100">

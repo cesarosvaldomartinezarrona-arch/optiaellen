@@ -145,7 +145,7 @@ interface TicketVentaProps {
 }
 
 export default function TicketVenta({ data: initialData, onClose }: TicketVentaProps) {
-  const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx, cedula: cedulaCtx, licenciatura: licenciaturaCtx } = useApp();
+  const { patients, prescriptions, sales, products, opticsName, rfc: rfcCtx, regimenFiscal: regimenCtx, direccionSucursal: dirSucCtx, cedula: cedulaCtx, licenciatura: licenciaturaCtx, telefonoOptica: telCtx } = useApp();
   const { user } = useAuth();
 
   // Generar folio automático
@@ -166,6 +166,8 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
       direccionSucursal: dirSucCtx ?? '',
       cedula: cedulaCtx ?? '',
       licenciatura: licenciaturaCtx ?? '',
+      telefonoOptica: telCtx ?? '',
+      redesSociales: defaultData.redesSociales,
     };
   });
 
