@@ -48,30 +48,39 @@ export default function Ventas() {
             ))}
           </div>
 
-          <div className="space-y-2">
-            {filtered.map(product => (
-              <div key={product.id} className="bg-white rounded-lg border border-slate-200/80 px-4 py-3 flex items-center gap-4 hover:shadow-md hover:border-[var(--accent)]/30 transition-all cursor-pointer group"
-                onClick={() => addToCart(product)}>
-                <div className="w-10 h-10 bg-gradient-to-br from-purple-50 to-slate-50 rounded-lg flex items-center justify-center flex-shrink-0 border border-slate-100 group-hover:border-purple-200 transition-colors">
-                  <Grid3X3 className="w-5 h-5 text-purple-200 group-hover:text-purple-400 transition-colors" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-bold text-slate-800 truncate">{product.name}</h3>
-                  <p className="text-[11px] text-slate-400 truncate">{product.model}</p>
-                </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md font-medium hidden sm:inline">{product.category}</span>
-                  {product.brand && <span className="text-[10px] bg-purple-50 text-[var(--accent)] px-2 py-0.5 rounded-md font-medium hidden sm:inline">{product.brand}</span>}
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${product.stock < 10 ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}`}>
-                    {product.stock}
-                  </span>
-                  <span className="text-sm font-extrabold text-[var(--accent)] min-w-[70px] text-right">${product.price.toLocaleString()}</span>
-                  <div className="w-7 h-7 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
-                    <Plus className="w-4 h-4 text-[var(--accent)] group-hover:text-white" />
+          <div className="bg-white rounded-lg border border-slate-200/80 overflow-hidden">
+            <div className="hidden md:grid grid-cols-[80px_1fr_1fr_140px_100px_80px_80px] gap-4 px-4 py-3 bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              <span>ID</span>
+              <span>Producto</span>
+              <span>Modelo</span>
+              <span>Categoría</span>
+              <span className="text-right">Precio</span>
+              <span className="text-center">Stock</span>
+              <span className="text-center">Acción</span>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {filtered.map(product => (
+                <div key={product.id}
+                  className="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr_140px_100px_80px_80px] gap-2 md:gap-4 items-center px-4 py-3 hover:bg-slate-50/80 transition-colors cursor-pointer group"
+                  onClick={() => addToCart(product)}>
+                  <span className="text-xs font-bold text-[var(--accent)]">{product.id}</span>
+                  <div className="min-w-0">
+                    <span className="text-sm font-bold text-slate-800">{product.name}</span>
+                    {product.brand && <span className="text-xs text-slate-400 ml-1">({product.brand})</span>}
+                  </div>
+                  <span className="text-sm text-slate-600 truncate">{product.model}</span>
+                  <span className="text-[10px] font-bold bg-purple-50 text-[var(--accent)] px-2 py-0.5 rounded-md w-fit">{product.category}</span>
+                  <span className="text-sm font-bold text-slate-800 text-right">${product.price.toLocaleString()}</span>
+                  <span className={`text-sm font-bold text-center ${product.stock < 10 ? 'text-red-500' : 'text-slate-800'}`}>{product.stock}</span>
+                  <div className="flex justify-center">
+                    <button onClick={(e) => { e.stopPropagation(); addToCart(product); }}
+                      className="w-8 h-8 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white transition-colors">
+                      <Plus className="w-4 h-4 text-[var(--accent)] group-hover:text-white" />
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
