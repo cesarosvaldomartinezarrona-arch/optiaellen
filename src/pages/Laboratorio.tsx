@@ -141,7 +141,11 @@ export default function Laboratorio() {
                 </button>
               )}
             </div>
-            <p className="text-xs sm:text-sm text-slate-500 mb-4 sm:mb-6 leading-relaxed">{order.products}</p>
+            <p className="text-xs sm:text-sm text-slate-500 mb-2 sm:mb-3 leading-relaxed">{order.products}</p>
+            <div className="flex flex-wrap gap-3 mb-4 sm:mb-6">
+              {order.examName && <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-[10px] sm:text-[11px] font-bold"><FlaskConical className="w-3 h-3" /> {order.examName}</span>}
+              {order.baseType && <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-purple-50 text-purple-700 border border-purple-200 rounded-full text-[10px] sm:text-[11px] font-bold"><Layers className="w-3 h-3" /> {order.baseType}</span>}
+            </div>
             <div className="flex flex-wrap items-center gap-4 sm:gap-8 mb-5 sm:mb-7 text-xs sm:text-sm text-slate-500">
               <div className="flex items-center gap-2"><User className="w-4 h-4 sm:w-4 sm:h-4 text-slate-400" />{order.operator}</div>
               <div className="flex items-center gap-2"><Calendar className="w-4 h-4 sm:w-4 sm:h-4 text-slate-400" />{order.startDate}</div>
