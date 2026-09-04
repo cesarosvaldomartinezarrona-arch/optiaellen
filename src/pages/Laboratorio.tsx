@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Plus, ChevronRight, Clock, User, Calendar, FlaskConical, CheckCircle2, Scissors, Sparkles, Layers, ShieldCheck, FileDown } from 'lucide-react';
+import { Plus, ChevronRight, Clock, User, Calendar, FlaskConical, CheckCircle2, Scissors, Sparkles, Layers, ShieldCheck, FileDown, Eye, X, ChevronDown } from 'lucide-react';
 import jsPDF from 'jspdf';
 
 const phases = [
@@ -12,10 +12,85 @@ const phases = [
   { name: 'Listo', icon: CheckCircle2, color: 'text-emerald-600 bg-emerald-100 border-emerald-200' },
 ];
 
+const perPageOptions = [1, 2, 3, 4, 6, 8, 10, 12];
+
+function generatePDF(labOrders: any[], opticsName: string, perPage: number) {
+  const doc = new jsPDF('p', 'mm', 'letter');
+  const pageW = doc.internal.pageSize.getWidth();
+  const margin = 15;
+  const colW = (pageW - margin * 2) / 2;
+  const headerH = 25;
+  const rowsPerPage = perPage / 2;
+  const areaH = doc.internal.pageSize.getHeight() - headerH - 15;
+  const rowH = Math.min(38, areaH / rowsPerPage);
+  const startY = headerH + 5;
+
+  const drawHeader = () => {
+    doc.setFillColor(15, 10, 31);
+    doc.rect(0, 0, pageW, headerH, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text(opticsName || 'Óptica', margin, 10);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Ver bien es vivir mejor', margin, 15);
+    doc.setFontSize(9);
+    doc.text(`Órdenes de Laboratorio — ${new Date().toLocaleDateString('es-MX')}`, margin, 21);
+    doc.setFontSize(8);
+    doc.text(`Total: ${labOrders.length} órdenes  |  ${perPage} por hoja`, pageW - margin, 10, { align: 'right' });
+  };
+
+  drawHeader();
+
+  labOrders.forEach((order: any, i: number) => {
+    const posInPage = i % perPage;
+    if (posInPage === 0 && i > 0) {
+      doc.addPage();
+      drawHeader();
+    }
+    const col = posInPage % 2;
+    const row = Math.floor(posInPage / 2);
+    const x = margin + col * colW;
+    const y = startY + row * rowH;
+
+    doc.setDrawColor(220, 220, 230);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(x, y, colW - 4, rowH - 4, 2, 2, 'S');
+
+    doc.setFillColor(248, 245, 255);
+    doc.roundedRect(x, y, colW - 4, 8, 2, 2, 'F');
+    doc.setTextColor(100, 80, 180);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'bold');
+    doc.text(order.id, x + 3, y + 5.5);
+
+    doc.setTextColor(40, 40, 50);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'bold');
+    doc.text(order.patientName, x + 3, y + 14);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(80, 80, 90);
+    doc.text(`Examen: ${order.examName || '—'}`, x + 3, y + 19.5);
+    doc.text(`Base: ${order.baseType || '—'}`, x + 3, y + 24);
+    doc.text(`Trabajo: ${order.products}`, x + 3, y + 28.5);
+
+    doc.setFontSize(6);
+    doc.setTextColor(120, 120, 130);
+    doc.text(`Inicio: ${order.startDate}  |  Entrega: ${order.estimatedDelivery}`, x + 3, y + 33);
+  });
+
+  return doc;
+}
+
 export default function Laboratorio() {
   const { labOrders, setLabOrders, patients, opticsName } = useApp();
   const [showModal, setShowModal] = useState(false);
   const [newOrder, setNewOrder] = useState({ patientId: '', products: '', operator: 'Juan Taller', examName: '', baseType: '' });
+  const [perPage, setPerPage] = useState(6);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleAdvance = (orderId: string) => {
     setLabOrders(prev => prev.map(o => o.id === orderId && o.phase < 6 ? { ...o, phase: o.phase + 1, status: phases[o.phase].name as any } : o));
@@ -34,73 +109,14 @@ export default function Laboratorio() {
     setNewOrder({ patientId: '', products: '', operator: 'Juan Taller', examName: '', baseType: '' });
   };
 
+  const handlePreview = () => {
+    const doc = generatePDF(labOrders, opticsName, perPage);
+    const url = doc.output('dataurlstring');
+    setPreviewUrl(url);
+  };
+
   const handleDownloadPDF = () => {
-    const doc = new jsPDF('p', 'mm', 'letter');
-    const pageW = doc.internal.pageSize.getWidth();
-    const margin = 15;
-    const colW = (pageW - margin * 2) / 2;
-    const headerH = 25;
-    const rowH = 38;
-    const startY = headerH + 5;
-    const perPage = 6;
-
-    const drawHeader = () => {
-      doc.setFillColor(15, 10, 31);
-      doc.rect(0, 0, pageW, headerH, 'F');
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bold');
-      doc.text(opticsName || 'Óptica', margin, 10);
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text('Ver bien es vivir mejor', margin, 15);
-      doc.setFontSize(9);
-      doc.text(`Órdenes de Laboratorio — ${new Date().toLocaleDateString('es-MX')}`, margin, 21);
-      doc.setFontSize(8);
-      doc.text(`Total: ${labOrders.length} órdenes`, pageW - margin, 10, { align: 'right' });
-    };
-
-    drawHeader();
-
-    labOrders.forEach((order, i) => {
-      const posInPage = i % perPage;
-      if (posInPage === 0 && i > 0) {
-        doc.addPage();
-        drawHeader();
-      }
-      const col = posInPage % 2;
-      const row = Math.floor(posInPage / 2);
-      const x = margin + col * colW;
-      const y = startY + row * rowH;
-
-      doc.setDrawColor(220, 220, 230);
-      doc.setLineWidth(0.3);
-      doc.roundedRect(x, y, colW - 4, rowH - 4, 2, 2, 'S');
-
-      doc.setFillColor(248, 245, 255);
-      doc.roundedRect(x, y, colW - 4, 8, 2, 2, 'F');
-      doc.setTextColor(100, 80, 180);
-      doc.setFontSize(7);
-      doc.setFont('helvetica', 'bold');
-      doc.text(order.id, x + 3, y + 5.5);
-
-      doc.setTextColor(40, 40, 50);
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'bold');
-      doc.text(order.patientName, x + 3, y + 14);
-
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7);
-      doc.setTextColor(80, 80, 90);
-      doc.text(`Examen: ${order.examName || '—'}`, x + 3, y + 19.5);
-      doc.text(`Base: ${order.baseType || '—'}`, x + 3, y + 24);
-      doc.text(`Trabajo: ${order.products}`, x + 3, y + 28.5);
-
-      doc.setFontSize(6);
-      doc.setTextColor(120, 120, 130);
-      doc.text(`Inicio: ${order.startDate}  |  Entrega: ${order.estimatedDelivery}`, x + 3, y + 33);
-    });
-
+    const doc = generatePDF(labOrders, opticsName, perPage);
     doc.save(`laboratorio_${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
@@ -111,7 +127,18 @@ export default function Laboratorio() {
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Laboratorio</h1>
           <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Seguimiento de órdenes de taller</p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="relative">
+            <select value={perPage} onChange={e => setPerPage(Number(e.target.value))}
+              className="appearance-none bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 pl-4 pr-9 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
+              {perPageOptions.map(n => <option key={n} value={n}>{n} / hoja</option>)}
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          </div>
+          <button onClick={handlePreview}
+            className="flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm">
+            <Eye className="w-4 h-4" /> Vista Previa
+          </button>
           <button onClick={handleDownloadPDF}
             className="flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm">
             <FileDown className="w-4 h-4" /> Descargar PDF
@@ -174,6 +201,32 @@ export default function Laboratorio() {
           </div>
         ))}
       </div>
+
+      {previewUrl && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg w-full max-w-5xl shadow-2xl border border-slate-200/80 max-h-[92vh] flex flex-col">
+            <div className="flex items-center justify-between p-5 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <Eye className="w-5 h-5 text-[var(--accent)]" />
+                <h2 className="text-lg font-bold text-slate-900">Vista Previa — {perPage} por hoja</h2>
+              </div>
+              <div className="flex items-center gap-3">
+                <button onClick={handleDownloadPDF}
+                  className="flex items-center gap-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md">
+                  <FileDown className="w-4 h-4" /> Descargar
+                </button>
+                <button onClick={() => setPreviewUrl(null)}
+                  className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center">
+                  <X className="w-5 h-5 text-slate-500" />
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-auto p-4">
+              <iframe src={previewUrl} className="w-full h-full min-h-[600px] border border-slate-200 rounded-lg" title="Vista previa PDF" />
+            </div>
+          </div>
+        </div>
+      )}
 
       {showModal && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
