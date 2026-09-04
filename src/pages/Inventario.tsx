@@ -59,11 +59,15 @@ function ProductForm({ form, setForm, onSave, onCancel, title }: {
             <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-slate-200" /> Detalles comerciales
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Costo</label>
                 <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Precio Venta *</label>
                 <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Ganancia</label>
+                <div className="w-full px-3 py-2.5 bg-emerald-50 rounded-lg border border-emerald-200 text-[13px] font-bold text-emerald-700">
+                  ${((parseFloat(form.price) || 0) - (parseFloat(form.cost) || 0)).toLocaleString()}
+                </div></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Existencia</label>
                 <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0" /></div>
             </div>
