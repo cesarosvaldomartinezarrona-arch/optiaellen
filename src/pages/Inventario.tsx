@@ -209,32 +209,32 @@ export default function Inventario() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead><tr className="bg-slate-50/80">
-              {['ID', 'Producto', 'Marca', 'Modelo', 'Color', 'Categoría', 'Precio', 'Stock', 'Estatus', 'Acciones'].map(h => (
+              {['ID', 'Marca', 'Modelo', 'Color', 'Costo', 'Precio Venta', 'Ganancia', 'Sucursal', 'Acciones'].map(h => (
                 <th key={h} className="text-left text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">{h}</th>
               ))}
             </tr></thead>
             <tbody className="divide-y divide-slate-100">
-              {filtered.map(product => (
-                <tr key={product.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-3 py-2 text-[11px] font-bold text-[var(--accent)]">{product.id}</td>
-                  <td className="px-3 py-2">
-                    <span className="text-[13px] font-bold text-slate-800">{product.name}</span>
-                  </td>
-                  <td className="px-3 py-2 text-[12px] text-slate-500">{product.brand || '—'}</td>
-                  <td className="px-3 py-2 text-[12px] text-slate-600">{product.model}</td>
-                  <td className="px-3 py-2 text-[12px] text-slate-600">{product.color || '—'}</td>
-                  <td className="px-3 py-2"><span className={`inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold ${categoryColors[product.category]}`}>{product.category}</span></td>
-                  <td className="px-3 py-2 text-[12px] font-bold text-slate-900">${product.price.toLocaleString()}</td>
-                  <td className="px-3 py-2"><span className={`text-[12px] font-bold ${product.stock < 10 ? 'text-red-600' : 'text-slate-800'}`}>{product.stock}</span></td>
-                  <td className="px-3 py-2"><span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${product.estatus === 'Disponible' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : product.estatus === 'Agotado' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-slate-100 text-slate-500 border border-slate-200'}`}>{product.estatus || 'Disponible'}</span></td>
-                  <td className="px-3 py-2">
-                    <div className="flex items-center gap-1">
-                      <button onClick={() => startEdit(product.id)} className="w-7 h-7 rounded-lg bg-purple-50 text-[var(--accent)] hover:bg-purple-100 flex items-center justify-center transition-colors border border-purple-100"><Edit2 className="w-3.5 h-3.5" /></button>
-                      <button onClick={() => handleDelete(product.id)} className="w-7 h-7 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors border border-red-100"><Trash2 className="w-3.5 h-3.5" /></button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {filtered.map(product => {
+                const ganancia = product.price - (product.cost || 0);
+                return (
+                  <tr key={product.id} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="px-3 py-2 text-[11px] font-bold text-[var(--accent)]">{product.id}</td>
+                    <td className="px-3 py-2 text-[12px] font-semibold text-slate-700">{product.brand || '—'}</td>
+                    <td className="px-3 py-2 text-[12px] text-slate-600">{product.model}</td>
+                    <td className="px-3 py-2 text-[12px] text-slate-600">{product.color || '—'}</td>
+                    <td className="px-3 py-2 text-[12px] font-semibold text-slate-700">${(product.cost || 0).toLocaleString()}</td>
+                    <td className="px-3 py-2 text-[12px] font-bold text-slate-900">${product.price.toLocaleString()}</td>
+                    <td className="px-3 py-2 text-[12px] font-bold text-emerald-600">${ganancia.toLocaleString()}</td>
+                    <td className="px-3 py-2 text-[12px] text-slate-600">{product.sucursal || '—'}</td>
+                    <td className="px-3 py-2">
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => startEdit(product.id)} className="w-7 h-7 rounded-lg bg-purple-50 text-[var(--accent)] hover:bg-purple-100 flex items-center justify-center transition-colors border border-purple-100"><Edit2 className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => handleDelete(product.id)} className="w-7 h-7 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors border border-red-100"><Trash2 className="w-3.5 h-3.5" /></button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
