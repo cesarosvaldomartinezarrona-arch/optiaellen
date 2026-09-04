@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { CreditCard, Banknote, Building2, Wallet, Check, ArrowRight, Printer, MessageCircle, FileText } from 'lucide-react';
+import { Search, CreditCard, Banknote, Building2, Wallet, Check, ArrowRight, Printer, MessageCircle, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { PaymentMethod } from '../types';
 
@@ -77,6 +77,7 @@ export default function Cobrar() {
   const [paymentData, setPaymentData] = useState({ method: 'Efectivo' as PaymentMethod, cashAmount: '', cardReference: '', partialAmount: '' });
   const [showSuccess, setShowSuccess] = useState(false);
   const [lastPaidSaleId, setLastPaidSaleId] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
   const methods = [
     { id: 'Efectivo', label: 'Efectivo', icon: Banknote, color: 'from-emerald-500 to-emerald-600' },
@@ -175,13 +176,19 @@ export default function Cobrar() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="space-y-3">
+          <div className="relative flex">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            <input type="text" placeholder="Buscar por nombre o venta..." value={search} onChange={e => setSearch(e.target.value)}
+              className="w-full py-3 bg-white rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] transition-all shadow-sm"
+              style={{ paddingLeft: '40px', paddingRight: '16px' }} />
+          </div>
           <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Pagos Pendientes</h3>
-          {pendingPayments.length === 0 ? (
+          {pendingPayments.filter(p => !search || p.patientName.toLowerCase().includes(search.toLowerCase()) || p.saleId.toLowerCase().includes(search.toLowerCase())).length === 0 ? (
             <div className="bg-white rounded-lg border border-slate-200/80 p-8 text-center shadow-sm">
               <div className="w-14 h-14 rounded-lg bg-emerald-100 flex items-center justify-center mx-auto mb-3"><Check className="w-7 h-7 text-emerald-600" /></div>
               <p className="text-sm font-medium text-slate-500">No hay pagos pendientes</p>
             </div>
-          ) : pendingPayments.map(p => (
+          ) : pendingPayments.filter(p => !search || p.patientName.toLowerCase().includes(search.toLowerCase()) || p.saleId.toLowerCase().includes(search.toLowerCase())).map(p => (
             <div key={p.id} onClick={() => { setSelectedPayment(p.id); setPaymentData({ method: 'Efectivo', cashAmount: '', cardReference: '', partialAmount: '' }); }}
               className={`bg-white rounded-lg border-2 p-4 cursor-pointer transition-all hover:shadow-md ${selectedPayment === p.id ? 'border-[var(--accent)] shadow-lg shadow-[rgba(var(--accent-rgb),0.10)]' : 'border-slate-200 hover:border-slate-300'}`}>
               <div className="flex items-center justify-between mb-2">
