@@ -1,9 +1,9 @@
 import { Outlet, NavLink, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useMemo } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useApp } from '../context/AppContext';
-import { Search, Bell, Maximize2, LayoutDashboard, Users, ShoppingCart, Package, Menu } from 'lucide-react';
+import { Search, Bell, Maximize2, LayoutDashboard, Users, ShoppingCart, Package, Menu, X, AlertTriangle, Clock, DollarSign, CheckCircle } from 'lucide-react';
 
 export const SidebarContext = createContext({ mobileOpen: false, setMobileOpen: (_v: boolean) => {}, collapsed: false, setCollapsed: (_v: boolean) => {} });
 
@@ -52,10 +52,13 @@ function MobileBottomNav({ onMenuOpen }: { onMenuOpen: () => void }) {
 
 export default function Layout() {
   const { user } = useAuth();
+  const { pendingPayments, products, labOrders, sales } = useApp();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [search, setSearch] = useState('');
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -76,6 +79,26 @@ export default function Layout() {
 
   const sidebarWidth = collapsed ? 72 : 232;
   const marginStyle = isMobile ? { marginLeft: 0 } : { marginLeft: sidebarWidth };
+
+  const notifications = useMemo(() => {
+    const items: { id: string; icon: any; color: string; bg: string; title: string; desc: string; time: string }[] = [];
+    pendingPayments.filter(p => p.status === 'Pendiente').forEach(p => {
+      items.push({ id: `cobro-${p.id}`, icon: DollarSign, color: 'text-amber-600', bg: 'bg-amber-50', title: `Pago pendiente: ${p.patientName}`, desc: `$${p.pending.toLocaleString()} pendientes`, time: 'Ahora' });
+    });
+    products.filter(p => p.stock < 10).forEach(p => {
+      items.push({ id: `stock-${p.id}`, icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-50', title: `Stock bajo: ${p.name}`, desc: `Solo ${p.stock} piezas`, time: 'Inventario' });
+    });
+    labOrders.filter(o => o.phase < 6).forEach(o => {
+      items.push({ id: `lab-${o.id}`, icon: Clock, color: 'text-blue-500', bg: 'bg-blue-50', title: `Laboratorio: ${o.patientName}`, desc: `${o.status} — Entrega: ${o.estimatedDelivery}`, time: 'Taller' });
+    });
+    sales.filter(s => s.status === 'Pagado').slice(-3).forEach(s => {
+      items.push({ id: `venta-${s.id}`, icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50', title: `Venta completada: ${s.patientName}`, desc: `$${s.total.toLocaleString()} — ${s.paymentMethod || ''}`, time: 'Ventas' });
+    });
+    return items;
+  }, [pendingPayments, products, labOrders, sales]);
+
+  const visibleNotifs = notifications.filter(n => !dismissed.has(n.id));
+  const unreadCount = visibleNotifs.length;
 
   return (
     <SidebarContext.Provider value={{ mobileOpen, setMobileOpen, collapsed, setCollapsed }}>
@@ -126,14 +149,63 @@ export default function Layout() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               <button className="lg:hidden w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-slate-50" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
                 <Search className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
               </button>
-              <button className="w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-slate-50 relative" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
-                <Bell className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
-                <span className="absolute top-2 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2" style={{ borderColor: 'var(--bg-primary)' }} />
-              </button>
+              <div className="relative">
+                <button onClick={() => setNotifOpen(!notifOpen)} className="w-10 h-10 rounded-lg border flex items-center justify-center hover:bg-slate-50 relative" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
+                  <Bell className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
+                  {unreadCount > 0 && <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2" style={{ borderColor: 'var(--bg-primary)' }}>{unreadCount}</span>}
+                </button>
+                {notifOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
+                    <div className="absolute right-0 top-12 w-[380px] max-h-[480px] bg-white rounded-xl shadow-2xl border border-slate-200 z-50 overflow-hidden flex flex-col">
+                      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100">
+                        <h3 className="text-sm font-bold text-slate-900">Notificaciones</h3>
+                        <span className="text-[11px] font-semibold text-slate-400">{unreadCount} nuevas</span>
+                      </div>
+                      <div className="flex-1 overflow-y-auto">
+                        {visibleNotifs.length === 0 ? (
+                          <div className="p-8 text-center">
+                            <CheckCircle className="w-10 h-10 text-emerald-300 mx-auto mb-2" />
+                            <p className="text-sm font-medium text-slate-400">Todo al día</p>
+                          </div>
+                        ) : (
+                          <div className="divide-y divide-slate-50">
+                            {visibleNotifs.map(n => {
+                              const Icon = n.icon;
+                              return (
+                                <div key={n.id} className="flex items-start gap-3 px-4 py-3 hover:bg-slate-50/80 transition-colors">
+                                  <div className={`w-8 h-8 rounded-lg ${n.bg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                                    <Icon className={`w-4 h-4 ${n.color}`} />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <p className="text-[13px] font-semibold text-slate-800 leading-tight">{n.title}</p>
+                                    <p className="text-[11px] text-slate-500 mt-0.5">{n.desc}</p>
+                                    <p className="text-[10px] text-slate-400 mt-1">{n.time}</p>
+                                  </div>
+                                  <button onClick={() => setDismissed(prev => new Set(prev).add(n.id))} className="w-6 h-6 rounded flex items-center justify-center text-slate-300 hover:text-red-400 hover:bg-red-50 transition-colors flex-shrink-0">
+                                    <X className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                      {visibleNotifs.length > 0 && (
+                        <div className="px-4 py-2.5 border-t border-slate-100 bg-slate-50/50">
+                          <button onClick={() => setDismissed(new Set(notifications.map(n => n.id)))} className="w-full text-center text-[11px] font-semibold text-[var(--accent)] hover:underline">
+                            Marcar todo como leído
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
               <button className="hidden sm:flex w-10 h-10 rounded-lg border items-center justify-center hover:bg-slate-50" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
                 <Maximize2 className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
               </button>
