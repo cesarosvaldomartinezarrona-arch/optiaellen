@@ -49,7 +49,7 @@ export default function Ventas() {
           </div>
 
           <div className="bg-white rounded-lg border border-slate-200/80 overflow-hidden">
-            <div className="hidden md:grid grid-cols-[80px_1fr_1fr_140px_100px_80px_80px] gap-4 px-4 py-3 bg-slate-50 border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <div className="hidden md:grid grid-cols-[80px_1fr_1fr_140px_100px_80px_80px] gap-3 px-4 py-2 bg-slate-50 border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
               <span>ID</span>
               <span>Producto</span>
               <span>Modelo</span>
@@ -61,21 +61,21 @@ export default function Ventas() {
             <div className="divide-y divide-slate-100">
               {filtered.map(product => (
                 <div key={product.id}
-                  className="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr_140px_100px_80px_80px] gap-2 md:gap-4 items-center px-4 py-3 hover:bg-slate-50/80 transition-colors cursor-pointer group"
+                  className="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr_140px_100px_80px_80px] gap-2 md:gap-3 items-center px-4 py-2 hover:bg-slate-50/80 transition-colors cursor-pointer group"
                   onClick={() => addToCart(product)}>
-                  <span className="text-xs font-bold text-[var(--accent)]">{product.id}</span>
+                  <span className="text-[11px] font-bold text-[var(--accent)]">{product.id}</span>
                   <div className="min-w-0">
-                    <span className="text-sm font-bold text-slate-800">{product.name}</span>
-                    {product.brand && <span className="text-xs text-slate-400 ml-1">({product.brand})</span>}
+                    <span className="text-[13px] font-bold text-slate-800">{product.name}</span>
+                    {product.brand && <span className="text-[11px] text-slate-400 ml-1">({product.brand})</span>}
                   </div>
-                  <span className="text-sm text-slate-600 truncate">{product.model}</span>
+                  <span className="text-[13px] text-slate-600 truncate">{product.model}</span>
                   <span className="text-[10px] font-bold bg-purple-50 text-[var(--accent)] px-2 py-0.5 rounded-md w-fit">{product.category}</span>
-                  <span className="text-sm font-bold text-slate-800 text-right">${product.price.toLocaleString()}</span>
-                  <span className={`text-sm font-bold text-center ${product.stock < 10 ? 'text-red-500' : 'text-slate-800'}`}>{product.stock}</span>
+                  <span className="text-[13px] font-bold text-slate-800 text-right">${product.price.toLocaleString()}</span>
+                  <span className={`text-[13px] font-bold text-center ${product.stock < 10 ? 'text-red-500' : 'text-slate-800'}`}>{product.stock}</span>
                   <div className="flex justify-center">
                     <button onClick={(e) => { e.stopPropagation(); addToCart(product); }}
-                      className="w-8 h-8 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white transition-colors">
-                      <Plus className="w-4 h-4 text-[var(--accent)] group-hover:text-white" />
+                      className="w-7 h-7 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white transition-colors">
+                      <Plus className="w-3.5 h-3.5 text-[var(--accent)] group-hover:text-white" />
                     </button>
                   </div>
                 </div>

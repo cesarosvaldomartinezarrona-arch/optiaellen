@@ -187,25 +187,25 @@ export default function Inventario() {
           <table className="w-full">
             <thead><tr className="bg-slate-50/80">
               {['ID', 'Producto', 'Modelo', 'Categoría', 'Precio', 'Stock', 'Acciones'].map(h => (
-                <th key={h} className="text-left text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-6 py-4">{h}</th>
+                <th key={h} className="text-left text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-4 py-2">{h}</th>
               ))}
             </tr></thead>
             <tbody className="divide-y divide-slate-100">
               {filtered.map(product => (
                 <tr key={product.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-6 py-4 text-sm font-bold text-[var(--accent)]">{product.id}</td>
-                  <td className="px-6 py-4">
-                    <div><span className="text-sm font-bold text-slate-800">{product.name}</span>
-                    {product.brand && <span className="text-xs text-slate-400 ml-2">({product.brand})</span>}</div>
+                  <td className="px-4 py-2 text-[11px] font-bold text-[var(--accent)]">{product.id}</td>
+                  <td className="px-4 py-2">
+                    <div><span className="text-[13px] font-bold text-slate-800">{product.name}</span>
+                    {product.brand && <span className="text-[11px] text-slate-400 ml-2">({product.brand})</span>}</div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-600">{product.model}</td>
-                  <td className="px-6 py-4"><span className={`inline-flex px-3 py-1 rounded-full text-[11px] font-bold ${categoryColors[product.category]}`}>{product.category}</span></td>
-                  <td className="px-6 py-4 text-sm font-bold text-slate-900">${product.price.toLocaleString()}</td>
-                  <td className="px-6 py-4"><span className={`text-sm font-bold ${product.stock < 10 ? 'text-red-600' : 'text-slate-800'}`}>{product.stock}</span></td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => startEdit(product.id)} className="w-9 h-9 rounded-lg bg-purple-50 text-[var(--accent)] hover:bg-purple-100 flex items-center justify-center transition-colors border border-purple-100"><Edit2 className="w-4 h-4" /></button>
-                      <button onClick={() => handleDelete(product.id)} className="w-9 h-9 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors border border-red-100"><Trash2 className="w-4 h-4" /></button>
+                  <td className="px-4 py-2 text-[13px] text-slate-600">{product.model}</td>
+                  <td className="px-4 py-2"><span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold ${categoryColors[product.category]}`}>{product.category}</span></td>
+                  <td className="px-4 py-2 text-[13px] font-bold text-slate-900">${product.price.toLocaleString()}</td>
+                  <td className="px-4 py-2"><span className={`text-[13px] font-bold ${product.stock < 10 ? 'text-red-600' : 'text-slate-800'}`}>{product.stock}</span></td>
+                  <td className="px-4 py-2">
+                    <div className="flex items-center gap-1.5">
+                      <button onClick={() => startEdit(product.id)} className="w-7 h-7 rounded-lg bg-purple-50 text-[var(--accent)] hover:bg-purple-100 flex items-center justify-center transition-colors border border-purple-100"><Edit2 className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => handleDelete(product.id)} className="w-7 h-7 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors border border-red-100"><Trash2 className="w-3.5 h-3.5" /></button>
                     </div>
                   </td>
                 </tr>
