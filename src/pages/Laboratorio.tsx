@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Plus, ChevronRight, Clock, User, Calendar, FlaskConical, CheckCircle2, Scissors, Sparkles, Layers, ShieldCheck } from 'lucide-react';
+import { Plus, ChevronRight, Clock, User, Calendar, FlaskConical, CheckCircle2, Scissors, Sparkles, Layers, ShieldCheck, FileDown } from 'lucide-react';
+import jsPDF from 'jspdf';
 
 const phases = [
   { name: 'Recibido', icon: FlaskConical, color: 'text-blue-600 bg-blue-100 border-blue-200' },
@@ -12,9 +13,9 @@ const phases = [
 ];
 
 export default function Laboratorio() {
-  const { labOrders, setLabOrders, patients } = useApp();
+  const { labOrders, setLabOrders, patients, opticsName } = useApp();
   const [showModal, setShowModal] = useState(false);
-  const [newOrder, setNewOrder] = useState({ patientId: '', products: '', operator: 'Juan Taller' });
+  const [newOrder, setNewOrder] = useState({ patientId: '', products: '', operator: 'Juan Taller', examName: '', baseType: '' });
 
   const handleAdvance = (orderId: string) => {
     setLabOrders(prev => prev.map(o => o.id === orderId && o.phase < 6 ? { ...o, phase: o.phase + 1, status: phases[o.phase].name as any } : o));
@@ -27,9 +28,80 @@ export default function Laboratorio() {
       id: `LO${String(labOrders.length + 1).padStart(3, '0')}`, saleId: 'V000', patientName: patient?.name || '',
       products: newOrder.products, status: 'Recibido' as const, operator: newOrder.operator,
       startDate: new Date().toISOString().split('T')[0], estimatedDelivery: new Date(Date.now() + 10 * 86400000).toISOString().split('T')[0], phase: 1,
+      examName: newOrder.examName, baseType: newOrder.baseType,
     }]);
     setShowModal(false);
-    setNewOrder({ patientId: '', products: '', operator: 'Juan Taller' });
+    setNewOrder({ patientId: '', products: '', operator: 'Juan Taller', examName: '', baseType: '' });
+  };
+
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF('p', 'mm', 'letter');
+    const pageW = doc.internal.pageSize.getWidth();
+    const margin = 15;
+    const colW = (pageW - margin * 2) / 2;
+    const headerH = 25;
+    const rowH = 38;
+    const startY = headerH + 5;
+    const perPage = 6;
+
+    const drawHeader = () => {
+      doc.setFillColor(15, 10, 31);
+      doc.rect(0, 0, pageW, headerH, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text(opticsName || 'Óptica', margin, 10);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text('Ver bien es vivir mejor', margin, 15);
+      doc.setFontSize(9);
+      doc.text(`Órdenes de Laboratorio — ${new Date().toLocaleDateString('es-MX')}`, margin, 21);
+      doc.setFontSize(8);
+      doc.text(`Total: ${labOrders.length} órdenes`, pageW - margin, 10, { align: 'right' });
+    };
+
+    drawHeader();
+
+    labOrders.forEach((order, i) => {
+      const posInPage = i % perPage;
+      if (posInPage === 0 && i > 0) {
+        doc.addPage();
+        drawHeader();
+      }
+      const col = posInPage % 2;
+      const row = Math.floor(posInPage / 2);
+      const x = margin + col * colW;
+      const y = startY + row * rowH;
+
+      doc.setDrawColor(220, 220, 230);
+      doc.setLineWidth(0.3);
+      doc.roundedRect(x, y, colW - 4, rowH - 4, 2, 2, 'S');
+
+      doc.setFillColor(248, 245, 255);
+      doc.roundedRect(x, y, colW - 4, 8, 2, 2, 'F');
+      doc.setTextColor(100, 80, 180);
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'bold');
+      doc.text(order.id, x + 3, y + 5.5);
+
+      doc.setTextColor(40, 40, 50);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'bold');
+      doc.text(order.patientName, x + 3, y + 14);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7);
+      doc.setTextColor(80, 80, 90);
+      doc.text(`Examen: ${order.examName || '—'}`, x + 3, y + 19.5);
+      doc.text(`Base: ${order.baseType || '—'}`, x + 3, y + 24);
+      doc.text(`Trabajo: ${order.products}`, x + 3, y + 28.5);
+
+      doc.setFontSize(6);
+      doc.setTextColor(120, 120, 130);
+      doc.text(`Inicio: ${order.startDate}  |  Entrega: ${order.estimatedDelivery}`, x + 3, y + 33);
+    });
+
+    doc.save(`laboratorio_${new Date().toISOString().split('T')[0]}.pdf`);
   };
 
   return (
@@ -39,10 +111,16 @@ export default function Laboratorio() {
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Laboratorio</h1>
           <p className="text-slate-500 text-xs sm:text-sm mt-1.5">Seguimiento de órdenes de taller</p>
         </div>
-        <button onClick={() => setShowModal(true)}
-          className="flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] hover:from-[var(--accent-dark)] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">
-          <Plus className="w-4 h-4" /> Nueva Orden
-        </button>
+        <div className="flex gap-3">
+          <button onClick={handleDownloadPDF}
+            className="flex items-center justify-center gap-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-4 py-3 rounded-lg text-sm font-semibold transition-all shadow-sm">
+            <FileDown className="w-4 h-4" /> Descargar PDF
+          </button>
+          <button onClick={() => setShowModal(true)}
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-dark)] hover:from-[var(--accent-dark)] hover:to-[#5b21b6] text-white px-5 sm:px-6 py-3.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-[rgba(var(--accent-rgb),0.25)]">
+            <Plus className="w-4 h-4" /> Nueva Orden
+          </button>
+        </div>
       </div>
 
       <div className="space-y-6">
@@ -107,6 +185,19 @@ export default function Laboratorio() {
                   className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
                   <option value="">Seleccionar paciente</option>
                   {patients.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Examen de la vista *</label>
+                <input type="text" value={newOrder.examName} onChange={e => setNewOrder({ ...newOrder, examName: e.target.value })}
+                  placeholder="Ej: Examen Visual Completo" className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Tipo de base *</label>
+                <select value={newOrder.baseType} onChange={e => setNewOrder({ ...newOrder, baseType: e.target.value })}
+                  className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
+                  <option value="">Seleccionar tipo</option>
+                  {['Monofocal', 'Bifocal', 'Progresivo', 'Antirreflejante', 'Blue Light', 'Fotocromático', 'Policarbonato', 'Alto Índice'].map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
               <div>

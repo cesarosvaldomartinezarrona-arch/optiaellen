@@ -126,6 +126,8 @@ export interface LabOrder {
   estimatedDelivery: string;
   prescriptionId?: string;
   phase: number;
+  examName?: string;
+  baseType?: string;
 }
 
 export type LabStatus = 'Recibido' | 'Cortando' | 'Puliendo' | 'Montando' | 'Control de Calidad' | 'Listo';

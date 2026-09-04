@@ -148,9 +148,9 @@ export const sales: Sale[] = [
 ];
 
 export const labOrders: LabOrder[] = [
-  { id: 'LO001', saleId: 'V002', patientName: 'Carlos Rodríguez Pérez', products: 'Montura Prada + Cristal Progresivo', status: 'Montando', operator: 'Juan Taller', startDate: '2024-12-06', estimatedDelivery: '2024-12-16', prescriptionId: 'R002', phase: 4 },
-  { id: 'LO002', saleId: 'V004', patientName: 'Laura Jiménez Flores', products: 'Montura Oakley + Cristal Blue Light', status: 'Puliendo', operator: 'Juan Taller', startDate: '2024-12-13', estimatedDelivery: '2024-12-23', prescriptionId: 'R004', phase: 3 },
-  { id: 'LO003', saleId: 'V001', patientName: 'María García López', products: 'Montura Ray-Ban + Cristal AR', status: 'Listo', operator: 'Juan Taller', startDate: '2024-12-02', estimatedDelivery: '2024-12-10', prescriptionId: 'R001', phase: 6 },
+  { id: 'LO001', saleId: 'V002', patientName: 'Carlos Rodríguez Pérez', products: 'Montura Prada + Cristal Progresivo', status: 'Montando', operator: 'Juan Taller', startDate: '2024-12-06', estimatedDelivery: '2024-12-16', prescriptionId: 'R002', phase: 4, examName: 'Examen Visual Completo', baseType: 'Progresivo' },
+  { id: 'LO002', saleId: 'V004', patientName: 'Laura Jiménez Flores', products: 'Montura Oakley + Cristal Blue Light', status: 'Puliendo', operator: 'Juan Taller', startDate: '2024-12-13', estimatedDelivery: '2024-12-23', prescriptionId: 'R004', phase: 3, examName: 'Examen Visual Completo', baseType: 'Blue Light' },
+  { id: 'LO003', saleId: 'V001', patientName: 'María García López', products: 'Montura Ray-Ban + Cristal AR', status: 'Listo', operator: 'Juan Taller', startDate: '2024-12-02', estimatedDelivery: '2024-12-10', prescriptionId: 'R001', phase: 6, examName: 'Examen Visual Completo', baseType: 'Antirreflejante' },
 ];
 
 export const expenses: Expense[] = [
