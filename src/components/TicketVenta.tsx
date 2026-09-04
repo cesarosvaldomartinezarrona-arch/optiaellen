@@ -32,8 +32,8 @@ export interface TicketVentaData {
   armazon: string;
   colorArmazon: string;
   graduacion: {
-    od: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; eje: string; adicion: string; prisma: string };
-    oi: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; eje: string; adicion: string; prisma: string };
+    od: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; eje: string; adicion: string; prisma: string; agudezaVisual: string };
+    oi: { dnpL: string; dnpC: string; alt: string; esfera: string; cilindro: string; eje: string; adicion: string; prisma: string; agudezaVisual: string };
   };
   observaciones: string;
   detalle: { descripcion: string; cantidad: number; precioUnitario: number; descuento: number; iva: number; importe: number; precioFinal: number }[];
@@ -87,8 +87,8 @@ export const defaultData: TicketVentaData = {
   armazon: '',
   colorArmazon: '',
   graduacion: {
-    od: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', eje: '', adicion: '', prisma: '' },
-    oi: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', eje: '', adicion: '', prisma: '' },
+    od: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', eje: '', adicion: '', prisma: '', agudezaVisual: '' },
+    oi: { dnpL: '', dnpC: '', alt: '', esfera: '', cilindro: '', eje: '', adicion: '', prisma: '', agudezaVisual: '' },
   },
   observaciones: 'Sin observaciones',
   detalle: [{ descripcion: '', cantidad: 1, precioUnitario: 0, descuento: 0, iva: 0, importe: 0, precioFinal: 0 }],
@@ -210,8 +210,8 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
       colonia: prev.colonia || coloniaFromAddr,
       ocupacion: patient.occupation || '',
       graduacion: patientRx ? {
-        od: { dnpL: patientRx.rightEye.dp || '', dnpC: '', alt: '', esfera: patientRx.rightEye.sph || '', cilindro: patientRx.rightEye.cyl || '', eje: patientRx.rightEye.axis || '', adicion: patientRx.rightEye.add || '', prisma: patientRx.rightEye.prisma || '' },
-        oi: { dnpL: patientRx.leftEye.dp || '', dnpC: '', alt: '', esfera: patientRx.leftEye.sph || '', cilindro: patientRx.leftEye.cyl || '', eje: patientRx.leftEye.axis || '', adicion: patientRx.leftEye.add || '', prisma: patientRx.leftEye.prisma || '' },
+        od: { dnpL: patientRx.rightEye.dp || '', dnpC: '', alt: '', esfera: patientRx.rightEye.sph || '', cilindro: patientRx.rightEye.cyl || '', eje: patientRx.rightEye.axis || '', adicion: patientRx.rightEye.add || '', prisma: patientRx.rightEye.prisma || '', agudezaVisual: '' },
+        oi: { dnpL: patientRx.leftEye.dp || '', dnpC: '', alt: '', esfera: patientRx.leftEye.sph || '', cilindro: patientRx.leftEye.cyl || '', eje: patientRx.leftEye.axis || '', adicion: patientRx.leftEye.add || '', prisma: patientRx.leftEye.prisma || '', agudezaVisual: '' },
       } : prev.graduacion,
       descripcionProducto: baseMica || prev.descripcionProducto,
       tratamientos: tratamientosStr || prev.tratamientos,
@@ -560,39 +560,51 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
 
           {/* ESPECIFICACIONES */}
           <Section title="Graduación">
-            <div className="overflow-hidden rounded border border-slate-200">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Derecho (OD)</th>
-                    <th className="bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] text-white px-3 py-2.5 text-center font-bold text-xs tracking-wide" colSpan={8}>Ojo Izquierdo (OI)</th>
-                  </tr>
-                  <tr className="bg-slate-50">
-                    {['DP', 'ALT', 'Esfera', 'Cilindro', 'Eje', 'Adición', 'Prisma', 'DNP(C)'].map(h => (
-                      <th key={`h-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-[10px] uppercase">{h}</th>
-                    ))}
-                    {['DP', 'ALT', 'Esfera', 'Cilindro', 'Eje', 'Adición', 'Prisma', 'DNP(C)'].map(h => (
-                      <th key={`i-${h}`} className="px-2 py-2.5 text-center font-bold text-slate-500 text-[10px] uppercase">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-t border-slate-100">
-                    {(['dnpL', 'alt', 'esfera', 'cilindro', 'eje', 'adicion', 'prisma', 'dnpC'] as const).map(f => (
-                      <td key={`od-${f}`} className="px-1.5 py-1.5">
-                        <input type="text" value={data.graduacion.od[f]} onChange={e => updateGrad('od', f, e.target.value)}
-                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
-                      </td>
-                    ))}
-                    {(['dnpL', 'alt', 'esfera', 'cilindro', 'eje', 'adicion', 'prisma', 'dnpC'] as const).map(f => (
-                      <td key={`oi-${f}`} className="px-1.5 py-1.5">
-                        <input type="text" value={data.graduacion.oi[f]} onChange={e => updateGrad('oi', f, e.target.value)}
-                          className="w-full text-center py-2 px-1 bg-transparent border border-transparent hover:border-slate-200 focus:border-[var(--accent)] focus:bg-white rounded text-sm font-semibold text-slate-700 outline-none transition-all" />
-                      </td>
-                    ))}
-                  </tr>
-                </tbody>
-              </table>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Ojo Derecho */}
+              <div className="border border-slate-200 rounded-xl overflow-hidden">
+                <div className="bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] px-4 py-2.5 flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold text-white">OD</span>
+                  <span className="text-sm font-bold text-white">Ojo Derecho</span>
+                </div>
+                <div className="p-4 space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <GradInput label="Esfera (SPH)" value={data.graduacion.od.esfera} onChange={v => updateGrad('od', 'esfera', v)} placeholder="+0.00" />
+                    <GradInput label="Cilindro (CYL)" value={data.graduacion.od.cilindro} onChange={v => updateGrad('od', 'cilindro', v)} placeholder="-0.00" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <GradInput label="Eje (AXIS)" value={data.graduacion.od.eje} onChange={v => updateGrad('od', 'eje', v)} placeholder="0 - 180" />
+                    <GradInput label="Prisma" value={data.graduacion.od.prisma} onChange={v => updateGrad('od', 'prisma', v)} placeholder="0.00" />
+                  </div>
+                  <GradInput label="Adición (ADD)" value={data.graduacion.od.adicion} onChange={v => updateGrad('od', 'adicion', v)} placeholder="+0.00" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <GradInput label="DP (MM)" value={data.graduacion.od.dnpL} onChange={v => updateGrad('od', 'dnpL', v)} placeholder="32" />
+                    <GradInput label="Agudeza Visual" value={data.graduacion.od.agudezaVisual} onChange={v => updateGrad('od', 'agudezaVisual', v)} placeholder="20/20" />
+                  </div>
+                </div>
+              </div>
+              {/* Ojo Izquierdo */}
+              <div className="border border-slate-200 rounded-xl overflow-hidden">
+                <div className="bg-gradient-to-r from-[#5b1a9e] to-[var(--accent)] px-4 py-2.5 flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold text-white">OI</span>
+                  <span className="text-sm font-bold text-white">Ojo Izquierdo</span>
+                </div>
+                <div className="p-4 space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <GradInput label="Esfera (SPH)" value={data.graduacion.oi.esfera} onChange={v => updateGrad('oi', 'esfera', v)} placeholder="+0.00" />
+                    <GradInput label="Cilindro (CYL)" value={data.graduacion.oi.cilindro} onChange={v => updateGrad('oi', 'cilindro', v)} placeholder="-0.00" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <GradInput label="Eje (AXIS)" value={data.graduacion.oi.eje} onChange={v => updateGrad('oi', 'eje', v)} placeholder="0 - 180" />
+                    <GradInput label="Prisma" value={data.graduacion.oi.prisma} onChange={v => updateGrad('oi', 'prisma', v)} placeholder="0.00" />
+                  </div>
+                  <GradInput label="Adición (ADD)" value={data.graduacion.oi.adicion} onChange={v => updateGrad('oi', 'adicion', v)} placeholder="+0.00" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <GradInput label="DP (MM)" value={data.graduacion.oi.dnpL} onChange={v => updateGrad('oi', 'dnpL', v)} placeholder="32" />
+                    <GradInput label="Agudeza Visual" value={data.graduacion.oi.agudezaVisual} onChange={v => updateGrad('oi', 'agudezaVisual', v)} placeholder="20/20" />
+                  </div>
+                </div>
+              </div>
             </div>
           </Section>
 
@@ -1007,6 +1019,16 @@ function InputField({ label, value, onChange, type = 'text', placeholder = '' }:
       <label className="block text-xs font-semibold text-slate-500 mb-1.5 uppercase tracking-wider">{label}</label>
       <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
         className="w-full px-4 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] placeholder:text-slate-400" />
+    </div>
+  );
+}
+
+function GradInput({ label, value, onChange, placeholder = '' }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }) {
+  return (
+    <div>
+      <label className="block text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-wider">{label}</label>
+      <input type="text" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
+        className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] placeholder:text-slate-300 text-center" />
     </div>
   );
 }
