@@ -48,24 +48,27 @@ export default function Ventas() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+          <div className="space-y-2">
             {filtered.map(product => (
-              <div key={product.id} className="bg-white rounded-lg border border-slate-200/80 p-3 sm:p-4 hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+              <div key={product.id} className="bg-white rounded-lg border border-slate-200/80 px-4 py-3 flex items-center gap-4 hover:shadow-md hover:border-[var(--accent)]/30 transition-all cursor-pointer group"
                 onClick={() => addToCart(product)}>
-                <div className="w-full h-20 sm:h-28 bg-gradient-to-br from-purple-50 to-slate-50 rounded-lg flex items-center justify-center mb-2 sm:mb-3 border border-slate-100 group-hover:border-purple-200 transition-colors">
-                  <Grid3X3 className="w-8 h-8 sm:w-10 sm:h-10 text-purple-200 group-hover:text-purple-400 transition-colors" />
+                <div className="w-10 h-10 bg-gradient-to-br from-purple-50 to-slate-50 rounded-lg flex items-center justify-center flex-shrink-0 border border-slate-100 group-hover:border-purple-200 transition-colors">
+                  <Grid3X3 className="w-5 h-5 text-purple-200 group-hover:text-purple-400 transition-colors" />
                 </div>
-                <h3 className="text-xs sm:text-sm font-bold text-slate-800 truncate">{product.name}</h3>
-                <p className="text-[10px] sm:text-[11px] text-slate-400 truncate mt-0.5">{product.model}</p>
-                <div className="flex items-center justify-between mt-2 sm:mt-3">
-                  <span className="text-base sm:text-lg font-extrabold text-[var(--accent)]">${product.price.toLocaleString()}</span>
-                  <span className={`text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full ${product.stock < 10 ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}`}>
-                    Stock: {product.stock}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-bold text-slate-800 truncate">{product.name}</h3>
+                  <p className="text-[11px] text-slate-400 truncate">{product.model}</p>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md font-medium hidden sm:inline">{product.category}</span>
+                  {product.brand && <span className="text-[10px] bg-purple-50 text-[var(--accent)] px-2 py-0.5 rounded-md font-medium hidden sm:inline">{product.brand}</span>}
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${product.stock < 10 ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'}`}>
+                    {product.stock}
                   </span>
-                </div>
-                <div className="mt-2 flex items-center gap-1.5">
-                  <span className="text-[9px] sm:text-[10px] bg-slate-100 text-slate-500 px-1.5 sm:px-2 py-0.5 rounded-md font-medium">{product.category}</span>
-                  {product.brand && <span className="text-[9px] sm:text-[10px] bg-purple-50 text-[var(--accent)] px-1.5 sm:px-2 py-0.5 rounded-md font-medium">{product.brand}</span>}
+                  <span className="text-sm font-extrabold text-[var(--accent)] min-w-[70px] text-right">${product.price.toLocaleString()}</span>
+                  <div className="w-7 h-7 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center group-hover:bg-[var(--accent)] group-hover:text-white transition-colors">
+                    <Plus className="w-4 h-4 text-[var(--accent)] group-hover:text-white" />
+                  </div>
                 </div>
               </div>
             ))}
