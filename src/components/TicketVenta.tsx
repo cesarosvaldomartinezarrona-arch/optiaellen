@@ -537,15 +537,9 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
 
           {/* BASE / MICA */}
           <Section title="Lente y Armazón">
-            <div className="grid grid-cols-2 gap-6">
-              <InputField label="Tipo de Lente" value={data.tipoLente} onChange={v => update('tipoLente', v)} placeholder="Monofocal, Bifocal, Progresivo..." />
-              <InputField label="Material / Índice" value={data.materialLente} onChange={v => update('materialLente', v)} placeholder="1.50, 1.60, 1.67, 1.74..." />
-            </div>
+            <LensSelector data={data} update={update} />
             <div className="mt-6">
               <InputField label="Descripción (Lente)" value={data.descripcionProducto} onChange={v => update('descripcionProducto', v)} />
-            </div>
-            <div className="mt-6">
-              <InputField label="Tratamientos" value={data.tratamientos} onChange={v => update('tratamientos', v)} placeholder="Antirreflejante, Fotocromático, Filtro UV..." />
             </div>
             <div className="grid grid-cols-2 gap-6 mt-6">
               <div>
@@ -855,6 +849,142 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
           table { page-break-inside: avoid; }
         }
       `}</style>
+    </div>
+  );
+}
+
+function LensSelector({ data, update }: { data: TicketVentaData; update: (field: string, value: string) => void }) {
+  const lensTypes = ['Monofocal', 'Bifocal Flat-Top', 'Progresivo'];
+  const materialsByType: Record<string, string[]> = {
+    'Monofocal': ['CR39', 'Policarbonato', 'Hi Index', 'Cristal'],
+    'Bifocal Flat-Top': ['CR39', 'Policarbonato', 'Hi Index', 'Cristal'],
+    'Progresivo': ['CR39', 'Policarbonato', 'Hi Index', 'Premium'],
+  };
+  const allTreatments = ['Blanco', 'Antirreflejante', 'Anti Blue Ray', 'Fotocromático', 'Tinte', 'Polarizado'];
+  const fotocromoColors = [
+    { label: 'Gris', hex: '#808080' },
+    { label: 'Tracks', hex: '#4a4a4a' },
+    { label: 'Verde', hex: '#2d8a4e' },
+    { label: 'Café', hex: '#8B4513' },
+    { label: 'Azul', hex: '#2563eb' },
+  ];
+  const grados = ['Grado 1', 'Grado 2', 'Grado 3'];
+
+  const selectedType = data.tipoLente;
+  const selectedMaterial = data.materialLente;
+  const selectedTreatments = data.tratamientos ? data.tratamientos.split(', ').filter(Boolean) : [];
+
+  const toggleTreatment = (t: string) => {
+    let next: string[];
+    if (selectedTreatments.includes(t)) {
+      next = selectedTreatments.filter(x => x !== t);
+    } else {
+      next = [...selectedTreatments, t];
+    }
+    update('tratamientos', next.join(', '));
+  };
+
+  const updateFotocromoDetail = (detail: string) => {
+    const base = selectedTreatments.filter(t => t !== 'Fotocromático');
+    base.push(`Fotocromático ${detail}`);
+    update('tratamientos', base.join(', '));
+  };
+
+  const fotocromoDetail = data.tratamientos.match(/Fotocromático\s+(.+)/)?.[1] || '';
+
+  return (
+    <div className="space-y-5">
+      {/* Tipo de Lente */}
+      <div>
+        <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Tipo de Lente</label>
+        <div className="flex flex-wrap gap-2">
+          {lensTypes.map(t => (
+            <button key={t} onClick={() => { update('tipoLente', t); update('materialLente', ''); update('tratamientos', ''); }}
+              className={`px-4 py-2.5 rounded-lg text-[13px] font-semibold transition-all border-2 ${
+                selectedType === t
+                  ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-md shadow-[rgba(var(--accent-rgb),0.25)]'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+              }`}>
+              {t}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Material */}
+      {selectedType && (
+        <div>
+          <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Material</label>
+          <div className="flex flex-wrap gap-2">
+            {(materialsByType[selectedType] || []).map(m => (
+              <button key={m} onClick={() => { update('materialLente', m); update('tratamientos', ''); }}
+                className={`px-4 py-2.5 rounded-lg text-[13px] font-semibold transition-all border-2 ${
+                  selectedMaterial === m
+                    ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-md shadow-[rgba(var(--accent-rgb),0.25)]'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                }`}>
+                {m}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Tratamientos */}
+      {selectedMaterial && (
+        <div>
+          <label className="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-wider">Tratamientos</label>
+          <div className="flex flex-wrap gap-2">
+            {allTreatments.map(t => {
+              const isActive = selectedTreatments.some(st => st === t || st.startsWith(t));
+              return (
+                <button key={t} onClick={() => toggleTreatment(t)}
+                  className={`px-4 py-2.5 rounded-lg text-[13px] font-semibold transition-all border-2 ${
+                    isActive
+                      ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-md shadow-[rgba(var(--accent-rgb),0.25)]'
+                      : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                  }`}>
+                  {t}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Fotocromático sub-options */}
+          {selectedTreatments.some(t => t.startsWith('Fotocromático')) && (
+            <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200 space-y-3">
+              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Fotocromático — Selecciona color y grado</p>
+              <div className="flex flex-wrap gap-2">
+                {fotocromoColors.map(c => {
+                  const isSelected = fotocromoDetail.includes(c.label);
+                  return (
+                    <button key={c.label} onClick={() => updateFotocromoDetail(c.label)}
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all ${
+                        isSelected ? 'border-[var(--accent)] shadow-md' : 'border-slate-200 hover:border-slate-300'
+                      }`}>
+                      <span className="w-5 h-5 rounded-full border border-slate-300" style={{ backgroundColor: c.hex }} />
+                      <span className="text-[12px] font-semibold text-slate-700">{c.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {grados.map(g => {
+                  const isSelected = fotocromoDetail.includes(g);
+                  return (
+                    <button key={g} onClick={() => updateFotocromoDetail(`${fotocromoDetail.split(' ')[0]} ${g}`)}
+                      className={`px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all border-2 ${
+                        isSelected ? 'bg-[var(--accent)] text-white border-[var(--accent)]' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                      }`}>
+                      {g}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
