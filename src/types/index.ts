@@ -80,6 +80,14 @@ export interface Product {
   brand?: string;
   type?: string;
   color?: string;
+  material?: string;
+  forma?: string;
+  talla?: string;
+  ganancia?: number;
+  proveedor?: string;
+  sucursal?: string;
+  exhibidor?: string;
+  estatus?: string;
 }
 
 export type ProductCategory = 'Monturas' | 'Lentes de Contacto' | 'Cristales' | 'Accesorios';

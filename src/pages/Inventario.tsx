@@ -13,7 +13,9 @@ const categoryColors: Record<ProductCategory, string> = {
 type ProductFormData = {
   name: string; model: string; category: ProductCategory;
   price: string; cost: string; stock: string;
-  brand: string; type: string; color: string;
+  brand: string; color: string; material: string;
+  forma: string; talla: string; proveedor: string;
+  sucursal: string; exhibidor: string; estatus: string;
 };
 
 function ProductForm({ form, setForm, onSave, onCancel, title }: {
@@ -33,41 +35,49 @@ function ProductForm({ form, setForm, onSave, onCancel, title }: {
             <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-slate-200" /> Información general
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Nombre *</label>
-                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Gafas Urban Chic" /></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Modelo</label>
-                <input type="text" value={form.model} onChange={e => update('model', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: UC-2024" /></div>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
-              <span className="w-8 h-px bg-slate-200" /> Clasificación
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Categoría</label>
-                <select value={form.category} onChange={e => update('category', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Nombre *</label>
+                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Montura Ray-Ban" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Marca</label>
+                <input type="text" value={form.brand} onChange={e => update('brand', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Ray-Ban" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Modelo</label>
+                <input type="text" value={form.model} onChange={e => update('model', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Wayfarer RB2140" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Color</label>
+                <input type="text" value={form.color} onChange={e => update('color', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Negro mate" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Categoría</label>
+                <select value={form.category} onChange={e => update('category', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
                   {(['Monturas', 'Lentes de Contacto', 'Cristales', 'Accesorios'] as ProductCategory[]).map(c => (<option key={c} value={c}>{c}</option>))}</select></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Marca</label>
-                <input type="text" value={form.brand} onChange={e => update('brand', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Ray-Ban" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Material</label>
+                <input type="text" value={form.material} onChange={e => update('material', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Acetato" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Forma</label>
+                <input type="text" value={form.forma} onChange={e => update('forma', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Rectangular" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Talla</label>
+                <input type="text" value={form.talla} onChange={e => update('talla', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: 54-18-140" /></div>
             </div>
-            <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Tipo</label>
-              <input type="text" value={form.type} onChange={e => update('type', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Acetato, Metal, Diario..." /></div>
-            <div className="mt-6"><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Color de armazón / montura</label>
-              <input type="text" value={form.color} onChange={e => update('color', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Negro, Carey, Dorado..." /></div>
           </div>
           <div>
             <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-slate-200" /> Detalles comerciales
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Costo Real</label>
-                <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Precio de Venta *</label>
-                <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-2 uppercase tracking-wider">Stock</label>
-                <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-4 py-3.5 bg-slate-50 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0" /></div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Costo</label>
+                <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Precio Venta *</label>
+                <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Existencia</label>
+                <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0" /></div>
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Proveedor</label>
+                <input type="text" value={form.proveedor} onChange={e => update('proveedor', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Proveedor A" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Sucursal</label>
+                <input type="text" value={form.sucursal} onChange={e => update('sucursal', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Dolores" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Exhibidor</label>
+                <input type="text" value={form.exhibidor} onChange={e => update('exhibidor', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Vitrina 2" /></div>
+            </div>
+            <div className="mt-4"><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Estatus</label>
+              <select value={form.estatus} onChange={e => update('estatus', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)]">
+                {['Disponible', 'Agotado', 'Descontinuado', 'Reservado'].map(e => (<option key={e} value={e}>{e}</option>))}</select></div>
           </div>
         </div>
         <div className="flex justify-end gap-3 p-6 sm:p-8 border-t border-slate-100 bg-slate-50/50 rounded-b-3xl">
@@ -87,8 +97,8 @@ export default function Inventario() {
   const [editProduct, setEditProduct] = useState<string | null>(null);
   const [showSaved, setShowSaved] = useState(false);
 
-  const [newProduct, setNewProduct] = useState({ name: '', model: '', category: 'Monturas' as ProductCategory, price: '', cost: '', stock: '', brand: '', type: '', color: '' });
-  const [editForm, setEditForm] = useState({ name: '', model: '', category: '' as ProductCategory, price: '', cost: '', stock: '', brand: '', type: '', color: '' });
+  const [newProduct, setNewProduct] = useState({ name: '', model: '', category: 'Monturas' as ProductCategory, price: '', cost: '', stock: '', brand: '', color: '', material: '', forma: '', talla: '', proveedor: '', sucursal: '', exhibidor: '', estatus: 'Disponible' });
+  const [editForm, setEditForm] = useState({ name: '', model: '', category: '' as ProductCategory, price: '', cost: '', stock: '', brand: '', color: '', material: '', forma: '', talla: '', proveedor: '', sucursal: '', exhibidor: '', estatus: 'Disponible' });
 
   const filtered = products.filter(p => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase()) || p.model.toLowerCase().includes(search.toLowerCase());
@@ -102,27 +112,36 @@ export default function Inventario() {
 
   const handleAdd = () => {
     if (!newProduct.name || !newProduct.price) return;
+    const precio = parseFloat(newProduct.price) || 0;
+    const costo = parseFloat(newProduct.cost) || 0;
     setProducts([...products, {
       id: `PRD${String(products.length + 1).padStart(3, '0')}`, name: newProduct.name, model: newProduct.model,
-      category: newProduct.category, price: parseFloat(newProduct.price), cost: parseFloat(newProduct.cost) || 0, stock: parseInt(newProduct.stock) || 0, brand: newProduct.brand, type: newProduct.type, color: newProduct.color,
+      category: newProduct.category, price: precio, cost: costo, stock: parseInt(newProduct.stock) || 0,
+      brand: newProduct.brand, color: newProduct.color, material: newProduct.material,
+      forma: newProduct.forma, talla: newProduct.talla, ganancia: precio - costo,
+      proveedor: newProduct.proveedor, sucursal: newProduct.sucursal, exhibidor: newProduct.exhibidor, estatus: newProduct.estatus,
     }]);
     setShowAddModal(false);
-    setNewProduct({ name: '', model: '', category: 'Monturas', price: '', cost: '', stock: '', brand: '', type: '', color: '' });
+    setNewProduct({ name: '', model: '', category: 'Monturas', price: '', cost: '', stock: '', brand: '', color: '', material: '', forma: '', talla: '', proveedor: '', sucursal: '', exhibidor: '', estatus: 'Disponible' });
   };
 
   const startEdit = (id: string) => {
     const p = products.find(pr => pr.id === id);
     if (!p) return;
     setEditProduct(id);
-    setEditForm({ name: p.name, model: p.model, category: p.category, price: String(p.price), cost: String(p.cost || ''), stock: String(p.stock), brand: p.brand || '', type: p.type || '', color: p.color || '' });
+    setEditForm({ name: p.name, model: p.model, category: p.category, price: String(p.price), cost: String(p.cost || ''), stock: String(p.stock), brand: p.brand || '', color: p.color || '', material: p.material || '', forma: p.forma || '', talla: p.talla || '', proveedor: p.proveedor || '', sucursal: p.sucursal || '', exhibidor: p.exhibidor || '', estatus: p.estatus || 'Disponible' });
   };
 
   const saveEdit = () => {
     if (!editProduct) return;
+    const precio = parseFloat(editForm.price) || 0;
+    const costo = parseFloat(editForm.cost) || 0;
     setProducts(products.map(p => p.id === editProduct ? {
       ...p, name: editForm.name, model: editForm.model, category: editForm.category,
-      price: parseFloat(editForm.price) || p.price, cost: parseFloat(editForm.cost) || 0, stock: parseInt(editForm.stock) || p.stock,
-      brand: editForm.brand, type: editForm.type, color: editForm.color,
+      price: precio, cost: costo, stock: parseInt(editForm.stock) || p.stock,
+      brand: editForm.brand, color: editForm.color, material: editForm.material,
+      forma: editForm.forma, talla: editForm.talla, ganancia: precio - costo,
+      proveedor: editForm.proveedor, sucursal: editForm.sucursal, exhibidor: editForm.exhibidor, estatus: editForm.estatus,
     } : p));
     setEditProduct(null);
     setShowSaved(true);
@@ -186,24 +205,26 @@ export default function Inventario() {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead><tr className="bg-slate-50/80">
-              {['ID', 'Producto', 'Modelo', 'Categoría', 'Precio', 'Stock', 'Acciones'].map(h => (
-                <th key={h} className="text-left text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-4 py-2">{h}</th>
+              {['ID', 'Producto', 'Marca', 'Modelo', 'Color', 'Categoría', 'Precio', 'Stock', 'Estatus', 'Acciones'].map(h => (
+                <th key={h} className="text-left text-[10px] font-semibold text-slate-400 uppercase tracking-wider px-3 py-2">{h}</th>
               ))}
             </tr></thead>
             <tbody className="divide-y divide-slate-100">
               {filtered.map(product => (
                 <tr key={product.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="px-4 py-2 text-[11px] font-bold text-[var(--accent)]">{product.id}</td>
-                  <td className="px-4 py-2">
-                    <div><span className="text-[13px] font-bold text-slate-800">{product.name}</span>
-                    {product.brand && <span className="text-[11px] text-slate-400 ml-2">({product.brand})</span>}</div>
+                  <td className="px-3 py-2 text-[11px] font-bold text-[var(--accent)]">{product.id}</td>
+                  <td className="px-3 py-2">
+                    <span className="text-[13px] font-bold text-slate-800">{product.name}</span>
                   </td>
-                  <td className="px-4 py-2 text-[13px] text-slate-600">{product.model}</td>
-                  <td className="px-4 py-2"><span className={`inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold ${categoryColors[product.category]}`}>{product.category}</span></td>
-                  <td className="px-4 py-2 text-[13px] font-bold text-slate-900">${product.price.toLocaleString()}</td>
-                  <td className="px-4 py-2"><span className={`text-[13px] font-bold ${product.stock < 10 ? 'text-red-600' : 'text-slate-800'}`}>{product.stock}</span></td>
-                  <td className="px-4 py-2">
-                    <div className="flex items-center gap-1.5">
+                  <td className="px-3 py-2 text-[12px] text-slate-500">{product.brand || '—'}</td>
+                  <td className="px-3 py-2 text-[12px] text-slate-600">{product.model}</td>
+                  <td className="px-3 py-2 text-[12px] text-slate-600">{product.color || '—'}</td>
+                  <td className="px-3 py-2"><span className={`inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold ${categoryColors[product.category]}`}>{product.category}</span></td>
+                  <td className="px-3 py-2 text-[12px] font-bold text-slate-900">${product.price.toLocaleString()}</td>
+                  <td className="px-3 py-2"><span className={`text-[12px] font-bold ${product.stock < 10 ? 'text-red-600' : 'text-slate-800'}`}>{product.stock}</span></td>
+                  <td className="px-3 py-2"><span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${product.estatus === 'Disponible' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : product.estatus === 'Agotado' ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-slate-100 text-slate-500 border border-slate-200'}`}>{product.estatus || 'Disponible'}</span></td>
+                  <td className="px-3 py-2">
+                    <div className="flex items-center gap-1">
                       <button onClick={() => startEdit(product.id)} className="w-7 h-7 rounded-lg bg-purple-50 text-[var(--accent)] hover:bg-purple-100 flex items-center justify-center transition-colors border border-purple-100"><Edit2 className="w-3.5 h-3.5" /></button>
                       <button onClick={() => handleDelete(product.id)} className="w-7 h-7 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 flex items-center justify-center transition-colors border border-red-100"><Trash2 className="w-3.5 h-3.5" /></button>
                     </div>
