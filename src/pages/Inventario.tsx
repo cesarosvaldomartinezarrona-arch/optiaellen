@@ -36,12 +36,12 @@ function ProductForm({ form, setForm, onSave, onCancel, title }: {
               <span className="w-8 h-px bg-slate-200" /> Información general
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Nombre *</label>
-                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Montura Ray-Ban" /></div>
+              <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Código *</label>
+                <input type="text" value={form.name} onChange={e => update('name', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: AR-00125" /></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Marca</label>
-                <input type="text" value={form.brand} onChange={e => update('brand', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Ray-Ban" /></div>
+                <input type="text" value={form.brand} onChange={e => update('brand', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Genérica" /></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Modelo</label>
-                <input type="text" value={form.model} onChange={e => update('model', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Wayfarer RB2140" /></div>
+                <input type="text" value={form.model} onChange={e => update('model', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: 5208" /></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Color</label>
                 <input type="text" value={form.color} onChange={e => update('color', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: Negro mate" /></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Categoría</label>
@@ -61,15 +61,15 @@ function ProductForm({ form, setForm, onSave, onCancel, title }: {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Costo</label>
-                <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
+                <input type="number" value={form.cost} onChange={e => update('cost', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: 180" /></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Precio Venta *</label>
-                <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0.00" /></div>
+                <input type="number" value={form.price} onChange={e => update('price', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: 450" /></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Ganancia</label>
                 <div className="w-full px-3 py-2.5 bg-emerald-50 rounded-lg border border-emerald-200 text-[13px] font-bold text-emerald-700">
                   ${((parseFloat(form.price) || 0) - (parseFloat(form.cost) || 0)).toLocaleString()}
                 </div></div>
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Existencia</label>
-                <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="0" /></div>
+                <input type="number" value={form.stock} onChange={e => update('stock', e.target.value)} className="w-full px-3 py-2.5 bg-slate-50 rounded-lg border border-slate-200 text-[13px] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/20 focus:border-[var(--accent)] placeholder:text-slate-400" placeholder="Ej: 2" /></div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
               <div><label className="block text-[10px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Proveedor</label>
