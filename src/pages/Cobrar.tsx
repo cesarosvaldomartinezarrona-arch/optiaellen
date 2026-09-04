@@ -174,7 +174,7 @@ export default function Cobrar() {
         <p className="text-slate-500 text-xs sm:text-sm mt-1">Gestión de cobros y pagos pendientes</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
         <div className="space-y-3">
           <div className="relative flex">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
