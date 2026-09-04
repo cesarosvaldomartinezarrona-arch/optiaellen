@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { Search, ShoppingCart, Plus, Minus, Trash2, Tag, Grid3X3, X } from 'lucide-react';
+import { Search, ShoppingCart, Plus, Minus, Trash2, Tag, X } from 'lucide-react';
 import type { ProductCategory } from '../types';
 
 const categories: ProductCategory[] = ['Monturas', 'Lentes de Contacto', 'Cristales', 'Accesorios'];
