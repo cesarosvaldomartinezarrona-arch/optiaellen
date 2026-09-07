@@ -343,26 +343,26 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
     const totalCalc = data.totales.total;
     w.document.write(`<!DOCTYPE html><html><head><title>Ticket ${data.folio}</title>
 <style>
-  @page { margin: 3mm; }
+  @page { size: 80mm auto; margin: 2mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #000; line-height: 1.5; overflow-x: hidden; }
-  .ticket-wrap { max-width: 280px; margin: 0 auto; word-wrap: break-word; overflow-wrap: break-word; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 11pt; color: #000; line-height: 1.45; overflow-x: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .ticket-wrap { width: 72mm; margin: 0 auto; word-wrap: break-word; overflow-wrap: break-word; }
   .center { text-align: center; }
   .bold { font-weight: bold; }
-  .line { border-top: 1px dashed #000; margin: 6px 0; }
-  .line2 { border-top: 2px solid #000; margin: 6px 0; }
+  .line { border-top: 1px dashed #000; margin: 4px 0; }
+  .line2 { border-top: 2px solid #000; margin: 4px 0; }
   table { width: 100%; border-collapse: collapse; }
-  td, th { padding: 2px 0; font-size: 14px; }
+  td, th { padding: 1px 0; font-size: 10pt; }
   .right { text-align: right; }
-  .small { font-size: 13px; }
+  .small { font-size: 9pt; }
 </style></head><body>
 <div class="ticket-wrap">
-${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:160px;height:auto;margin-bottom:4px" /></div>` : `<div class="center bold" style="font-size:22px">${data.sucursal || 'OPTICA'}</div>`}
+${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:160px;height:auto;margin-bottom:4px" /></div>` : `<div class="center bold" style="font-size:16pt">${data.sucursal || 'OPTICA'}</div>`}
 <div class="center small">${data.direccionSucursal || ''}</div>
 <div class="center small">Tel: ${data.telefonoOptica || ''}</div>
 <div class="center small">RFC: ${data.rfc || ''}</div>
 <div class="line2"></div>
-<div class="center bold" style="font-size:18px">TICKET DE VENTA</div>
+<div class="center bold" style="font-size:13pt">TICKET DE VENTA</div>
 <div class="line"></div>
 <table><tr><td class="small">Folio:</td><td class="right bold">${data.folio || '—'}</td></tr>
 <tr><td class="small">Fecha:</td><td class="right">${data.fechaVenta || '—'}</td></tr>
@@ -389,10 +389,10 @@ ${data.armazon ? `<div class="small">Armazon: ${data.armazon}</div>` : ''}
 <table>${det.map(d => `<tr><td class="small">${d.descripcion} ${d.cantidad > 1 ? 'x' + d.cantidad : ''}</td><td class="right small">$${d.precioFinal.toLocaleString()}</td></tr>`).join('')}</table>
 <div class="line2"></div>
 <table>
-<tr><td class="bold" style="font-size:16px">SUBTOTAL</td><td class="right bold" style="font-size:16px">$${data.totales.subtotal.toLocaleString()}</td></tr>
+<tr><td class="bold" style="font-size:11pt">SUBTOTAL</td><td class="right bold" style="font-size:11pt">$${data.totales.subtotal.toLocaleString()}</td></tr>
 ${data.totales.descuento > 0 ? `<tr><td class="small">DESCUENTO</td><td class="right small">-$${data.totales.descuento.toLocaleString()}</td></tr>` : ''}
 <tr><td class="small">IVA (16%)</td><td class="right small">$${data.totales.iva.toLocaleString()}</td></tr>
-<tr><td class="bold" style="font-size:18px">TOTAL</td><td class="right bold" style="font-size:18px">$${totalCalc.toLocaleString()}</td></tr>
+<tr><td class="bold" style="font-size:13pt">TOTAL</td><td class="right bold" style="font-size:13pt">$${totalCalc.toLocaleString()}</td></tr>
 </table>
 ${data.anticipo > 0 ? `<div class="line"></div><table>
 <tr><td class="small">ANTICIPO</td><td class="right small">$${data.anticipo.toLocaleString()}</td></tr>
