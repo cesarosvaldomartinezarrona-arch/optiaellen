@@ -374,15 +374,12 @@ ${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:16
 ${data.rfcCliente ? `<tr><td class="small">RFC:</td><td class="right">${data.rfcCliente}</td></tr>` : ''}</table>
 <div class="line"></div>
 <div class="bold small">GRADUACION</div>
-<div class="small bold">OD:</div>
-<table style="margin-left:8px">
-<tr><td class="small">ESF</td><td class="small right" style="width:60px">${data.graduacion.od.esfera || '—'}</td><td class="small"> CIL</td><td class="small right" style="width:60px">${data.graduacion.od.cilindro || '—'}</td></tr>
-<tr><td class="small">EJE</td><td class="small right">${data.graduacion.od.eje || '—'}</td><td class="small">ADD</td><td class="small right">${data.graduacion.od.adicion || '—'}</td></tr>
-</table>
-<div class="small bold">OI:</div>
-<table style="margin-left:8px">
-<tr><td class="small">ESF</td><td class="small right" style="width:60px">${data.graduacion.oi.esfera || '—'}</td><td class="small"> CIL</td><td class="small right" style="width:60px">${data.graduacion.oi.cilindro || '—'}</td></tr>
-<tr><td class="small">EJE</td><td class="small right">${data.graduacion.oi.eje || '—'}</td><td class="small">ADD</td><td class="small right">${data.graduacion.oi.adicion || '—'}</td></tr>
+<table style="width:100%">
+<tr><td class="small bold" style="width:24px">OD:</td><td class="small" style="width:32px">ESF</td><td class="small" style="width:50px;border-bottom:1px solid #999">${data.graduacion.od.esfera || '—'}</td><td class="small" style="width:32px">CIL</td><td class="small" style="width:50px;border-bottom:1px solid #999">${data.graduacion.od.cilindro || '—'}</td></tr>
+<tr><td class="small bold"></td><td class="small">EJE</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.od.eje || '—'}</td><td class="small">ADD</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.od.adicion || '—'}</td></tr>
+<tr><td colspan="5" style="height:6px"></td></tr>
+<tr><td class="small bold">OI:</td><td class="small">ESF</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.esfera || '—'}</td><td class="small">CIL</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.cilindro || '—'}</td></tr>
+<tr><td class="small bold"></td><td class="small">EJE</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.eje || '—'}</td><td class="small">ADD</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.adicion || '—'}</td></tr>
 </table>
 ${data.tipoLente || data.materialLente ? `<div class="small">Lente: ${data.tipoLente || ''} ${data.materialLente || ''}</div>` : ''}
 ${data.tratamientos ? `<div class="small">Tratamientos: ${data.tratamientos}</div>` : ''}
