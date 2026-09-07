@@ -345,8 +345,8 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 <style>
   @page { margin: 3mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #000; line-height: 1.5; }
-  .ticket-wrap { max-width: 320px; margin: 0 auto; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #000; line-height: 1.5; overflow-x: hidden; }
+  .ticket-wrap { max-width: 280px; margin: 0 auto; word-wrap: break-word; overflow-wrap: break-word; }
   .center { text-align: center; }
   .bold { font-weight: bold; }
   .line { border-top: 1px dashed #000; margin: 6px 0; }
@@ -374,9 +374,15 @@ ${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:16
 ${data.rfcCliente ? `<tr><td class="small">RFC:</td><td class="right">${data.rfcCliente}</td></tr>` : ''}</table>
 <div class="line"></div>
 <div class="bold small">GRADUACION</div>
-<table>
-<tr><td class="small bold">OD:</td><td class="small right">ESF ${data.graduacion.od.esfera || '—'} | CIL ${data.graduacion.od.cilindro || '—'} | EJE ${data.graduacion.od.eje || '—'} | ADD ${data.graduacion.od.adicion || '—'}</td></tr>
-<tr><td class="small bold">OI:</td><td class="small right">ESF ${data.graduacion.oi.esfera || '—'} | CIL ${data.graduacion.oi.cilindro || '—'} | EJE ${data.graduacion.oi.eje || '—'} | ADD ${data.graduacion.oi.adicion || '—'}</td></tr>
+<div class="small bold">OD:</div>
+<table style="margin-left:8px">
+<tr><td class="small">ESF</td><td class="small right" style="width:60px">${data.graduacion.od.esfera || '—'}</td><td class="small"> CIL</td><td class="small right" style="width:60px">${data.graduacion.od.cilindro || '—'}</td></tr>
+<tr><td class="small">EJE</td><td class="small right">${data.graduacion.od.eje || '—'}</td><td class="small">ADD</td><td class="small right">${data.graduacion.od.adicion || '—'}</td></tr>
+</table>
+<div class="small bold">OI:</div>
+<table style="margin-left:8px">
+<tr><td class="small">ESF</td><td class="small right" style="width:60px">${data.graduacion.oi.esfera || '—'}</td><td class="small"> CIL</td><td class="small right" style="width:60px">${data.graduacion.oi.cilindro || '—'}</td></tr>
+<tr><td class="small">EJE</td><td class="small right">${data.graduacion.oi.eje || '—'}</td><td class="small">ADD</td><td class="small right">${data.graduacion.oi.adicion || '—'}</td></tr>
 </table>
 ${data.tipoLente || data.materialLente ? `<div class="small">Lente: ${data.tipoLente || ''} ${data.materialLente || ''}</div>` : ''}
 ${data.tratamientos ? `<div class="small">Tratamientos: ${data.tratamientos}</div>` : ''}
