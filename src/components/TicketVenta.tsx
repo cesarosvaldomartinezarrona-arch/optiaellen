@@ -333,7 +333,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
 <style>
   @page { margin: 3mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Courier New', monospace; font-size: 15px; color: #000; line-height: 1.5; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #000; line-height: 1.5; }
   .ticket-wrap { max-width: 320px; margin: 0 auto; }
   .center { text-align: center; }
   .bold { font-weight: bold; }
