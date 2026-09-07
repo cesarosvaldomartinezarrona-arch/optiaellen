@@ -324,9 +324,21 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
     window.open(url, '_blank');
   };
 
-  const handlePrintThermal = () => {
+  const handlePrintThermal = async () => {
     const w = window.open('', '_blank', 'width=400,height=800');
     if (!w) return;
+
+    let logoBase64 = '';
+    try {
+      const resp = await fetch('/optiaellen/logo.png');
+      const blob = await resp.blob();
+      logoBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+    } catch {}
+
     const det = data.detalle.filter(d => d.descripcion);
     const totalCalc = data.totales.total;
     w.document.write(`<!DOCTYPE html><html><head><title>Ticket ${data.folio}</title>
@@ -345,7 +357,7 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
   .small { font-size: 13px; }
 </style></head><body>
 <div class="ticket-wrap">
-<div class="center bold" style="font-size:22px">${data.sucursal || 'OPTICA'}</div>
+${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:160px;height:auto;margin-bottom:4px" /></div>` : `<div class="center bold" style="font-size:22px">${data.sucursal || 'OPTICA'}</div>`}
 <div class="center small">${data.direccionSucursal || ''}</div>
 <div class="center small">Tel: ${data.telefonoOptica || ''}</div>
 <div class="center small">RFC: ${data.rfc || ''}</div>
