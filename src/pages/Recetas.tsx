@@ -1,9 +1,62 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Plus, Eye, Calendar, Stethoscope, X, FileDown, Printer, Check, Glasses, Scissors as Treatment, Sparkles } from 'lucide-react';
 import type { Prescription, EyeData, SelectedLens, Treatment as TreatmentType } from '../types';
 import { availableLenses, availableTreatments } from '../data/mockData';
 import jsPDF from 'jspdf';
+
+const EyeForm = React.memo(function EyeForm({ label, data, onChange, readonly = false }: { label: string; data: EyeData; onChange: (d: EyeData) => void; readonly?: boolean }) {
+  const isOD = label.includes('OD');
+  return (
+    <div className="bg-[#fafaf8] rounded-lg border border-slate-200/70 p-5 sm:p-6 shadow-sm">
+      <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-200/60">
+        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-sm ${isOD ? 'bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] text-white' : 'bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] text-white'}`}>
+          <Eye className="w-5 h-5" />
+        </div>
+        <div>
+          <h4 className="text-[15px] font-bold text-[#1e3a6e] leading-none">{label}</h4>
+          <p className="text-[11px] text-slate-400 font-medium mt-0.5">{isOD ? 'Ojo Derecho' : 'Ojo Izquierdo'}</p>
+        </div>
+        <div className={`ml-auto w-2 h-2 rounded-full ${isOD ? 'bg-[var(--accent)]' : 'bg-[#2563eb]'} animate-pulse`} />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-[12px] font-bold text-slate-700 mb-2">Esfera (SPH)</label>
+          <SpinnerInput value={data.sph} onChange={v => onChange({ ...data, sph: v })} step={0.25} min={-20} max={20} placeholder="+0.00" />
+        </div>
+        <div>
+          <label className="block text-[12px] font-bold text-slate-700 mb-2">Cilindro (CYL)</label>
+          <SpinnerInput value={data.cyl} onChange={v => onChange({ ...data, cyl: v })} step={0.25} min={-10} max={10} placeholder="-0.00" />
+        </div>
+        <div>
+          <label className="block text-[12px] font-bold text-slate-700 mb-2">Eje (AXIS)</label>
+          <SpinnerInput value={data.axis} onChange={v => onChange({ ...data, axis: v })} step={5} min={0} max={180} placeholder="0 - 180" />
+        </div>
+        <div>
+          <label className="block text-[12px] font-bold text-slate-700 mb-2">Prisma</label>
+          <SpinnerInput value={data.prisma} onChange={v => onChange({ ...data, prisma: v })} step={0.25} min={0} max={20} placeholder="0.00" />
+        </div>
+      </div>
+      <div className="mt-4">
+        <label className="block text-[12px] font-bold text-slate-700 mb-2">Adición (ADD)</label>
+        <SpinnerInput value={data.add} onChange={v => onChange({ ...data, add: v })} step={0.25} min={0} max={6} placeholder="+0.00" />
+      </div>
+      <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200/40">
+        <div>
+          <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">DP (mm)</label>
+          <SpinnerInput value={data.dp} onChange={v => onChange({ ...data, dp: v })} step={1} min={0} max={80} placeholder="32" compact raw />
+        </div>
+        <div>
+          <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agudeza Visual</label>
+          <input type="text" inputMode="text" value={data.av} onChange={e => onChange({ ...data, av: e.target.value })} readOnly={readonly}
+            placeholder="20/20" data-no-upper style={{ textTransform: 'none' }}
+            className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]'}`} />
+        </div>
+      </div>
+    </div>
+  );
+});
 
 const emptyEye: EyeData = { sph: '', cyl: '', axis: '', prisma: '', add: '', dp: '', av: '' };
 
@@ -245,60 +298,6 @@ export default function Recetas() {
     setPrescriptions([...prescriptions, rx]);
     setShowModal(false);
     setNewRx({ patientId: '', doctor: 'Dr. Elena Ruiz', status: 'Vigente', rightEye: { ...emptyEye }, leftEye: { ...emptyEye }, recommendations: '', observations: '', selectedLenses: [], treatments: [] });
-  };
-
-  const EyeForm = ({ label, data, onChange, readonly = false }: { label: string; data: EyeData; onChange: (d: EyeData) => void; readonly?: boolean }) => {
-    const isOD = label.includes('OD');
-    return (
-      <div className="bg-[#fafaf8] rounded-lg border border-slate-200/70 p-5 sm:p-6 shadow-sm">
-        <div className="flex items-center gap-3 mb-5 pb-4 border-b border-slate-200/60">
-          <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-sm ${isOD ? 'bg-gradient-to-br from-[var(--accent)] to-[var(--accent-dark)] text-white' : 'bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] text-white'}`}>
-            <Eye className="w-5 h-5" />
-          </div>
-          <div>
-            <h4 className="text-[15px] font-bold text-[#1e3a6e] leading-none">{label}</h4>
-            <p className="text-[11px] text-slate-400 font-medium mt-0.5">{isOD ? 'Ojo Derecho' : 'Ojo Izquierdo'}</p>
-          </div>
-          <div className={`ml-auto w-2 h-2 rounded-full ${isOD ? 'bg-[var(--accent)]' : 'bg-[#2563eb]'} animate-pulse`} />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-[12px] font-bold text-slate-700 mb-2">Esfera (SPH)</label>
-            <SpinnerInput value={data.sph} onChange={v => onChange({ ...data, sph: v })} step={0.25} min={-20} max={20} placeholder="+0.00" />
-          </div>
-          <div>
-            <label className="block text-[12px] font-bold text-slate-700 mb-2">Cilindro (CYL)</label>
-            <SpinnerInput value={data.cyl} onChange={v => onChange({ ...data, cyl: v })} step={0.25} min={-10} max={10} placeholder="-0.00" />
-          </div>
-          <div>
-            <label className="block text-[12px] font-bold text-slate-700 mb-2">Eje (AXIS)</label>
-            <SpinnerInput value={data.axis} onChange={v => onChange({ ...data, axis: v })} step={5} min={0} max={180} placeholder="0 - 180" />
-          </div>
-          <div>
-            <label className="block text-[12px] font-bold text-slate-700 mb-2">Prisma</label>
-            <SpinnerInput value={data.prisma} onChange={v => onChange({ ...data, prisma: v })} step={0.25} min={0} max={20} placeholder="0.00" />
-          </div>
-        </div>
-        <div className="mt-4">
-          <label className="block text-[12px] font-bold text-slate-700 mb-2">Adición (ADD)</label>
-          <SpinnerInput value={data.add} onChange={v => onChange({ ...data, add: v })} step={0.25} min={0} max={6} placeholder="+0.00" />
-        </div>
-        {/* DP y AV como campos secundarios colapsables */}
-        <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200/40">
-          <div>
-            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">DP (mm)</label>
-            <SpinnerInput value={data.dp} onChange={v => onChange({ ...data, dp: v })} step={1} min={0} max={80} placeholder="32" compact raw />
-          </div>
-          <div>
-            <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agudeza Visual</label>
-            <input type="text" inputMode="text" value={data.av} onChange={e => onChange({ ...data, av: e.target.value })} readOnly={readonly}
-              placeholder="20/20" data-no-upper style={{ textTransform: 'none' }}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]'}`} />
-          </div>
-        </div>
-      </div>
-    );
   };
 
   return (
