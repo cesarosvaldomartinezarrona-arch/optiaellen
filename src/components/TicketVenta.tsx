@@ -350,14 +350,14 @@ ${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:16
 <div class="line2"></div>
 <div class="center bold" style="font-size:13pt">TICKET DE VENTA</div>
 <div class="line"></div>
-<table><tr><td class="small">Folio:</td><td class="right bold">${data.folio || '\u2014'}</td></tr>
-<tr><td class="small">Fecha:</td><td class="right">${data.fechaVenta || '\u2014'}</td></tr>
-<tr><td class="small">Recepcionista:</td><td class="right">${data.recepcionista || '\u2014'}</td></tr></table>
+<table><tr><td class="small bold">Folio:</td><td class="small bold">${data.folio || '\u2014'}</td></tr>
+<tr><td class="small bold">Fecha:</td><td class="small">${data.fechaVenta || '\u2014'}</td></tr>
+<tr><td class="small bold">Recepcionista:</td><td class="small">${data.recepcionista || '\u2014'}</td></tr></table>
 <div class="line"></div>
-<div class="bold small">DATOS DEL CLIENTE</div>
-<div class="small"><b>Nombre:</b> ${data.paciente || '\u2014'}</div>
-<div class="small"><b>Telefono:</b> ${data.telefonoCliente || '\u2014'}</div>
-${data.rfcCliente ? `<div class="small"><b>RFC:</b> ${data.rfcCliente}</div>` : ''}
+<div class="bold" style="font-size:11pt">DATOS DEL CLIENTE</div>
+<div style="font-size:10pt"><b>Nombre:</b> ${data.paciente || '\u2014'}</div>
+<div style="font-size:10pt"><b>Telefono:</b> ${data.telefonoCliente || '\u2014'}</div>
+${data.rfcCliente ? `<div style="font-size:10pt"><b>RFC:</b> ${data.rfcCliente}</div>` : ''}
 <div class="line"></div>
 <div class="bold small">GRADUACION</div>
 <table style="width:100%">
