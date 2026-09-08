@@ -12,19 +12,17 @@ function SpinnerInput({ value, onChange, step = 0.25, min, max, placeholder, com
 }) {
   const parse = (v: string) => { const n = parseFloat(v); return isNaN(n) ? 0 : n; };
   const num = parse(value);
-  const inc = () => { let n = num + step; if (max !== undefined && n > max) n = max; onChange(n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2)); };
-  const dec = () => { let n = num - step; if (min !== undefined && n < min) n = min; onChange(n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2)); };
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let v = e.target.value;
-    if (v !== '' && v !== '-' && v !== '+') {
-      const n = parseFloat(v);
-      if (!isNaN(n)) v = n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2);
-    }
-    onChange(v);
+  const format = (n: number) => n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2);
+  const inc = () => { let n = num + step; if (max !== undefined && n > max) n = max; onChange(format(n)); };
+  const dec = () => { let n = num - step; if (min !== undefined && n < min) n = min; onChange(format(n)); };
+  const handleBlur = () => {
+    if (value === '' || value === '-' || value === '+') return;
+    const n = parseFloat(value);
+    if (!isNaN(n)) onChange(format(n));
   };
   return (
     <div className={`relative inline-flex items-stretch rounded-lg border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-[rgba(var(--accent-rgb),0.20)] focus-within:border-[var(--accent)] shadow-sm transition-all ${compact ? 'h-10' : 'h-12'}`}>
-      <input type="text" inputMode="decimal" value={value} onChange={handleInput} placeholder={placeholder}
+      <input type="text" inputMode="decimal" value={value} onChange={e => onChange(e.target.value)} onBlur={handleBlur} placeholder={placeholder}
         style={{ textTransform: 'none' }}
         className={`flex-1 min-w-0 ${compact ? 'px-2.5 text-[15px]' : 'px-3.5 text-[17px]'} font-semibold text-slate-800 bg-transparent border-none focus:outline-none placeholder:text-slate-300 text-center`} />
       <div className="flex flex-col border-l border-slate-200">
