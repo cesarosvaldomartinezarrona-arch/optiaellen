@@ -26,7 +26,7 @@ function SpinnerInput({ value, onChange, step = 0.25, min, max, placeholder, com
     <div className={`relative inline-flex items-stretch rounded-lg border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-[rgba(var(--accent-rgb),0.20)] focus-within:border-[var(--accent)] shadow-sm transition-all ${compact ? 'h-10' : 'h-12'}`}>
       <input type="text" inputMode="decimal" value={value} onChange={handleInput} placeholder={placeholder}
         style={{ textTransform: 'none' }}
-        className={`flex-1 min-w-0 ${compact ? 'px-2.5 text-[13px]' : 'px-3.5 text-sm'} font-semibold text-slate-800 bg-transparent border-none focus:outline-none placeholder:text-slate-300`} />
+        className={`flex-1 min-w-0 ${compact ? 'px-2.5 text-[15px]' : 'px-3.5 text-[17px]'} font-semibold text-slate-800 bg-transparent border-none focus:outline-none placeholder:text-slate-300 text-center`} />
       <div className="flex flex-col border-l border-slate-200">
         <button type="button" onClick={inc} className={`flex-1 flex items-center justify-center ${compact ? 'px-1.5' : 'px-2'} hover:bg-slate-50 active:bg-slate-100 transition-colors`}>
           <svg className={`${compact ? 'w-2.5 h-2.5' : 'w-3 h-3'} text-slate-400`} viewBox="0 0 10 6"><path d="M5 0L10 6H0z" fill="currentColor"/></svg>
