@@ -7,6 +7,39 @@ import jsPDF from 'jspdf';
 
 const emptyEye: EyeData = { sph: '', cyl: '', axis: '', prisma: '', add: '', dp: '', av: '' };
 
+function SpinnerInput({ value, onChange, step = 0.25, min, max, placeholder, compact = false }: {
+  value: string; onChange: (v: string) => void; step?: number; min?: number; max?: number; placeholder?: string; compact?: boolean;
+}) {
+  const parse = (v: string) => { const n = parseFloat(v); return isNaN(n) ? 0 : n; };
+  const num = parse(value);
+  const inc = () => { let n = num + step; if (max !== undefined && n > max) n = max; onChange(n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2)); };
+  const dec = () => { let n = num - step; if (min !== undefined && n < min) n = min; onChange(n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2)); };
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let v = e.target.value;
+    if (v !== '' && v !== '-' && v !== '+') {
+      const n = parseFloat(v);
+      if (!isNaN(n)) v = n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2);
+    }
+    onChange(v);
+  };
+  return (
+    <div className={`relative inline-flex items-stretch rounded-lg border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-[rgba(var(--accent-rgb),0.20)] focus-within:border-[var(--accent)] shadow-sm transition-all ${compact ? 'h-10' : 'h-12'}`}>
+      <input type="text" inputMode="decimal" value={value} onChange={handleInput} placeholder={placeholder}
+        style={{ textTransform: 'none' }}
+        className={`flex-1 min-w-0 ${compact ? 'px-2.5 text-[13px]' : 'px-3.5 text-sm'} font-semibold text-slate-800 bg-transparent border-none focus:outline-none placeholder:text-slate-300`} />
+      <div className="flex flex-col border-l border-slate-200">
+        <button type="button" onClick={inc} className={`flex-1 flex items-center justify-center ${compact ? 'px-1.5' : 'px-2'} hover:bg-slate-50 active:bg-slate-100 transition-colors`}>
+          <svg className={`${compact ? 'w-2.5 h-2.5' : 'w-3 h-3'} text-slate-400`} viewBox="0 0 10 6"><path d="M5 0L10 6H0z" fill="currentColor"/></svg>
+        </button>
+        <div className="h-px bg-slate-200" />
+        <button type="button" onClick={dec} className={`flex-1 flex items-center justify-center ${compact ? 'px-1.5' : 'px-2'} hover:bg-slate-50 active:bg-slate-100 transition-colors`}>
+          <svg className={`${compact ? 'w-2.5 h-2.5' : 'w-3 h-3'} text-slate-400`} viewBox="0 0 10 6"><path d="M0 0h10L5 6z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function buildTicketHTML(opticsName: string, rx: Prescription): string {
   return `<!DOCTYPE html>
 <html><head><title>Ticket Receta</title>
@@ -234,42 +267,30 @@ export default function Recetas() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Esfera (SPH)</label>
-            <input type="text" inputMode="decimal" value={data.sph} onChange={e => onChange({ ...data, sph: e.target.value })} readOnly={readonly}
-              placeholder="+0.00" style={{ textTransform: 'none' }}
-              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] shadow-sm'}`} />
+            <SpinnerInput value={data.sph} onChange={v => onChange({ ...data, sph: v })} step={0.25} min={-20} max={20} placeholder="+0.00" />
           </div>
           <div>
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Cilindro (CYL)</label>
-            <input type="text" inputMode="decimal" value={data.cyl} onChange={e => onChange({ ...data, cyl: e.target.value })} readOnly={readonly}
-              placeholder="-0.00" style={{ textTransform: 'none' }}
-              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] shadow-sm'}`} />
+            <SpinnerInput value={data.cyl} onChange={v => onChange({ ...data, cyl: v })} step={0.25} min={-10} max={10} placeholder="-0.00" />
           </div>
           <div>
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Eje (AXIS)</label>
-            <input type="text" inputMode="numeric" value={data.axis} onChange={e => onChange({ ...data, axis: e.target.value })} readOnly={readonly}
-              placeholder="0 - 180" style={{ textTransform: 'none' }}
-              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] shadow-sm'}`} />
+            <SpinnerInput value={data.axis} onChange={v => onChange({ ...data, axis: v })} step={5} min={0} max={180} placeholder="0 - 180" />
           </div>
           <div>
             <label className="block text-[12px] font-bold text-slate-700 mb-2">Prisma</label>
-            <input type="text" inputMode="decimal" value={data.prisma} onChange={e => onChange({ ...data, prisma: e.target.value })} readOnly={readonly}
-              placeholder="0.00" style={{ textTransform: 'none' }}
-              className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] shadow-sm'}`} />
+            <SpinnerInput value={data.prisma} onChange={v => onChange({ ...data, prisma: v })} step={0.25} min={0} max={20} placeholder="0.00" />
           </div>
         </div>
         <div className="mt-4">
           <label className="block text-[12px] font-bold text-slate-700 mb-2">Adición (ADD)</label>
-          <input type="text" inputMode="decimal" value={data.add} onChange={e => onChange({ ...data, add: e.target.value })} readOnly={readonly}
-            placeholder="+0.00" style={{ textTransform: 'none' }}
-            className={`w-full px-4 py-3.5 rounded-lg border text-sm font-semibold placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-800 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)] shadow-sm'}`} />
+          <SpinnerInput value={data.add} onChange={v => onChange({ ...data, add: v })} step={0.25} min={0} max={6} placeholder="+0.00" />
         </div>
         {/* DP y AV como campos secundarios colapsables */}
         <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200/40">
           <div>
             <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">DP (mm)</label>
-            <input type="text" inputMode="decimal" value={data.dp} onChange={e => onChange({ ...data, dp: e.target.value })} readOnly={readonly}
-              placeholder="32" style={{ textTransform: 'none' }}
-              className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]'}`} />
+            <SpinnerInput value={data.dp} onChange={v => onChange({ ...data, dp: v })} step={0.5} min={0} max={80} placeholder="32" compact />
           </div>
           <div>
             <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agudeza Visual</label>
