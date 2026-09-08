@@ -324,24 +324,10 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
     window.open(url, '_blank');
   };
 
-  const handlePrintThermal = async () => {
-    const w = window.open('', '_blank', 'width=400,height=800');
-    if (!w) return;
-
-    let logoBase64 = '';
-    try {
-      const resp = await fetch('/optiaellen/logo.png');
-      const blob = await resp.blob();
-      logoBase64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.readAsDataURL(blob);
-      });
-    } catch {}
-
+  const buildThermalHtml = (logoBase64: string) => {
     const det = data.detalle.filter(d => d.descripcion);
     const totalCalc = data.totales.total;
-    w.document.write(`<!DOCTYPE html><html><head><title>Ticket ${data.folio}</title>
+    return `<!DOCTYPE html><html><head><title>Ticket ${data.folio}</title>
 <style>
   @page { size: 80mm auto; margin: 2mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -364,22 +350,22 @@ ${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:16
 <div class="line2"></div>
 <div class="center bold" style="font-size:13pt">TICKET DE VENTA</div>
 <div class="line"></div>
-<table><tr><td class="small">Folio:</td><td class="right bold">${data.folio || '—'}</td></tr>
-<tr><td class="small">Fecha:</td><td class="right">${data.fechaVenta || '—'}</td></tr>
-<tr><td class="small">Recepcionista:</td><td class="right">${data.recepcionista || '—'}</td></tr></table>
+<table><tr><td class="small">Folio:</td><td class="right bold">${data.folio || '\u2014'}</td></tr>
+<tr><td class="small">Fecha:</td><td class="right">${data.fechaVenta || '\u2014'}</td></tr>
+<tr><td class="small">Recepcionista:</td><td class="right">${data.recepcionista || '\u2014'}</td></tr></table>
 <div class="line"></div>
 <div class="bold small">DATOS DEL CLIENTE</div>
-<div class="small"><b>Nombre:</b> ${data.paciente || '—'}</div>
-<div class="small"><b>Telefono:</b> ${data.telefonoCliente || '—'}</div>
+<div class="small"><b>Nombre:</b> ${data.paciente || '\u2014'}</div>
+<div class="small"><b>Telefono:</b> ${data.telefonoCliente || '\u2014'}</div>
 ${data.rfcCliente ? `<div class="small"><b>RFC:</b> ${data.rfcCliente}</div>` : ''}
 <div class="line"></div>
 <div class="bold small">GRADUACION</div>
 <table style="width:100%">
-<tr><td class="small bold" style="width:24px">OD:</td><td class="small" style="width:32px">ESF</td><td class="small" style="width:50px;border-bottom:1px solid #999">${data.graduacion.od.esfera || '—'}</td><td class="small" style="width:32px">CIL</td><td class="small" style="width:50px;border-bottom:1px solid #999">${data.graduacion.od.cilindro || '—'}</td></tr>
-<tr><td class="small bold"></td><td class="small">EJE</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.od.eje || '—'}</td><td class="small">ADD</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.od.adicion || '—'}</td></tr>
+<tr><td class="small bold" style="width:24px">OD:</td><td class="small" style="width:32px">ESF</td><td class="small" style="width:50px;border-bottom:1px solid #999">${data.graduacion.od.esfera || '\u2014'}</td><td class="small" style="width:32px">CIL</td><td class="small" style="width:50px;border-bottom:1px solid #999">${data.graduacion.od.cilindro || '\u2014'}</td></tr>
+<tr><td class="small bold"></td><td class="small">EJE</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.od.eje || '\u2014'}</td><td class="small">ADD</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.od.adicion || '\u2014'}</td></tr>
 <tr><td colspan="5" style="height:6px"></td></tr>
-<tr><td class="small bold">OI:</td><td class="small">ESF</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.esfera || '—'}</td><td class="small">CIL</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.cilindro || '—'}</td></tr>
-<tr><td class="small bold"></td><td class="small">EJE</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.eje || '—'}</td><td class="small">ADD</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.adicion || '—'}</td></tr>
+<tr><td class="small bold">OI:</td><td class="small">ESF</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.esfera || '\u2014'}</td><td class="small">CIL</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.cilindro || '\u2014'}</td></tr>
+<tr><td class="small bold"></td><td class="small">EJE</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.eje || '\u2014'}</td><td class="small">ADD</td><td class="small" style="border-bottom:1px solid #999">${data.graduacion.oi.adicion || '\u2014'}</td></tr>
 </table>
 ${data.tipoLente || data.materialLente ? `<div class="small">Lente: ${data.tipoLente || ''} ${data.materialLente || ''}</div>` : ''}
 ${data.tratamientos ? `<div class="small">Tratamientos: ${data.tratamientos}</div>` : ''}
@@ -408,16 +394,44 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
 <div class="center small">!Gracias por su compra!</div>
 <div class="center small">${data.sucursal || ''}</div>
 <div class="line2"></div>
-</div></body></html>`);
+</div></body></html>`;
+  };
+
+  const getLogoBase64 = async (): Promise<string> => {
+    try {
+      const resp = await fetch('/optiaellen/logo.png');
+      const blob = await resp.blob();
+      return await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+    } catch { return ''; }
+  };
+
+  const [showThermalPreview, setShowThermalPreview] = useState(false);
+  const [thermalHtml, setThermalHtml] = useState('');
+
+  const handleViewThermal = async () => {
+    const logoBase64 = await getLogoBase64();
+    setThermalHtml(buildThermalHtml(logoBase64));
+    setShowThermalPreview(true);
+  };
+
+  const handleDownloadThermal = async () => {
+    const logoBase64 = await getLogoBase64();
+    const w = window.open('', '_blank', 'width=400,height=800');
+    if (!w) return;
+    w.document.write(buildThermalHtml(logoBase64));
     w.document.close();
-    setTimeout(() => { w.print(); w.close(); }, 300);
+    setTimeout(() => { w.print(); w.close(); }, 400);
   };
 
   const handleReset = () => {
     setData({ ...defaultData });
   };
 
-  return (
+  return (<>
     <div ref={modalRef} className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[60] p-3 sm:p-4">
       <div className="bg-white rounded-lg w-full max-w-5xl shadow-2xl border border-slate-200 max-h-[92vh] overflow-hidden flex flex-col print:shadow-none print:rounded-none print:max-w-full print:border-none">
 
@@ -846,9 +860,13 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
               className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50">
               <FileDown className="w-4 h-4" /> {generatingPdf ? 'Generando...' : 'Descargar PDF'}
             </button>
-            <button onClick={handlePrintThermal}
+            <button onClick={handleViewThermal}
               className="flex items-center gap-2 px-4 py-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-sm font-bold text-emerald-700 hover:bg-emerald-100 transition-all">
-              <Printer className="w-4 h-4" /> Térmica
+              <Eye className="w-4 h-4" /> Ver Térmica
+            </button>
+            <button onClick={handleDownloadThermal}
+              className="flex items-center gap-2 px-4 py-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-sm font-bold text-emerald-700 hover:bg-emerald-100 transition-all">
+              <FileDown className="w-4 h-4" /> Descargar Térmica
             </button>
             <button
               className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
@@ -879,6 +897,35 @@ ${data.fechaEntrega ? `<div class="small">Entrega estimada: ${data.fechaEntrega}
         }
       `}</style>
     </div>
+
+    {showThermalPreview && (
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[70] p-4" onClick={() => setShowThermalPreview(false)}>
+        <div className="bg-white rounded-lg w-full max-w-md shadow-2xl border border-slate-200/80 max-h-[92vh] flex flex-col" onClick={e => e.stopPropagation()}>
+          <div className="flex items-center justify-between p-5 border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <Eye className="w-5 h-5 text-emerald-600" />
+              <h2 className="text-lg font-bold text-slate-900">Ticket Termico</h2>
+            </div>
+            <button onClick={() => setShowThermalPreview(false)}
+              className="w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center">
+              <span className="text-slate-500 text-lg">&times;</span>
+            </button>
+          </div>
+          <div className="flex-1 overflow-auto p-4 bg-slate-100">
+            <iframe srcDoc={thermalHtml} className="w-full min-h-[500px] border border-slate-200 rounded-lg bg-white" title="Ticket Termico" />
+          </div>
+          <div className="flex justify-end gap-3 p-4 border-t border-slate-100">
+            <button onClick={() => setShowThermalPreview(false)}
+              className="px-5 py-2.5 rounded-lg text-sm font-medium text-slate-500 hover:bg-slate-100 transition-colors">Cerrar</button>
+            <button onClick={() => { handleDownloadThermal(); setShowThermalPreview(false); }}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors">
+              <FileDown className="w-4 h-4" /> Imprimir / Guardar PDF
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
 
