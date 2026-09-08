@@ -20,38 +20,38 @@ const EyeForm = React.memo(function EyeForm({ label, data, onChange, readonly = 
         <div className={`ml-auto w-2 h-2 rounded-full ${isOD ? 'bg-[var(--accent)]' : 'bg-[#2563eb]'} animate-pulse`} />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-6">
         <div>
-          <label className="block text-[12px] font-bold text-slate-700 mb-2">Esfera (SPH)</label>
+          <label className="block text-[13px] font-bold text-slate-700 mb-2.5">Esfera (SPH)</label>
           <SpinnerInput value={data.sph} onChange={v => onChange({ ...data, sph: v })} step={0.25} min={-20} max={20} placeholder="+0.00" />
         </div>
         <div>
-          <label className="block text-[12px] font-bold text-slate-700 mb-2">Cilindro (CYL)</label>
+          <label className="block text-[13px] font-bold text-slate-700 mb-2.5">Cilindro (CYL)</label>
           <SpinnerInput value={data.cyl} onChange={v => onChange({ ...data, cyl: v })} step={0.25} min={-10} max={10} placeholder="-0.00" />
         </div>
         <div>
-          <label className="block text-[12px] font-bold text-slate-700 mb-2">Eje (AXIS)</label>
+          <label className="block text-[13px] font-bold text-slate-700 mb-2.5">Eje (AXIS)</label>
           <SpinnerInput value={data.axis} onChange={v => onChange({ ...data, axis: v })} step={5} min={0} max={180} placeholder="0 - 180" />
         </div>
         <div>
-          <label className="block text-[12px] font-bold text-slate-700 mb-2">Prisma</label>
+          <label className="block text-[13px] font-bold text-slate-700 mb-2.5">Prisma</label>
           <SpinnerInput value={data.prisma} onChange={v => onChange({ ...data, prisma: v })} step={0.25} min={0} max={20} placeholder="0.00" />
         </div>
       </div>
-      <div className="mt-4">
-        <label className="block text-[12px] font-bold text-slate-700 mb-2">Adición (ADD)</label>
+      <div className="mt-5">
+        <label className="block text-[13px] font-bold text-slate-700 mb-2.5">Adición (ADD)</label>
         <SpinnerInput value={data.add} onChange={v => onChange({ ...data, add: v })} step={0.25} min={0} max={6} placeholder="+0.00" />
       </div>
-      <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200/40">
+      <div className="grid grid-cols-2 gap-6 mt-5 pt-5 border-t border-slate-200/40">
         <div>
-          <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">DP (mm)</label>
+          <label className="block text-[12px] font-bold text-slate-400 uppercase tracking-wider mb-2">DP (mm)</label>
           <SpinnerInput value={data.dp} onChange={v => onChange({ ...data, dp: v })} step={1} min={0} max={80} placeholder="32" compact raw />
         </div>
         <div>
-          <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agudeza Visual</label>
+          <label className="block text-[12px] font-bold text-slate-400 uppercase tracking-wider mb-2">Agudeza Visual</label>
           <input type="text" inputMode="text" value={data.av} onChange={e => onChange({ ...data, av: e.target.value })} readOnly={readonly}
             placeholder="20/20" data-no-upper style={{ textTransform: 'none' }}
-            className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]'}`} />
+            className={`w-full h-10 px-3.5 rounded-lg border text-[15px] font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]'}`} />
         </div>
       </div>
     </div>
@@ -74,10 +74,10 @@ function SpinnerInput({ value, onChange, step = 0.25, min, max, placeholder, com
     if (!isNaN(n)) onChange(format(n));
   };
   return (
-    <div className={`relative inline-flex items-stretch rounded-lg border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-[rgba(var(--accent-rgb),0.20)] focus-within:border-[var(--accent)] shadow-sm transition-all ${compact ? 'h-10' : 'h-12'}`}>
+    <div className={`relative inline-flex items-stretch rounded-lg border border-slate-200 bg-white focus-within:ring-2 focus-within:ring-[rgba(var(--accent-rgb),0.20)] focus-within:border-[var(--accent)] shadow-sm transition-all ${compact ? 'h-12' : 'h-14'}`}>
       <input type="text" inputMode="decimal" value={value} onChange={e => onChange(e.target.value)} onBlur={handleBlur} placeholder={placeholder}
         style={{ textTransform: 'none' }}
-        className={`flex-1 min-w-0 ${compact ? 'px-2.5 text-[15px]' : 'px-3.5 text-[17px]'} font-semibold text-slate-800 bg-transparent border-none focus:outline-none placeholder:text-slate-300 text-center`} />
+        className={`flex-1 min-w-0 ${compact ? 'px-3 text-[16px]' : 'px-4 text-[19px]'} font-semibold text-slate-800 bg-transparent border-none focus:outline-none placeholder:text-slate-300 text-center`} />
       <div className="flex flex-col border-l border-slate-200">
         <button type="button" onClick={inc} className={`flex-1 flex items-center justify-center ${compact ? 'px-1.5' : 'px-2'} hover:bg-slate-50 active:bg-slate-100 transition-colors`}>
           <svg className={`${compact ? 'w-2.5 h-2.5' : 'w-3 h-3'} text-slate-400`} viewBox="0 0 10 6"><path d="M5 0L10 6H0z" fill="currentColor"/></svg>
