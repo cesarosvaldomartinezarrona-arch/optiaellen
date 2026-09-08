@@ -329,35 +329,35 @@ export default function TicketVenta({ data: initialData, onClose }: TicketVentaP
     const totalCalc = data.totales.total;
     return `<!DOCTYPE html><html><head><title>Ticket ${data.folio}</title>
 <style>
-  @page { size: 80mm auto; margin: 2mm; }
+  @page { size: 58mm auto; margin: 2mm; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Arial, Helvetica, sans-serif; font-size: 11pt; color: #000; line-height: 1.45; overflow-x: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .ticket-wrap { width: 72mm; margin: 0 auto; word-wrap: break-word; overflow-wrap: break-word; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #000; line-height: 1.4; overflow-x: hidden; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .ticket-wrap { width: 52mm; margin: 0 auto; word-wrap: break-word; overflow-wrap: break-word; }
   .center { text-align: center; }
   .bold { font-weight: bold; }
   .line { border-top: 1px dashed #000; margin: 4px 0; }
   .line2 { border-top: 2px solid #000; margin: 4px 0; }
   table { width: 100%; border-collapse: collapse; }
-  td, th { padding: 1px 0; font-size: 10pt; }
+  td, th { padding: 1px 0; font-size: 8pt; }
   .right { text-align: right; }
-  .small { font-size: 9pt; }
+  .small { font-size: 7.5pt; }
 </style></head><body>
 <div class="ticket-wrap">
-${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:160px;height:auto;margin-bottom:4px" /></div>` : `<div class="center bold" style="font-size:16pt">${data.sucursal || 'OPTICA'}</div>`}
+${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:120px;height:auto;margin-bottom:4px" /></div>` : `<div class="center bold" style="font-size:13pt">${data.sucursal || 'OPTICA'}</div>`}
 <div class="center small">${data.direccionSucursal || ''}</div>
 <div class="center small">Tel: ${data.telefonoOptica || ''}</div>
 <div class="center small">RFC: ${data.rfc || ''}</div>
 <div class="line2"></div>
-<div class="center bold" style="font-size:13pt">TICKET DE VENTA</div>
+<div class="center bold" style="font-size:11pt">TICKET DE VENTA</div>
 <div class="line"></div>
 <table><tr><td class="small bold">Folio:</td><td class="small bold">${data.folio || '\u2014'}</td></tr>
 <tr><td class="small bold">Fecha:</td><td class="small">${data.fechaVenta || '\u2014'}</td></tr>
 <tr><td class="small bold">Recepcionista:</td><td class="small">${data.recepcionista || '\u2014'}</td></tr></table>
 <div class="line"></div>
-<div class="bold" style="font-size:11pt">DATOS DEL CLIENTE</div>
-<div style="font-size:10pt"><b>Nombre:</b> ${data.paciente || '\u2014'}</div>
-<div style="font-size:10pt"><b>Telefono:</b> ${data.telefonoCliente || '\u2014'}</div>
-${data.rfcCliente ? `<div style="font-size:10pt"><b>RFC:</b> ${data.rfcCliente}</div>` : ''}
+<div class="bold" style="font-size:9pt">DATOS DEL CLIENTE</div>
+<div style="font-size:8.5pt"><b>Nombre:</b> ${data.paciente || '\u2014'}</div>
+<div style="font-size:8.5pt"><b>Telefono:</b> ${data.telefonoCliente || '\u2014'}</div>
+${data.rfcCliente ? `<div style="font-size:8.5pt"><b>RFC:</b> ${data.rfcCliente}</div>` : ''}
 <div class="line"></div>
 <div class="bold small">GRADUACION</div>
 <table style="width:100%">
@@ -375,10 +375,10 @@ ${data.armazon ? `<div class="small">Armazon: ${data.armazon}</div>` : ''}
 <table>${det.map(d => `<tr><td class="small">${d.descripcion} ${d.cantidad > 1 ? 'x' + d.cantidad : ''}</td><td class="right small">$${d.precioFinal.toLocaleString()}</td></tr>`).join('')}</table>
 <div class="line2"></div>
 <table>
-<tr><td class="bold" style="font-size:11pt">SUBTOTAL</td><td class="right bold" style="font-size:11pt">$${data.totales.subtotal.toLocaleString()}</td></tr>
+<tr><td class="bold" style="font-size:9pt">SUBTOTAL</td><td class="right bold" style="font-size:9pt">$${data.totales.subtotal.toLocaleString()}</td></tr>
 ${data.totales.descuento > 0 ? `<tr><td class="small">DESCUENTO</td><td class="right small">-$${data.totales.descuento.toLocaleString()}</td></tr>` : ''}
 <tr><td class="small">IVA (16%)</td><td class="right small">$${data.totales.iva.toLocaleString()}</td></tr>
-<tr><td class="bold" style="font-size:13pt">TOTAL</td><td class="right bold" style="font-size:13pt">$${totalCalc.toLocaleString()}</td></tr>
+<tr><td class="bold" style="font-size:11pt">TOTAL</td><td class="right bold" style="font-size:11pt">$${totalCalc.toLocaleString()}</td></tr>
 </table>
 ${data.anticipo > 0 ? `<div class="line"></div><table>
 <tr><td class="small">ANTICIPO</td><td class="right small">$${data.anticipo.toLocaleString()}</td></tr>
