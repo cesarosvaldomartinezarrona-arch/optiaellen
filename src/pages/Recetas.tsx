@@ -7,16 +7,16 @@ import jsPDF from 'jspdf';
 
 const emptyEye: EyeData = { sph: '', cyl: '', axis: '', prisma: '', add: '', dp: '', av: '' };
 
-function SpinnerInput({ value, onChange, step = 0.25, min, max, placeholder, compact = false }: {
-  value: string; onChange: (v: string) => void; step?: number; min?: number; max?: number; placeholder?: string; compact?: boolean;
+function SpinnerInput({ value, onChange, step = 0.25, min, max, placeholder, compact = false, raw = false }: {
+  value: string; onChange: (v: string) => void; step?: number; min?: number; max?: number; placeholder?: string; compact?: boolean; raw?: boolean;
 }) {
   const parse = (v: string) => { const n = parseFloat(v); return isNaN(n) ? 0 : n; };
   const num = parse(value);
   const format = (n: number) => n >= 0 ? `+${n.toFixed(2)}` : n.toFixed(2);
-  const inc = () => { let n = num + step; if (max !== undefined && n > max) n = max; onChange(format(n)); };
-  const dec = () => { let n = num - step; if (min !== undefined && n < min) n = min; onChange(format(n)); };
+  const inc = () => { let n = num + step; if (max !== undefined && n > max) n = max; raw ? onChange(String(Math.round(n))) : onChange(format(n)); };
+  const dec = () => { let n = num - step; if (min !== undefined && n < min) n = min; raw ? onChange(String(Math.round(n))) : onChange(format(n)); };
   const handleBlur = () => {
-    if (value === '' || value === '-' || value === '+') return;
+    if (raw || value === '' || value === '-' || value === '+') return;
     const n = parseFloat(value);
     if (!isNaN(n)) onChange(format(n));
   };
@@ -288,7 +288,7 @@ export default function Recetas() {
         <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200/40">
           <div>
             <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">DP (mm)</label>
-            <SpinnerInput value={data.dp} onChange={v => onChange({ ...data, dp: v })} step={0.5} min={0} max={80} placeholder="32" compact />
+            <SpinnerInput value={data.dp} onChange={v => onChange({ ...data, dp: v })} step={1} min={0} max={80} placeholder="32" compact raw />
           </div>
           <div>
             <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agudeza Visual</label>
