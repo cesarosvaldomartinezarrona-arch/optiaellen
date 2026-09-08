@@ -126,7 +126,7 @@ body {
 }
 .dark .placeholder\:text-slate-400::placeholder { color: var(--text-muted); }
 
-.auto-uppercase input,
+.auto-uppercase input:not([data-no-upper]),
 .auto-uppercase textarea,
 .auto-uppercase select {
   text-transform: uppercase;

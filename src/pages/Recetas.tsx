@@ -293,7 +293,7 @@ export default function Recetas() {
           <div>
             <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Agudeza Visual</label>
             <input type="text" inputMode="text" value={data.av} onChange={e => onChange({ ...data, av: e.target.value })} readOnly={readonly}
-              placeholder="20/20" style={{ textTransform: 'none' }}
+              placeholder="20/20" data-no-upper style={{ textTransform: 'none' }}
               className={`w-full px-3.5 py-2.5 rounded-lg border text-sm font-medium placeholder:text-slate-300 focus:outline-none focus:ring-2 transition-all ${readonly ? 'bg-slate-50 border-slate-200 text-slate-700' : 'bg-white border-slate-200 text-slate-700 focus:ring-[rgba(var(--accent-rgb),0.20)] focus:border-[var(--accent)]'}`} />
           </div>
         </div>
