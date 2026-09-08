@@ -369,9 +369,9 @@ ${logoBase64 ? `<div class="center"><img src="${logoBase64}" style="max-width:16
 <tr><td class="small">Recepcionista:</td><td class="right">${data.recepcionista || '—'}</td></tr></table>
 <div class="line"></div>
 <div class="bold small">DATOS DEL CLIENTE</div>
-<table><tr><td class="small">Nombre:</td><td class="right">${data.paciente || '—'}</td></tr>
-<tr><td class="small">Telefono:</td><td class="right">${data.telefonoCliente || '—'}</td></tr>
-${data.rfcCliente ? `<tr><td class="small">RFC:</td><td class="right">${data.rfcCliente}</td></tr>` : ''}</table>
+<div class="small"><b>Nombre:</b> ${data.paciente || '—'}</div>
+<div class="small"><b>Telefono:</b> ${data.telefonoCliente || '—'}</div>
+${data.rfcCliente ? `<div class="small"><b>RFC:</b> ${data.rfcCliente}</div>` : ''}
 <div class="line"></div>
 <div class="bold small">GRADUACION</div>
 <table style="width:100%">
